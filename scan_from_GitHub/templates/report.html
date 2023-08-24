@@ -1,0 +1,38 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Deaddrops </title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="navmenu">
+        <a href="/">Deaddrops</a>
+        <a href="/report">Report</a>
+        <a href="/logging">Logging</a>
+        <a href="/about">About</a>
+    </div>
+
+    <div class="banner">
+            _____                     _____
+         -.-=   7 )                  /     - 
+        /0  0  _  \\      ____________\/\  * |
+       (=___._/\_/  _\___/ DEADDROPS  ]\/    /
+        V  V    \  *         _____  *      /
+                 \./_____*__/     \______*/
+    </div>
+           <div class="textbox">
+            {% if finished == True %}
+                <div>
+                    <p> &ensp; Scan status: Finished</p>
+                </div>
+            {% else %}
+                <div>
+                    <p> &ensp; Scan status: Ongoing</p>
+                </div>
+            {% endif %}
+            <hr />
+            <p> &ensp; Hosts found: {{devices}}</p>
+        </div>
+</body>
+</html >

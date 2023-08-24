@@ -1,0 +1,47 @@
+body {
+    background: #1B1B1B;
+}
+hr {
+    color: #1B1B1B;
+    margin: 0;
+}
+
+p {
+    color: #f8f4ff;
+    font-family: DejaVu Sans Mono, monospace;
+}
+img {
+    float: left; 
+    margin-right: 10px; 
+} 
+
+.banner {
+   font-size: 1.3rem;
+   text-align: center;
+   color: #bf4f51;
+   font-family: monospace;
+   white-space: pre;
+}
+
+.navmenu {
+   background-color: #333;
+   overflow: hidden;
+}
+.navmenu a {
+   font-family: OCR A Std, monospace;
+   float: left;
+   color: #C66666;
+   text-align: center;
+   padding: 14px 16px;
+   text-decoration: none;
+   font-size: 22px;
+}
+.navmenu a:hover {
+   color: #ddd;
+}
+
+.textbox {
+   background-color: #333;
+   overflow: hidden;
+   font-size: 14px;
+}

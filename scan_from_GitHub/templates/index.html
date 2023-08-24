@@ -1,0 +1,36 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Deaddrops </title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="navmenu">
+        <a href="/">Deaddrops</a>
+        <a href="/report">Report</a>
+        <a href="/logging">Logging</a>
+        <a href="/about">About</a>
+    </div>
+
+        <div class="banner">
+            _____                     _____
+         -.-=   7 )                  /     - 
+        /0  0  _  \\      ____________\/\  * |
+       (=___._/\_/  _\___/ DEADDROPS  ]\/    /
+        V  V    \  *         _____  *      /
+                 \./_____*__/     \______*/
+
+    </div>
+    
+        <p> [*] Scanning {{net}}...</p>
+        <div class="textbox">
+            {% for i in devices %}
+            <img src="/static/logo_{{i['OS']}}.png" width="45" height="45">
+            <p> &ensp; {{i['IP']}} / {{i['MAC']}} ({{i['MANUF']}}) </p>
+            <hr />
+            {% endfor %}
+
+        </div>
+</body>
+</html>
