@@ -1,0 +1,26 @@
+host;hostname;hostname_type;protocol;port;name;state;product;extrainfo;reason;version;conf;cpe
+192.168.1.70;;;tcp;139;netbios-ssn;closed;;;conn-refused;;3;
+192.168.1.70;;;tcp;445;microsoft-ds;closed;;;conn-refused;;3;
+192.168.1.70;;;tcp;25;smtp;closed;;;conn-refused;;3;
+192.168.1.70;;;tcp;53;domain;closed;;;conn-refused;;3;
+192.168.1.70;;;tcp;67;dhcps;closed;;;conn-refused;;3;
+192.168.1.70;;;tcp;68;dhcpc;closed;;;conn-refused;;3;
+192.168.1.70;;;tcp;135;msrpc;closed;;;conn-refused;;3;
+192.168.1.70;;;tcp;139;netbios-ssn;closed;;;conn-refused;;3;
+192.168.1.70;;;tcp;161;snmp;closed;;;conn-refused;;3;
+192.168.1.70;;;tcp;162;snmptrap;closed;;;conn-refused;;3;
+192.168.1.70;;;tcp;445;microsoft-ds;closed;;;conn-refused;;3;
+192.168.1.70;;;tcp;1433;ms-sql-s;closed;;;conn-refused;;3;
+192.168.1.70;;;tcp;3389;ms-wbt-server;closed;;;conn-refused;;3;
+192.168.1.70;;;tcp;22;ssh;closed;;;conn-refused;;3;
+192.168.1.70;;;tcp;80;http;closed;;;conn-refused;;3;
+192.168.1.70;;;tcp;443;https;closed;;;conn-refused;;3;
+192.168.1.70;;;tcp;5060;sip;closed;;;conn-refused;;3;
+192.168.1.70;;;tcp;5062;na-localise;closed;;;conn-refused;;3;
+192.168.1.70;;;tcp;8080;http-proxy;closed;;;conn-refused;;3;
+192.168.1.1;;;tcp;22;ssh;open;OpenSSH;protocol 2.0;syn-ack;7.4;10;cpe:/a:openbsd:openssh:7.4
+192.168.1.1;;;tcp;80;http;open;;;syn-ack;;10;
+192.168.1.1;;;tcp;443;https;filtered;;;no-response;;3;
+192.168.1.1;;;tcp;5060;sip;filtered;;;no-response;;3;
+192.168.1.1;;;tcp;5062;na-localise;filtered;;;no-response;;3;
+192.168.1.1;;;tcp;8080;http-proxy;filtered;;;no-response;;3;
