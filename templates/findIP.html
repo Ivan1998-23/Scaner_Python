@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title> 
+        <link  rel="stylesheet" type="text/css"  href="main.css">
+        <link  rel="stylesheet" type="text/css"  href="styleform.css">
+        <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@codolog/form@1.0.0/dist/form.min.css"> -->
+        <title>{% block title %}{% endblock %}</title>
+        <script type="module" src="./index.js"></script> 
+        <script> 
+        </script>
+    </head>
+<body>
+    <header>
+        <div class="container"> 
+            <nav>
+                <ul>
+                    <li><a href="\table.html">Головна</a></li>
+                    <li><a href="\addIP.html">Додати IP адресу</a></li>
+                    <li><a href="\findIP.html">Сканувати</a></li>
+                    <li><a href="#">Статистика</a></li>
+                    <li><a href="#">Контакти</a></li>
+                </ul>
+            </nav>
+            <h1>Scaner 6 VKBI</h1>
+        </div>
+    </header>
+    
+    <div class="form-container">
+        <!-- <label for="ipAddress"> IP-адрес:</label>
+        <input type="text" id="ipAddress" placeholder="Пример: 192.168.1.1">
+        <button onclick="checkIpAddress()">Проверить</button>
+        <p id="result"></p> -->
+ 
+        <div class='formaAllElement'> 
+            <div class="headline">
+                <p>Scaner IP adress</p>
+            </div>
+            <form name="formLoging"  >
+                <!-- <div class="ipAdress"> --> 
+                <div>
+                    <label class='sign-in-IP'>IP  adress:</label>
+                    <input type='text' class='form' name="ipadress" placeholder="192.168.1.1 or 192.168.1.0/24">
+                    <span class="message form" data-for="ipadress"></span>
+                </div>
+                <div class="linefiltr">
+                    <input type="radio" name="metodscan" class="form" value="fping" onclick="createCheckboxList()" checked >
+                    <label class="form" name="fping">Fping</label>
+                    <span class="message form" data-for="fping"></span>
+                </div>
+                <div class="linefiltr">
+                    <input type="radio" name="metodscan" class="form" value="listports" onclick="createCheckboxList()">
+                    <label class="form">Готовий список портів для сканування</label>
+                    <select class="form" name="arrayports">
+                        <option>5060-5062</option>
+                        <option>23</option>
+                        <option>80,443</option>
+                        <option>21,22,23,80,443,8080</option>
+                        <option>25,445,3389,1433,53,67,68,161,162,139,135</option>
+                    </select> 
+                </div>
+                <div class="linefiltr" >
+                    <input type="radio" name="metodscan" class="form" value="allports" onclick="createCheckboxList()"> 
+                    <label class="form" name="ports"> Список портів </label>
+                    <textarea class="form listPorts"   placeholder="22, 23, 443, 80"></textarea> 
+                </div>
+                <div class="nmapValue" id="checkboxListContainer" name="nmapValue">
+                    <div>
+                        <input type="checkbox" class="form">
+                        <label class="form">-PN :</label>
+                        <label class="form"> Розцінювати всі хости як такі, що працюють - пропустити виявлення хостів </label>
+                    </div>
+                    <div>
+                        <input type="checkbox" class="form" checked>
+                        <label class="form">-PS :</label>
+                        <label class="form">TCP SYN  пінгування заданих хостів </label>
+                    </div>
+                    <div>
+                        <input type="checkbox" class="form" checked>
+                        <label class="form">-PA :</label>
+                        <label class="form">TCP ACK   пінгування заданих хостів </label>
+                    </div>
+                    <div>
+                        <input type="checkbox" class="form" checked>
+                        <label class="form">-sU :</label>
+                        <label class="form">UDP сканування </label>
+                    </div>
+                    <div>
+                        <input type="checkbox" class="form" checked>
+                        <label class="form">-O :</label>
+                        <label class="form"> Активувати ф-ю визначення ОС</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" class="form" checked>
+                        <label class="form">-A :</label>
+                        <label class="form">Активувати ф-ю визначення ОС та версії,сканування з використанням скриптів та трасування</label>
+                    </div>
+                    <span class="message form" data-for="email"></span> 
+                </div>  
+                <button id="signUp" class="form full" type="submit" >Сканувати</button>  
+            </form> 
+        </div> 
+    </div> 
+</body>
+</html>

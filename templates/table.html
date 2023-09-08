@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"> 
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css')}}">  -->
+        <link  rel="stylesheet" type="text/css"  href="main.css">
+        <title>{% block title %}{% endblock %}</title>
+        <script>
+        //     document.getElementById("saveButton").addEventListener("click", function () {
+        //         // Получаем текст из <textarea>
+        //         var textToSave = document.getElementById("myTextarea").value;
+
+        //         // Создаем элемент <a> для скачивания файла
+        //         var downloadLink = document.createElement("a");
+        //         downloadLink.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(textToSave));
+        //         downloadLink.setAttribute("download", "myText.txt");
+                
+        //         // Симулируем клик на элементе <a>, чтобы начать скачивание
+        //         downloadLink.click();
+        //     });
+        // </script>
+    </head>
+<body>
+    <header>
+        <div class="container"> 
+            <nav>
+                <ul>
+                    <li><a href="#">Головна</a></li>
+                    <li><a href="\addIP.html">Додати IP адресу</a></li>
+                    <li><a href="\findIP.html">Сканувати</a></li>
+                    <li><a href="#">Статистика</a></li>
+                    <li><a href="#">Контакти</a></li>
+                </ul>
+            </nav>
+            <h1>Scaner 6 VKBI</h1>
+        </div>
+    </header>
+    
+	<div class="main"> 
+        <div class="table">
+            <div class="row table-header ">
+                <div class="value id">ID</div>
+                <div class="value ipAdress">IP addres</div>
+                <div class="value st"> STATUS</div>
+                <div class="value port">Port</div>
+                <div class="value endTieme">Останє сканування</div>
+                <div class="value comment">Примітки</div>
+                <div class="value other">Other</div>
+            </div>
+            <div class="element row">
+                <div class="value id">0</div>
+                <div class="value ipAdress"><a href="http://10.1.2.3" target="_blank">10.1.2.3</a></div>
+                <div class="value st"> up</div>
+                <div class="value port">80, 443</div>
+                <div class="value endTieme">31.08.2023 12:00</div>
+                <div class="value comment">
+                    <textarea id="myTextarea" rows="about" cols="about"></textarea> 
+                </div>
+                <div class="value other">Nmap scaning .....</div>
+            </div>
+            <div class="element row">
+                <div class="value id">1</div>
+                <div class="value ipAdress">172.124.232.223</div>
+                <div class="value st"> down</div>
+                <div class="value port">80,443,445,23,33,22</div>
+                <div class="value endTieme">31.08.2023 12:00</div>
+                <div class="value comment">
+                    <textarea id="myTextarea" rows="about" cols="about"></textarea>
+                </div>
+                <div class="value other">Nmap scaning .....</div>
+            </div>
+            <div class="element row">
+                <div class="value id">0</div>
+                <div class="value ipAdress"><a href="http://10.1.2.3" target="_blank">10.1.2.3</a></div>
+                <div class="value st"> up</div>
+                <div class="value port">80, 443</div>
+                <div class="value endTieme">31.08.2023 12:00</div>
+                <div class="value comment">
+                    <textarea id="myTextarea" rows="about" cols="about"></textarea> 
+                </div>
+                <div class="value other">Nmap scaning .....</div>
+            </div>
+            <div class="element row">
+                <div class="value id">0</div>
+                <div class="value ipAdress"><a href="http://10.1.2.3" target="_blank">10.1.2.3</a></div>
+                <div class="value st"> up</div>
+                <div class="value port">80, 443</div>
+                <div class="value endTieme">31.08.2023 12:00</div>
+                <div class="value comment">
+                    <textarea id="myTextarea" rows="about" cols="about"></textarea>
+                </div>
+                <div class="value other">Nmap scaning .....</div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
