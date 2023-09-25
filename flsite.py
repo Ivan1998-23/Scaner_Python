@@ -11,47 +11,45 @@ app.config['SECRET_KEY'] = 'hard to guess string'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///dbscan.db'
 db = SQLAlchemy(app)
 
-# 1
-class Address(db.Model):
-    __tablename__ = 'address'
+class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    ip = db.Column(db.String(25), nullable=False, unique=True)
-    # id_status = db.Column(db.Integer, db.ForeignKey('status.id'), nullable=False)                     # :m
+    username = db.Column(db.String(80), unique=True, nullable=False)
     update = db.Column(db.DateTime, default=datetime.utcnow)
-    created = db.Column(db.DateTime)
-    # svmap = db.relationship('Device', backref='article', uselist=False)
-    # nmap =
-    comments = db.Column(db.Text, nullable=True)
-    checked = db.Column(db.Boolean, nullable=True)
-              # divice = db.relationship('Device', backref='article', uselist=False)
+    profile = db.relationship('Profile', backref='user', uselist=False)  # Связь с профилем пользователя   1:1
+    posts = db.relationship('Post', backref='user', lazy=True)  # Связь с постами пользователя          1:m
 
     def __repr__(self):
-        return '<Address %r>' % self.id
+        return f'<User {self.username}>'
 
-# svmap
-class Svmap(db.Model):
-    __tablename__ = 'Svmap'
+
+class Profile(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    ports = db.Column(db.String(255), nullable=True)
-    version = db.Column(db.String(50), nullable=True)
-    dev_name = db.Column(db.String(50), nullable=True)
-    # article = db.relationship('Article', backref='device', uselist=False)
+    full_name = db.Column(db.String(120))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), unique=True, nullable=False)  # Связь с пользователем
 
-# fping scan        1:
-# class Status(db.Model):
-#     __tablename__ = 'status'
-#     id = db.Column(db.Integer, primary_key=True)
-#     value = db.Column(db.Boolean, nullable=False, unique=True)
-#     address = db.relationship('Address', backref='status', lazy=True)
+    def __repr__(self):
+        return f'<Profile {self.full_name}>'
 
 
+class Post(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(120))
+    content = db.Column(db.Text)
+    user_id = db.Column(db.Integer,  db.ForeignKey('user.id'), nullable=False)  # Связь с пользователем
 
+    def __repr__(self):
+        return f'<Post {self.title}>'
+
+
+with app.app_context():
+    db.create_all()
 
 @app.route("/home")
 @app.route("/")
 def index():
-    address = Address.query.all()
-    return render_template("index.html", address=address)
+    user = User.query.all()
+
+    return render_template("index.html", address=user)
 
 
 @app.route("/addIP", methods=['POST', 'GET'])
@@ -64,20 +62,18 @@ def addIP():
         comment = request.form['comment']
         if violations == 'Yes':
             b = True
-
         try:
-            # status = Status(value=False)
-            # db.session.add(status)
-            # db.session.commit()
-            # print(status)
-            statuss = Status.query.all()  # Извлекаем всех пользователей
-            for st in statuss:
-                print(st.id, st.value)
-            status = Status.session.get(1)
-            print(status)
-            if status:
-                new_address = Address(ip=ip, comments=comment )
-                db.session.add(new_address)
+            new_user = User(username=ip)
+            db.session.add(new_user)
+            db.session.commit()
+
+            if new_user:
+                new_profile = Profile(full_name=comment, user=new_user)
+                db.session.add(new_profile)
+                db.session.commit()
+                new_post = Post(title=port, content=port, user=new_user)
+                print(new_post)
+                db.session.add(new_post)
                 db.session.commit()
             return render_template("addIP.html")
         except:

@@ -20,15 +20,15 @@
             {% for el in address%}
                 <div class="element row">
                     <div class="value id">{{ el.id}}</div>
-<!--                    <div class="value violations">{{ el.status}}</div>-->
-<!--                    <div class="value ipAdress"><a href="http://{{ el.ip}}" target="_blank">{{ el.ip}}</a></div>-->
-<!--                    <div class="value st"> Up</div>-->
-<!--                    <div class="value port">{{ el.port}}</div>-->
-<!--                    <div class="value endTieme">{{ el.update.date()}}</div>-->
-<!--                    <div class="value comment">-->
-<!--                        <textarea id="myTextarea" rows="about" cols="about">{{ el.user_notes}}</textarea>-->
-<!--                    </div>-->
-<!--                    <div class="value other">{{ el.other}}</div>-->
+                    <div class="value violations">{{ el.post}}</div>
+                    <div class="value ipAdress"><a href="http://{{ el.username}}" target="_blank">{{ el.username}}</a></div>
+                    <div class="value st"> {% if el.profile %}{{ el.profile.id}} {% endif %} </div>
+                    <div class="value port">{% if el.posts %} {{  el.posts[0].title  }} {% endif %}</div>
+                    <div class="value endTieme">{{ el.update.date() }}</div>
+                    <div class="value comment">
+                        <textarea id="myTextarea" rows="about" cols="about">{% if el.profile %}{{ el.profile.full_name}} {% endif %}</textarea>
+                    </div>
+                    <div class="value other"></div>
                 </div>
             {% endfor %}
 
