@@ -1,6 +1,6 @@
-import { humanFormConfig } from './js/form-configs.js';
-import { Validator } from './js/validator.js'; 
-import { isValidIpAddressesFromMask} from   './js/checkIP.js'
+import { humanFormConfig } from './form-configs.js';
+import { Validator } from './validator.js';
+import { isValidIpAddressesFromMask} from   './checkIP.js'
 
 let form = document.formLoging; 
 let signUpBtn = form.signUp; 
@@ -75,16 +75,53 @@ function createCheckboxList() {
         }
     }
 }
-const group1Radios = document.querySelectorAll('input[name="metodscan"]');
+
 
 // Добавляем обработчик события change каждой радио-кнопке в группе 1
+const group1Radios = form.querySelectorAll('input[name="metodscan"]');
+
 group1Radios.forEach(radio => {
+    let onvalue = form.querySelectorAll(`label[data-for]`);
+    console.log(onvalue)
     radio.addEventListener('change', function() {
         if (this.checked) {
-            // Эта радио-кнопка была выбрана
-            console.log('Выбрана опция: ' + this.value);
+            let element = document.querySelector(`[data-for="${this.value}"]`);
+            element.classList.remove('ValueOff');
+            element.classList.add('ValueOn');
+            if (this.value == 'allports') {
+                let blok = document.getElementById(`checkboxListContainer`);
+                blok.classList.add('ValueOn');
+            }
+        } else {
+            element.classList.add('ValueOff');
+            element.classList.remove('ValueOn');
         }
     });
+});
+
+function gatherInformation() {
+    // Получаем значения из полей
+    const ip = document.getElementById('IP').value;
+    const port = document.getElementById('port').value;
+    const comment = document.getElementById('comment').value;
+    const other = document.getElementById('other').value;
+
+
+    // Создаем объект с информацией
+    const information = {
+        IP: ip,
+        Port: port,
+        Comment: comment,
+        Other: other
+    };
+
+    return information;
+}
+
+// Пример использования функции
+document.getElementById('signadd').addEventListener('click', function() {
+    const info = gatherInformation();
+    console.log(info);
 });
 // inputEmail.addEventListener('input', (e)=> {
 //     inputEmail.classList.remove('error'); 

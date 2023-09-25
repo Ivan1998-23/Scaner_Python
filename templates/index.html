@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	Головка
+{% endblock %}
+
+{% block body %}
+	<div class="main">
+        <div class="table">
+            <div class="row table-header ">
+                <div class="value id">ID</div>
+                <div class="value violations">Подавали</div>
+                <div class="value ipAdress">IP addres</div>
+                <div class="value st"> STATUS</div>
+                <div class="value port">Port</div>
+                <div class="value endTieme">Останє сканування</div>
+                <div class="value comment">Примітки</div>
+                <div class="value other">Other</div>
+            </div>
+            {% for el in address%}
+                <div class="element row">
+                    <div class="value id">{{ el.id}}</div>
+<!--                    <div class="value violations">{{ el.status}}</div>-->
+<!--                    <div class="value ipAdress"><a href="http://{{ el.ip}}" target="_blank">{{ el.ip}}</a></div>-->
+<!--                    <div class="value st"> Up</div>-->
+<!--                    <div class="value port">{{ el.port}}</div>-->
+<!--                    <div class="value endTieme">{{ el.update.date()}}</div>-->
+<!--                    <div class="value comment">-->
+<!--                        <textarea id="myTextarea" rows="about" cols="about">{{ el.user_notes}}</textarea>-->
+<!--                    </div>-->
+<!--                    <div class="value other">{{ el.other}}</div>-->
+                </div>
+            {% endfor %}
+
+        </div>
+    </div>
+{% endblock %}
