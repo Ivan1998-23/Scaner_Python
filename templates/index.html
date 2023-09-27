@@ -4,6 +4,10 @@
 	Головка
 {% endblock %}
 
+{% block script %}
+    <script  type='module'src="{{ url_for('static', filename='js/addcoments.js') }}"></script>
+{% endblock %}
+
 {% block body %}
 	<div class="main">
         <div class="table">
@@ -20,15 +24,26 @@
             {% for el in address%}
                 <div class="element row">
                     <div class="value id">{{ el.id}}</div>
-                    <div class="value violations">{{ el.post}}</div>
-                    <div class="value ipAdress"><a href="http://{{ el.username}}" target="_blank">{{ el.username}}</a></div>
-                    <div class="value st"> {% if el.profile %}{{ el.profile.id}} {% endif %} </div>
-                    <div class="value port">{% if el.posts %} {{  el.posts[0].title  }} {% endif %}</div>
+                    <div class="value violations">
+                                            {% if el.checked == True %}
+                                                    <span   data-id-vio="{{ el.id }}" value="True">&#9989</span>     <!-- Галочка -->
+                                            {% else %}
+                                                    <span   data-id-vio="{{ el.id }}" value="False">&#10060</span>  <!-- Крестик -->
+                                            {% endif %}
+                    </div>
+                    <div class="value ipAdress"><a href="http://{{ el.ip }}" target="_blank">{{ el.ip }}</a></div>
+                    <div class="value st"> {% if el.id_status == True %}
+                                                    <span>&#127774</span>
+                                            {% else %}
+                                                    <span>&#128164</span>
+                                            {% endif %}
+                    </div>
+                    <div class="value port">{% if el.id_svmap %} {{  el.id_svmap.ports  }} {% endif %}</div>
                     <div class="value endTieme">{{ el.update.date() }}</div>
                     <div class="value comment">
-                        <textarea id="myTextarea" rows="about" cols="about">{% if el.profile %}{{ el.profile.full_name}} {% endif %}</textarea>
+                        <textarea class="myTextarea" rows="about" cols="about" data-id-com="{{ el.id }}" >{{ el.comments }}</textarea>
                     </div>
-                    <div class="value other"></div>
+                    <div class="value other">{% if el.id_nmap %} {{  el.id_nmap.id  }} {% endif %}</div>
                 </div>
             {% endfor %}
 

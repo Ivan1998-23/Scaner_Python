@@ -4,11 +4,14 @@
 	Додати  ІР адрес
 {% endblock %}
 
+{% block script %}
+    <script  type='module'src="{{ url_for('static', filename='js/index.js') }}"></script>
+{% endblock %}
 {% block body %}
     <div class="form-container">
         <div class='formaAllElement'>
             <div class="headline">
-                <p>Scaner IP adress</p>
+                <h1>Scaner IP adress</h1>
             </div>
             <form name="formLoging" method="post" >
                 <div>

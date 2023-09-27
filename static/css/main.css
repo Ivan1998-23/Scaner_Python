@@ -16,7 +16,7 @@
 
 .value {  
 	padding: 5px; 
-    text-align: left;
+    text-align: center;
     margin: 0 10px 0 10px; 
 }
 
@@ -69,15 +69,28 @@ a {
     text-decoration:none;
 }
 
-#myTextarea {
-    word-wrap: none;
-    white-space: none;
+.myTextarea {
     width: auto;
-    height: 20px;
+    height: 10px;
     min-width: 150px;
-    max-width: 230px; /* Максимальная ширина в пикселях */
+    max-width: 200px;   /*Максимальная ширина в пикселях*/
+    max-height: 20px;
+    min-height: 10px;
+    border: none;
+    background: transparent;
+    resize: none;     /*    *//* Отключаем возможность изменения размера */
+    overflow: hidden;  /*  *//* Скрываем полосы прокрутки */
+}
+.myTextarea:focus {
+    outline: none;
+    resize: both;
+    border-width: 1px;
+    border-style: solid;
+    border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
+    height: 30px;
     max-height: 200px;
-    min-height: 20px;
+    max-width: 200px;
+    overflow: auto;
 }
 .value.port #myTextarea {
     white-space: none;
@@ -128,3 +141,46 @@ nav a {
 body {
     font: caption;
 }
+
+/*---------------------*/
+/*#toggle {*/
+/*  width: 50px;*/
+/*  height: 50px;*/
+/*  background-color: #ccc;*/
+/*  display: flex;*/
+/*  justify-content: center;*/
+/*  align-items: center;*/
+/*  cursor: pointer;*/
+/*}*/
+
+/*.checked::before {*/
+/*  content: '\2705'; *//* Галочка */
+/*  font-size: 24px;*/
+/*  color: green;*/
+/*}*/
+
+/*.unchecked::before {*/
+/*  content: '\274C '; *//* Крестик */
+/*  font-size: 24px;*/
+/*  color: red;*/
+/*}*/
+/*.violTr {*/
+/*    content: '\2705'*/
+/*    width: 50px;*/
+/*  height: 50px;*/
+/*  background-color: #ccc;*/
+/*  display: flex;*/
+/*  justify-content: center;*/
+/*  align-items: center;*/
+/*  cursor: pointer;*/
+/*}*/
+/*.violFl {*/
+/*    content: '\274C'*/
+/*    width: 50px;*/
+/*  height: 50px;*/
+/*  background-color: #ccc;*/
+/*  display: flex;*/
+/*  justify-content: center;*/
+/*  align-items: center;*/
+/*  cursor: pointer;*/
+/*}*/
