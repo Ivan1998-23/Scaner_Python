@@ -10,43 +10,91 @@
 
 {% block body %}
 	<div class="main">
-        <div class="table">
-            <div class="row table-header ">
-                <div class="value id">ID</div>
-                <div class="value violations">Подавали</div>
-                <div class="value ipAdress">IP addres</div>
-                <div class="value st"> STATUS</div>
-                <div class="value port">Port</div>
-                <div class="value endTieme">Останє сканування</div>
-                <div class="value comment">Примітки</div>
-                <div class="value other">Other</div>
-            </div>
-            {% for el in address%}
-                <div class="element row">
-                    <div class="value id">{{ el.id}}</div>
-                    <div class="value violations">
-                                            {% if el.checked == True %}
-                                                    <span   data-id-vio="{{ el.id }}" value="True">&#9989</span>     <!-- Галочка -->
-                                            {% else %}
-                                                    <span   data-id-vio="{{ el.id }}" value="False">&#10060</span>  <!-- Крестик -->
-                                            {% endif %}
-                    </div>
-                    <div class="value ipAdress"><a href="http://{{ el.ip }}" target="_blank">{{ el.ip }}</a></div>
-                    <div class="value st"> {% if el.id_status == True %}
-                                                    <span>&#127774</span>
-                                            {% else %}
-                                                    <span>&#128164</span>
-                                            {% endif %}
-                    </div>
-                    <div class="value port">{% if el.id_svmap %} {{  el.id_svmap.ports  }} {% endif %}</div>
-                    <div class="value endTieme">{{ el.update.date() }}</div>
-                    <div class="value comment">
-                        <textarea class="myTextarea" rows="about" cols="about" data-id-com="{{ el.id }}" >{{ el.comments }}</textarea>
-                    </div>
-                    <div class="value other">{% if el.id_nmap %} {{  el.id_nmap.id  }} {% endif %}</div>
-                </div>
-            {% endfor %}
+        <table  class="table table-striped">
+            <thead>
+                <tr  class="row table-header ">
+                    <th scope="col">
+                        <div class="value id">ID</div>
+                    </th>
+                    <th scope="col">
+                        <div class="value violations">Подавали</div>
+                    </th>
+                    <th scope="col">
+                        <div class="value ipAdress">IP addres</div>
+                    </th>
+                    <th scope="col">
+                        <div class="value st"> STATUS</div>
+                    </th>
+                    <th scope="col">
+                        <div class="value port">Port</div>
+                    </th>
+                    <th scope="col">
+                        <div class="value endTieme">Останє сканування</div>
+                    </th>
+                    <th scope="col">
+                        <div class="value comment">Примітки</div>
+                    </th>
+                    <th scope="col">
+                        <div class="value other">Other</div>
+                    </th>
+                    <th scope="col">
+                        <div class="value del">Видалити</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for el in address%}
+                        <tr class=" row">
+                            <td scope="col">
+                                <div class="value id">{{ el.id}}</div>
+                            </td>
+                            <td>
+                                <div class="value violations">
+                                                {% if el.checked == True %}
+                                                        <span   data-id-vio="{{ el.id }}" value="True">&#9989</span>     <!-- Галочка -->
+                                                {% else %}
+                                                        <span   data-id-vio="{{ el.id }}" value="False">&#10060</span>  <!-- Крестик -->
+                                                {% endif %}
+                                 </div>
+                            </td>
+                            <td>
+                                <div class="value ipAdress"  >
+                                    <a href="http://{{ el.ip }}" target="_blank" data-id-ip="{{ el.id }}">{{ el.ip }}</a>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="value st"> {% if el.id_status == True %}
+                                                        <span>&#127774</span>
+                                                {% else %}
+                                                        <span>&#128164</span>
+                                                {% endif %}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="value port">{% if el.id_svmap %} {{  el.id_svmap.ports  }} {% endif %}</div>
+                            </td>
+                            <td>
+                                <div class="value endTieme">{{ el.update.date() }}</div>
+                            </td>
+                            <td>
+                                <div class="value comment">
+                                    <textarea class="myTextarea" rows="about" cols="about" data-id-com="{{ el.id }}" >{{ el.comments }}</textarea>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="value other">{% if el.id_nmap %} {{  el.id_nmap.id  }} {% endif %}</div>
+                            </td>
+                            <td >
+                                <div class="value">
+                                    <button  class="value delete" name='deleteIP' data-id-del="{{ el.id }}">delete</button>
+                                </div>
+                            </td>
 
-        </div>
+                        </tr>
+
+                {% endfor %}
+            </tbody>
+
+        </table >
     </div>
 {% endblock %}

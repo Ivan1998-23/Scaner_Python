@@ -1,46 +1,17 @@
 @import url('styleform.css');
-.table {
+table {
+	border: 2px solid #dddddd;
     width: 100%;
-	margin-bottom: 20px;
-	border: 1px solid #dddddd;
-	border-collapse: collapse;
-    display: flex;
-    flex-direction: column;
-    width: auto;
-/*     
-    background-color: rgb(31, 160, 160);
-    width: auto;
-    margin: 0 50px 0 50px;
-    padding: 0  10px 10px 10px; */
+    border-collapse: collapse;   /* Убирает отступы и объединяет границы ячеек */
 }
-
-.value {  
-	padding: 5px; 
+.table-striped tbody tr:nth-child(odd) {
+    background-color: #ffffff;  Цвет фона для нечетных строк
+}
+.value {
     text-align: center;
-    margin: 0 10px 0 10px; 
 }
-
-.value.id {
-    width: 40px;  
-    word-wrap: break-word; /* Это свойство позволяет тексту переноситься на новую строку при нехватке места */
-    white-space: pre-line;
-}
-.value.ipAdress {
-    width: 110px; 
-}
-.violations {
-    width: 75px;
-}
-.value.st {
-    width: 50px;  
-}
-.value.port {
-    word-wrap: break-word; /* Это свойство позволяет тексту переноситься на новую строку при нехватке места */ 
-    width: 120px;   
-} 
-.value.other, .endTieme, .comment {
-    width: 150px;  
-    word-wrap: break-word; /* Это свойство позволяет тексту переноситься на новую строку при нехватке места */ 
+.violations span {
+    cursor: pointer;
 }
 .commentip {
     width: 350px;
@@ -50,28 +21,22 @@
     font-weight: bold; 
 	background: #efefef;
 	border: 1px solid #dddddd;
-    display: flex;
-    flex-direction: row; 
-    justify-content: space-around;
-    align-items: center; 
 }
+/*        при наведенні весь рядок змінює колір */
+/*.row:hover {background-color: #00cd1b59}*/
 
-.table-header {  
-    margin: 5px; 
+.table-header {
 	background: #b6b6b6;
 }
 
-.element {  
-    margin: 5px;
-}
 
 a {
     text-decoration:none;
 }
 
 .myTextarea {
-    width: auto;
-    height: 10px;
+/*    width: auto;*/
+    height: 15px;
     min-width: 150px;
     max-width: 200px;   /*Максимальная ширина в пикселях*/
     max-height: 20px;
@@ -87,7 +52,7 @@ a {
     border-width: 1px;
     border-style: solid;
     border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
-    height: 30px;
+    height: 60px;
     max-height: 200px;
     max-width: 200px;
     overflow: auto;
@@ -96,8 +61,8 @@ a {
     white-space: none;
 }
 .main { 
-    margin-right: 50px;
-    margin-left: 50px;
+    margin-right: 5%;
+    margin-left: 5%;
     margin-bottom: 100px;
 }
 
@@ -141,3 +106,21 @@ nav a {
 body {
     font: caption;
 }
+
+/*-----------------DELETE botton---------*/
+.delete {
+    background-color: #cd002ff0;
+    color:white;
+    border-radius: 15px;
+    height:20px;
+    padding: 5px 10px 5px 10px;
+}
+
+.delete:hover {background-color: #cd002f6c}
+
+.delete:active {
+  background-color: #ad0042f0;
+  box-shadow: 0 5px hwb(0 59% 40%);
+  transform: translateY(4px);
+}
+/*------------------------*/

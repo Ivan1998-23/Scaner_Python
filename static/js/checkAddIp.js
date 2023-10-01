@@ -75,6 +75,8 @@ additionBtn.addEventListener("click", (e)=> {
                 form.elements['ip'].classList.remove('true');
                 let fullMessage = `<span>Такий ІР вже є</span>` ;
                 errorIp.innerHTML = fullMessage;
+            } else {
+                document.location.reload(); // перезавантажує сторінку та оновлює всі данні
             }
         })
         .catch(error => {

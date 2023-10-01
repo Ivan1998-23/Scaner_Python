@@ -4,12 +4,17 @@ from flask import Flask, render_template, url_for, request, redirect, flash, jso
 from flask_sqlalchemy import SQLAlchemy
 from wtforms import StringField, SubmitField
 # from static.py.bd import crStatusTF
+from flask_assets import Environment, Bundle
 
 app = Flask(__name__)
 # app.config['SQLALCHEMY_DATABASE_URI'] = 's'
 app.config['SECRET_KEY'] = 'hard to guess string'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///dbscan.db'
 db = SQLAlchemy(app)
+
+assets = Environment(app)
+scss = Bundle('scss/main.scss', filters='libsass', output='css/main.css')
+assets.register('scss_all', scss)
 
 # Клас  ІР
 class Address(db.Model):
@@ -89,15 +94,44 @@ def index():
     if request.method == "POST":
         data = request.get_json()
         id_com = data.get('id')
-        address_from_com = Address.query.get(id_com)
-        comments = data.get('comments')
-        if comments is not None:
-            address_from_com.comments = comments
-        else:
-            value = data.get('value')
-            address_from_com.checked = value
-        db.session.add(address_from_com)
-        db.session.commit()
+        work = data.get('work')
+        response_data = {}
+        try:
+            address_from_com = Address.query.get(id_com)
+            comments = data.get('comments')
+            match work:
+                case 'com':   #дадаємо коменти
+                    address_from_com.comments = comments
+                    db.session.add(address_from_com)
+                case 'chek': # змінюємо значення перевірки
+                    value = data.get('value')
+                    address_from_com.checked = value
+                    db.session.add(address_from_com)
+                case 'del':  # видаляємо спочатку значення з таблиць nmap, svmap а потім вже ІР
+                    if address_from_com:
+                        delet_list_ip_svmap_ = address_from_com.id_svmap
+                        if delet_list_ip_svmap_:
+                            db.session.delete(delet_list_ip_svmap_)
+                            print('delete',  delet_list_ip_svmap_)
+
+                        delet_list_ip_nmap = address_from_com.id_nmap
+                        if delet_list_ip_nmap:
+                            db.session.delete(delet_list_ip_nmap)
+                            print('delete', delet_list_ip_nmap)
+                        db.session.delete(address_from_com)
+                        print('delete', address_from_com)
+                        response_data = {"result": True}
+                    else:
+                        print('delete', address_from_com)
+                        response_data = {"result": False}
+
+                # case _:
+                #     pass
+
+            db.session.commit()
+            return jsonify(response_data)
+        except:
+            return 'Відбулись якісь проблеми'
     return render_template("index.html", address=address)
 
 
@@ -134,27 +168,6 @@ def addIP():
             return jsonify(response_data)
         except:
             return 'Відбулись якісь проблеми'
-
-        # # ввариант когда бекенд сразу загружает все с сайта
-        # checked = False
-        # violations = request.form['violations']
-        # ip = request.form['ip']
-        # port = request.form['port']
-        # comment = request.form['comment']
-        # if violations == 'Yes':
-        #     checked = True
-        # try:
-        #     if len(Address.query.filter_by(ip=ip).all()) == 0:
-        #         new_ip = Address(ip=ip, comments=comment, checked=checked, status=Status.query.get(1))
-        #         new_svmap = Svmap(ports=port, address=new_ip)
-        #         new_nmap = Nmap(other='', address=new_ip)
-        #         db.session.add_all([new_svmap, new_nmap, new_ip])
-        #         db.session.commit()
-        #         return render_template("addIP.html")
-        #     else:
-        #         return render_template("errorAddIP.html", massedg='Tакий ІР вже є')
-        # except:
-        #     return render_template("errorAddIP.html", massedg='Щось ввели не те')
     else:
         return render_template("addIP.html")
 
