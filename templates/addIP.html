@@ -4,25 +4,32 @@
 	Додати  ІР адрес
 {% endblock %}
 
+{% block script %}
+    <script  type='module'src="{{ url_for('static', filename='js/checkAddip.js') }}"></script>
+{% endblock %}
 
 {% block body %}
+<h2>{{massedg}}</h2>
     <div class="form-container">
         <div class='formaAllElement'>
             <div class="headform">
                 <h1>Додати ІР</h1>
             </div>
-            <form id="myForm" method="post">
+            <form name="formAddIP" id="myForm" method="post">
                 <div class="form-group">
                     <label for="ip">IP:</label>
                     <input type="text" id="ip" name="ip" placeholder="192.168.1.1">
+                    <span class="message" data-for="ip"></span>
                 </div>
                 <div class="form-group">
                     <label for="port">Port:</label>
-                    <input type="text" id="port" name="port" placeholder="23,44,555,11">
+                    <input type="text" id="port" name="port" placeholder="23, 44, 555, 11">
+                    <span class="message" data-for="port"></span>
                 </div>
                 <div class="form-group">
                     <label for="comment">Comment:</label>
                     <textarea  class="commentip" id="comment" name="comment" placeholder="Це вч А1234" ></textarea>
+                    <span class="message " data-for="comment"></span>
                 </div>
                 <div class="form-group">
                     <label for="violations">Чи подавали його ?</label>
@@ -30,8 +37,9 @@
                         <<option selected value="No">No</option>-->
                         <option value="Yes">Yes</option>
                     </select>
+                    <span class="message" data-for="violations"></span>
                 </div>
-                <button type="submit">Add</button>
+                <button id="addition" type="submit">Add</button>
             </form>
         </div>
     </div>

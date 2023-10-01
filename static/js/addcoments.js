@@ -9,7 +9,6 @@ checkedBools.forEach(checkedBool => {
         const value =  this.getAttribute('value');
         console.log(value);
 
-
         // Робимо заміну зображень
         this.innerHTML = (value === 'True') ? "&#10060" : "&#9989"
         console.log("&#10060");
@@ -24,9 +23,6 @@ checkedBools.forEach(checkedBool => {
             let chekLogik = true
             this.setAttribute('value', 'True');
         }
-
-        console.log(chekLogik);
-
         fetch('/', {
             method: 'POST',
             body: JSON.stringify({
@@ -83,10 +79,3 @@ textareas.forEach(textarea => {
         });
     });
 });
-
-//const toggle = document.getElementById('toggle');
-//
-//toggle.addEventListener('click', () => {
-//  toggle.classList.toggle('checked');
-//  toggle.classList.toggle('unchecked');
-//});

@@ -1,6 +1,6 @@
 import ValidationError from "./validation-error.js";
 import { checkEmail, chekPassword } from './checkEmail.js'; 
-import { isValidIpAddressesFromMask, isValidIpAddress } from './checkIP.js'; 
+import { isValidIpAddressesFromMask, isValidIpAddress, validatePorts } from './checkIP.js';
 export const Validator = {
     // обєкт в якому будуть збираттися помилки про відповідний ІНПУТ
     errors: {},
@@ -30,6 +30,16 @@ export const Validator = {
             // тип помилки
             errorType: 'required'
         },
+        isNotPort: {
+            // ф-я
+            validate: (value) => {
+                return validatePorts(value)
+            },
+            // опис помилки
+            message: "He вірно записані порти",
+            // тип помилки
+            errorType: 'required'
+        },
     },  
 
     // ф-я яка примає  форму в якій знахотяться всі інпути та  обєкт який описує всі помилки які необхідно врахувати
@@ -41,7 +51,7 @@ export const Validator = {
         let elements = form.elements; 
 
 
-        // створюємо обєкт у з назвою нашої форми
+        // створюємо обєкт  з назвою нашої форми
         //  errors = {formLoging: { confirm-password : {required: "The field can't be a blank"},
         //                          email :            {required: "The field can't be a blank"}
         //                         }
@@ -97,4 +107,4 @@ export const Validator = {
 }
 
 
-export const { isNotEmpty, isNumber, isCorectPass, minMaxLength, isEmail, duplicate, isNotIP} = Validator.validators;
+export const { isNotEmpty, isNumber, isCorectPass, minMaxLength, isEmail, duplicate, isNotIP, isNotPort} = Validator.validators;
