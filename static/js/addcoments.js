@@ -10,10 +10,10 @@ checkedBools.forEach(checkedBool => {
 //        console.log(value);
 
         // Робимо заміну зображень
-        this.innerHTML = (value === 'True') ? "&#10060" : "&#9989"
+        this.innerHTML = (value === 'True') ? "&#10060" : "&#9989";
 
         // Робимо заміну значень. тру на фолс
-        let chekLogik = (value === 'True') ?  false : true
+        let chekLogik = (value === 'True') ?  false : true;
         if (value === 'True') {
             let chekLogik = false
             this.setAttribute('value', 'False');

@@ -3,6 +3,4 @@ import { isNotEmpty, isNumber, isNotIP, isCorectPass, minMaxLength, isEmail, dup
 export const ipFormConfig = {
     'ip' : [isNotIP, isNotEmpty],
     'port' : [isNotPort],
-    // 'address': [],
-    // 'age': [isNotEmpty, isNumber],  //, maxLength(3)
 };

@@ -5,7 +5,7 @@ table {
     border-collapse: collapse;   /* Убирает отступы и объединяет границы ячеек */
 }
 .table-striped tbody tr:nth-child(odd) {
-    background-color: #ffffff;  Цвет фона для нечетных строк
+    background-color: #ffffff;  /*  Цвет фона для нечетных строк*/
 }
 .value {
     text-align: center;

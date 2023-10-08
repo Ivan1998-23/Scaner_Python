@@ -3,8 +3,7 @@ from datetime import datetime
 from flask import Flask, render_template, url_for, request, redirect, flash, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from wtforms import StringField, SubmitField
-# from static.py.bd import crStatusTF
-from flask_assets import Environment, Bundle
+from static.py.inValueScan import chehekValueScan
 
 app = Flask(__name__)
 # app.config['SQLALCHEMY_DATABASE_URI'] = 's'
@@ -12,9 +11,6 @@ app.config['SECRET_KEY'] = 'hard to guess string'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///dbscan.db'
 db = SQLAlchemy(app)
 
-assets = Environment(app)
-scss = Bundle('scss/main.scss', filters='libsass', output='css/main.css')
-assets.register('scss_all', scss)
 
 # Клас  ІР
 class Address(db.Model):
@@ -174,11 +170,40 @@ def addIP():
 
 @app.route("/findIP", methods=['POST', 'GET'])
 def findIP():
-    # if request.method == "POST":
-    #     title = request.form['ipadress']
-    #     print(title)
-    # else:
-    return render_template("findIP.html")
+    if request.method == "POST":
+        data = request.get_json()
+        chehekValueScan(data)
+        # name = data.get('name')
+        # work = data.get('work')
+        # value = data.get('value')
+        # print(data)
+        # if violations == 'Yes':
+        #     checked = True
+        # try:
+        #     # Робимо пошук в БД всі тікі ІР  та записуємо в масив
+        #     findListIPFromBD = len(Address.query.filter_by(ip=ip).all())
+        #     # якщо в масиві 0 елементів значить нічого не знайшли і такий ІР унікальний
+        #     if findListIPFromBD == 0:
+        #         # Записуємо ІР в  БД
+        #         new_ip = Address(ip=ip, comments=comment, checked=checked, status=Status.query.get(1))
+        #         new_svmap = Svmap(ports=port, address=new_ip)
+        #         new_nmap = Nmap(other='', address=new_ip)
+        #         db.session.add_all([new_svmap, new_nmap, new_ip])
+        #         db.session.commit()
+        #
+        #         # Повертаємо на фронт True, для підтвердження запису в БД
+        #         response_data = {"result": True}
+        #     else:
+        #         # Якщо Ір не унікальний то повідомляємо про не унікальність ІР
+        #         response_data = {"result": False}
+        #     return jsonify(response_data)
+        # except:
+        #     return 'Відбулись якісь проблеми'
+        response_data = {"result": True}
+        return jsonify(response_data)
+        # return render_template("findIP.html")
+    else:
+        return render_template("findIP.html")
 
 @app.route('/statistics')
 def statistics():

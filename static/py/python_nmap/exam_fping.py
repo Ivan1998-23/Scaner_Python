@@ -12,12 +12,19 @@ def fping_all(address):
     result = subprocess.run(['fping', '-a', '-g',  address], stdout = subprocess.PIPE)
     
     mas_alive = result.stdout.decode('utf-8').split('\n') 
-  
+
     with open(write_file, 'a') as f2:
         for row in mas_alive:
             print(row, file=f2)
         print('', file=f2)
-          
+def fping_all_from_windows (address):
+    result = subprocess.run(["ping", address], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+
+    # Получить вывод ping
+    ping_output = result.stdout
+    print(ping_output)
+
+
 if __name__ == '__main__':
-	address = sys.argv[1] 
+	address = sys.argv[1]
 	fping_all(address)

@@ -5,11 +5,12 @@
 {% endblock %}
 
 {% block script %}
-    <script  type='module'src="{{ url_for('static', filename='js/index.js') }}"></script>
+    <script  type='module'src="{{ url_for('static', filename='js/findIP.js') }}"></script>
 {% endblock %}
 {% block body %}
+<div class="bady">
     <div class="form-container">
-        <div class='formaAllElement'>
+        <div class='formaAllElement widthform'>
             <div class="headline">
                 <h1>Scaner IP adress</h1>
             </div>
@@ -20,21 +21,21 @@
                     <span class="message form" data-for="ipadress"></span>
                 </div>
                 <div class="linefiltr">
-                    <input type="radio" name="metodscan" class="form" value="fping">
+                    <input type="radio" name="metodscan" class="form" value="fping" checked>
                     <label class="form">Fping</label>
                     <label class="form ValueOff" data-for="fping">Просто сканування </label>
                 </div>
                 <div class="linefiltr">
                     <input type="radio" name="metodscan" class="form" value="svmap">
                     <label class="form">Svmap</label>
-                    <label class="form ValueOff" data-for="svmap">Сканування SIP 5060-5062 портів </label>
+                    <label class="form ValueOff" data-for="svmap"  >Сканування SIP 5060-5062 портів </label>
                 </div>
                 <div class="linefiltr">
                     <input type="radio" name="metodscan" class="form" value="listports"  >
                     <label class="form">Готовий список портів для сканування</label>
                     <select class="form ValueOff" name="listports" data-for="listports" >
-                        <option>5060-5062</option>
                         <option>23</option>
+                        <option>8080</option>
                         <option>80,443</option>
                         <option>21,22,23,80,443,8080</option>
                         <option>25,445,3389,1433,53,67,68,161,162,139,135</option>
@@ -42,54 +43,52 @@
                 </div>
                 <div class="linefiltr" >
                     <input type="radio" name="metodscan" class="form" value="allports"  >
-                    <label class="form" name="ports"> Написати список портів </label>
-                    <textarea class="form ValueOff" placeholder="22, 23, 443, 80" data-for="allports"></textarea>
+                    <label class="form"> Написати список портів </label>
+                    <input type='text' class="allports form ValueOff" name="allports"  data-for="allports" placeholder="22, 23, 443, 80">
                 </div>
-
-
-
-
-
-                <div class="nmap ValueOff" id="checkboxListContainer" name="nmapValue">
-                    <div class="valuetonmap">
-                        <input type="checkbox" class="form">
-                        <label class="tagsnmap">-PN :</label>
-                        <label class="description"> Розцінювати всі хости як такі, що працюють - пропустити виявлення хостів </label>
-                    </div>
-                    <hr>
-                    <div class="valuetonmap">
-                        <input type="checkbox" class="form" checked>
-                        <label class="tagsnmap">-PS :</label>
-                        <label class="description">TCP SYN  пінгування заданих хостів </label>
-                    </div>
-                    <hr>
-                    <div class="valuetonmap">
-                        <input type="checkbox" class="form" checked>
-                        <label class="tagsnmap">-PA :</label>
-                        <label class="description">TCP ACK   пінгування заданих хостів </label>
-                    </div>
-                    <hr>
-                    <div class="valuetonmap">
-                        <input type="checkbox" class="form" checked>
-                        <label class="tagsnmap">-sU :</label>
-                        <label class="description">UDP сканування </label>
-                    </div>
-                    <hr>
-                    <div class="valuetonmap">
-                        <input type="checkbox" class="form" checked>
-                        <label class="tagsnmap">-O :</label>
-                        <label class="description"> Активувати ф-ю визначення ОС</label>
-                    </div>
-                    <hr>
-                    <div class="valuetonmap">
-                        <input type="checkbox" class="form" checked>
-                        <label class="tagsnmap">-A :</label>
-                        <label class="description">Активувати ф-ю визначення ОС та версії,сканування з використанням скриптів та трасування</label>
-                    </div>
-                    <span class="message form" data-for="email"></span>
-                </div>
-                <button id="signUp" class="form full" type="submit" >Сканувати</button>
+<!--                <div class="nmap ValueOff" id="checkboxListContainer" name="nmapValue">-->
+<!--                    <hr>-->
+<!--                    <div class="valuetonmap">-->
+<!--                        <input type="checkbox"  >-->
+<!--                        <label class="tagsnmap">-PN :</label>-->
+<!--                        <label class="description"> Розцінювати всі хости як такі, що працюють - пропустити виявлення хостів </label>-->
+<!--                    </div>-->
+<!--                    <hr>-->
+<!--                    <div class="valuetonmap">-->
+<!--                        <input type="checkbox"   checked>-->
+<!--                        <label class="tagsnmap">-PS :</label>-->
+<!--                        <label class="description">TCP SYN  пінгування заданих хостів </label>-->
+<!--                    </div>-->
+<!--                    <hr>-->
+<!--                    <div class="valuetonmap">-->
+<!--                        <input type="checkbox"  checked>-->
+<!--                        <label class="tagsnmap">-PA :</label>-->
+<!--                        <label class="description">TCP ACK   пінгування заданих хостів </label>-->
+<!--                    </div>-->
+<!--                    <hr>-->
+<!--                    <div class="valuetonmap">-->
+<!--                        <input type="checkbox"   checked>-->
+<!--                        <label class="tagsnmap">-sU :</label>-->
+<!--                        <label class="description">UDP сканування </label>-->
+<!--                    </div>-->
+<!--                    <hr>-->
+<!--                    <div class="valuetonmap">-->
+<!--                        <input type="checkbox"  checked>-->
+<!--                        <label class="tagsnmap">-O :</label>-->
+<!--                        <label class="description"> Активувати ф-ю визначення ОС</label>-->
+<!--                    </div>-->
+<!--                    <hr>-->
+<!--                    <div class="valuetonmap">-->
+<!--                        <input type="checkbox" class="form" checked>-->
+<!--                        <label class="tagsnmap">-A :</label>-->
+<!--                        <label class="description">Активувати ф-ю визначення ОС та версії,сканування з використанням скриптів та трасування</label>-->
+<!--                    </div>-->
+<!--                    <hr>-->
+<!--                    <span class="message form" data-for="email"></span>-->
+<!--                </div>-->
+                <button id="signUp" class="signUp" type="submit" >Сканувати</button>
             </form>
         </div>
     </div>
+</div>
 {% endblock %}
