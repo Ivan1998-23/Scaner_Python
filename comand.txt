@@ -1,3 +1,4 @@
 source venv/bin/activate
  python flsite.py
 pip freeze > requirements.txt
+навпаки завантажити: pip install -r requirements.txt
