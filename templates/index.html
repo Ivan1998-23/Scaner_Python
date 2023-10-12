@@ -4,6 +4,9 @@
 	Головка
 {% endblock %}
 
+{% block style %}
+    <link rel="stylesheet icon" href="{{ url_for('static', filename='css/main.css')}}">
+{% endblock %}
 {% block script %}
     <script  type='module'src="{{ url_for('static', filename='js/addcoments.js') }}"></script>
 {% endblock %}

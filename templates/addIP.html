@@ -4,8 +4,12 @@
 	Додати  ІР адрес
 {% endblock %}
 
+{% block style %}
+	<link rel="stylesheet icon" href="{{ url_for('static', filename='css/main.css')}}"> 
+{% endblock %}
+
 {% block script %}
-    <script  type='module'src="{{ url_for('static', filename='js/checkAddip.js') }}"></script>
+    <script  type='module'src="{{ url_for('static', filename='js/checkAddIp.js') }}"></script> 
 {% endblock %}
 
 {% block body %}

@@ -52,6 +52,7 @@ signUpBtn.addEventListener("click", (e)=> {
             work: inRadio.value,
             value: valueOnBox,
         }
+        showSpinner();
         //  відправляємо на бекенд за допомогою метода fetch
         fetch('/findIP', {
             method: 'POST',
@@ -70,12 +71,14 @@ signUpBtn.addEventListener("click", (e)=> {
         })
         .then(response_data => {
             console.log('Ответ от сервера:', response_data);
-//            document.location.reload();
-//            // Обработка данных из ответа
-//            // console.log('Ответ от сервера:', response_data);
-//            // console.log(response_data.result);
+            hideSpinner() 
             if (response_data.result) {
-                console.log('Cканування відбулось і необхідно відкрити нову строніку з результатом')
+                console.log('Cканування відбулось і необхідно відкрити нову строніку з результатом') 
+                // Перенаправление на новую страницу с передачей данных через URL
+				const newData = encodeURIComponent(JSON.stringify(response_data)); //кодуємо обєкт 
+				console.log('newData');
+                window.location.href = `/resultFindIPs?data=${newData}`; 
+                console.log('window');
             } else {
                 let answer = confirm(`Сканування не відбулось. Проблема з програмою.\nМожливо Іван щось не неалаштував.`);
                 document.location.reload(); // перезавантажує сторінку та оновлює всі данні
@@ -151,8 +154,14 @@ groupRadios.forEach(radio => {
         });
     });
 });
+// отображения и скрытия спиннера:	
+function showSpinner() {
+  document.getElementById("spinner").style.display = "block";
+}
 
-
+function hideSpinner() {
+  document.getElementById("spinner").style.display = "none";
+}
 
 //
 //// Пример использования функции

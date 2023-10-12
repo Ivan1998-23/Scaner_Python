@@ -4,16 +4,24 @@
 	Додати  ІР адрес
 {% endblock %}
 
+{% block style %}
+	<link rel="stylesheet icon" href="{{ url_for('static', filename='css/main.css')}}">
+    <link rel="stylesheet icon" href="{{ url_for('static', filename='css/styleform.css')}}">
+{% endblock %}
+
 {% block script %}
     <script  type='module'src="{{ url_for('static', filename='js/findIP.js') }}"></script>
 {% endblock %}
-{% block body %}
+{% block body %} 
 <div class="bady">
-    <div class="form-container">
+    <div class="form-container"> 
         <div class='formaAllElement widthform'>
             <div class="headline">
                 <h1>Scaner IP adress</h1>
             </div>
+            <div class="spinner-overlay" id="spinner">
+				<img src="https://rethinkhealth.org/wp-content/themes/rethink-for-health-theme/images/spinner.gif" alt="Loading...">
+			</div>
             <form name="formLoging" method="post" >
                 <div>
                     <label class='sign-in-IP'>IP  adress:</label>

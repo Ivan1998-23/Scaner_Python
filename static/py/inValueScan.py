@@ -9,8 +9,7 @@ def chehekValueScan(valueObj):
         case 'fping':
             ip = valueObj.get('name')
             print(ip)
-            fping_all_from_windows('192.168.5.1')
-            return True
+            return fping_all(ip)
         case 'svmap':
             print('svmap')
             return True

@@ -48,7 +48,7 @@ additionBtn.addEventListener("click", (e)=> {
             comment : form.elements.comment.value,
             violations : form.elements.violations.value
         }
-
+		console.log(obj);
         //  відправляємо на бекенд за допомогою метода fetch
         fetch('/addIP', {
             method: 'POST',

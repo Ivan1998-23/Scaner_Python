@@ -4,6 +4,8 @@ from flask import Flask, render_template, url_for, request, redirect, flash, jso
 from flask_sqlalchemy import SQLAlchemy
 from wtforms import StringField, SubmitField
 from static.py.inValueScan import chehekValueScan
+import json
+import urllib.parse
 
 app = Flask(__name__)
 # app.config['SQLALCHEMY_DATABASE_URI'] = 's'
@@ -133,15 +135,16 @@ def index():
 
 @app.route("/addIP", methods=['POST', 'GET'])
 def addIP():
-    if request.method == "POST":
+    if request.method == "POST": 
         # варіант коли запити йдуть від JS
         checked = False
         data = request.get_json()
+        print('OK')
         ip = data.get('ip')
         port = data.get('port')
         comment = data.get('comment')
         violations = data.get('violations')
-
+        
         if violations == 'Yes':
             checked = True
         try:
@@ -172,34 +175,30 @@ def addIP():
 def findIP():
     if request.method == "POST":
         data = request.get_json()
-        chehekValueScan(data)
-        # name = data.get('name')
-        # work = data.get('work')
-        # value = data.get('value')
-        # print(data)
-        # if violations == 'Yes':
-        #     checked = True
-        # try:
-        #     # Робимо пошук в БД всі тікі ІР  та записуємо в масив
-        #     findListIPFromBD = len(Address.query.filter_by(ip=ip).all())
-        #     # якщо в масиві 0 елементів значить нічого не знайшли і такий ІР унікальний
-        #     if findListIPFromBD == 0:
-        #         # Записуємо ІР в  БД
-        #         new_ip = Address(ip=ip, comments=comment, checked=checked, status=Status.query.get(1))
-        #         new_svmap = Svmap(ports=port, address=new_ip)
-        #         new_nmap = Nmap(other='', address=new_ip)
-        #         db.session.add_all([new_svmap, new_nmap, new_ip])
-        #         db.session.commit()
-        #
-        #         # Повертаємо на фронт True, для підтвердження запису в БД
-        #         response_data = {"result": True}
-        #     else:
-        #         # Якщо Ір не унікальний то повідомляємо про не унікальність ІР
-        #         response_data = {"result": False}
-        #     return jsonify(response_data)
-        # except:
-        #     return 'Відбулись якісь проблеми'
-        response_data = {"result": True}
+        return_data = chehekValueScan(data)   
+        print('return_data: ',return_data)
+        try:
+            for ones_ip in return_data:	
+			    # Робимо пошук в БД всі  ІР  та записуємо в масив
+                findListIPFromBD = len(Address.query.filter_by(ip=ones_ip).all())
+                # якщо в масиві 0 елементів значить нічого не знайшли і такий ІР унікальний
+                if findListIPFromBD == 1:
+					#id_ones_ip = Address.query.get(ones_ip)
+                    print(ones_ip, ': this IP now create')
+                     
+        
+                    # Повертаємо на фронт True, для підтвердження запису в БД
+                    response_data = {"result": True}
+                else:
+                    # Якщо Ір не унікальний то повідомляємо про не унікальність ІР
+                    pass
+            response_data = {"result": return_data}
+            print('return result from findIP')
+            return jsonify( response_data)
+        except:
+             return 'Відбулись якісь проблеми' 
+        
+        response_data = {"result": return_data}
         return jsonify(response_data)
         # return render_template("findIP.html")
     else:
@@ -209,7 +208,18 @@ def findIP():
 def statistics():
     return '<h1>Hello World!</h1>'
 
-
+@app.route("/resultFindIPs", methods=['GET'])
+def resultFindIPs():
+    data_param = request.args.get('data') 
+    print('data_param', data_param)
+    if data_param:
+        # Преобразуйте данные обратно из строки JSON
+        response_data = json.loads(urllib.parse.unquote(data_param))
+        # Вставьте код для отображения данных на новой странице
+        print('result', response_data)
+        return render_template('resultFindIPs.html', data=response_data.get('result'))
+    else:
+        return "Данные не найдены" 
 
 if __name__ == '__main__':
     app.run(debug=True)
