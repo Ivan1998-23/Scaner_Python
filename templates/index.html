@@ -32,6 +32,9 @@
                         <div class="value port">Port</div>
                     </th>
                     <th scope="col">
+                        <div class="value endTieme">Коли виявили</div>
+                    </th>
+                    <th scope="col">
                         <div class="value endTieme">Останє сканування</div>
                     </th>
                     <th scope="col">
@@ -75,6 +78,9 @@
                             </td>
                             <td>
                                 <div class="value port">{% if el.id_svmap %} {{  el.id_svmap.ports  }} {% endif %}</div>
+                            </td>
+                            <td>
+                                <div class="value endTieme">{{ el.created.date() }}</div>
                             </td>
                             <td>
                                 <div class="value endTieme">{{ el.update.date() }}</div>

@@ -19,7 +19,7 @@ class Address(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     ip = db.Column(db.String(25), nullable=False, unique=True)
     update = db.Column(db.DateTime, default=datetime.utcnow)               # остання дата перевірки
-    created = db.Column(db.DateTime, nullable=True)                        # дата створення
+    created = db.Column(db.DateTime, default=datetime.utcnow)              # дата створення
     comments = db.Column(db.Text, nullable=True)                           # власні коменти
     checked = db.Column(db.Boolean, nullable=True)                         # подавали порушення
     id_svmap = db.relationship('Svmap', backref='address', uselist=False)  # Связь с профилем пользователя   1:1
@@ -33,8 +33,8 @@ class Svmap(db.Model):
     __tablename__ = 'svmap'
     id = db.Column(db.Integer, primary_key=True)
     ports = db.Column(db.String(255), nullable=True)            # 80, 443, 21
-    version = db.Column(db.String(50), nullable=True)           # Grandstream Dinstar Cisco
-    dev_name = db.Column(db.String(50), nullable=True)          # ht818
+    version = db.Column(db.String(50), nullable=True)           # 1.0.7.13
+    dev_name = db.Column(db.String(50), nullable=True)          # Grandstreamht818 Dinstar Cisco
     id_address = db.Column(db.Integer, db.ForeignKey('address.id'), unique=True, nullable=False)
 
     def __repr__(self):
@@ -175,23 +175,28 @@ def addIP():
 def findIP():
     if request.method == "POST":
         data = request.get_json()
-        return_data = chehekValueScan(data)   
+        return_data = chehekValueScan(data)  
+        if  return_data == False :
+            response_data = {"result": False}
+            return jsonify( response_data)
         print('return_data: ',return_data)
         try:
+			# Беребираємо список ІР
             for ones_ip in return_data:	
-			    # Робимо пошук в БД всі  ІР  та записуємо в масив
+			    # шукаємо чи є тіки ІР в БД та показуємо кількість співпадінь
                 findListIPFromBD = len(Address.query.filter_by(ip=ones_ip).all())
-                # якщо в масиві 0 елементів значить нічого не знайшли і такий ІР унікальний
+                # якщо в масиві 0 елементів, значить ІР унікальний
                 if findListIPFromBD == 1:
-					#id_ones_ip = Address.query.get(ones_ip)
-                    print(ones_ip, ': this IP now create')
-                     
-        
-                    # Повертаємо на фронт True, для підтвердження запису в БД
-                    response_data = {"result": True}
+                    id_ones_ip = Address.query.filter_by(ip=ones_ip).first() 
+                    id_ones_ip.update = datetime.utcnow()
+                    db.session.add(id_ones_ip)  
                 else:
-                    # Якщо Ір не унікальний то повідомляємо про не унікальність ІР
-                    pass
+					# Записуємо  новий ІР
+                    new_ip = Address(ip=ones_ip, status=Status.query.get(1))
+                    new_svmap = Svmap(ports='', address=new_ip)
+                    new_nmap = Nmap(other='', address=new_ip)
+                    db.session.add_all([new_svmap, new_nmap, new_ip])
+                db.session.commit() 
             response_data = {"result": return_data}
             print('return result from findIP')
             return jsonify( response_data)

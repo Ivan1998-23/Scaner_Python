@@ -12,13 +12,7 @@
 	<div class="main">
         <table  class="table table-striped">
             <thead>
-                <tr  class="row table-header ">
-                    <th scope="col">
-                        <div class="value id">ID</div>
-                    </th>
-                    <th scope="col">
-                        <div class="value violations">Подавали</div>
-                    </th>
+                <tr  class="row table-header ">  
                     <th scope="col">
                         <div class="value ipAdress">IP addres</div>
                     </th>
@@ -41,15 +35,7 @@
             </thead>
             <tbody>  
                 {% for ip in data%}
-                        <tr class=" row">
-                            <td scope="col">
-                                <div class="value id"></div>
-                            </td>
-                            <td>
-                                <div class="value violations"> 
-                                                        <span   value="True">&#9989</span>     <!-- Галочка --> 
-                                 </div>
-                            </td>
+                        <tr class=" row">  
                             <td>
                                 <div class="value ipAdress"  >
                                     <a href="http://{{ip }}" target="_blank" >{{ ip }}</a>
