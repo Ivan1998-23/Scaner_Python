@@ -62,23 +62,29 @@ signUpBtn.addEventListener("click", (e)=> {
             }
         })
         .then(response => {
-            // Обработка ответа от сервера
+            // Обробка відповідей сервера
             if (!response.ok) {
                 throw new Error('Сетевая ошибка');
             }
-            // Преобразование ответа в JSON
+            // Перетворення відповіді в JSON
             return response.json();
         })
-        .then(response_data => {
-            console.log('Ответ от сервера:', response_data);
+        .then(response_data => { 
             hideSpinner() 
             if (response_data.result) {
-                console.log('Cканування відбулось і необхідно відкрити нову строніку з результатом') 
-                // Перенаправление на новую страницу с передачей данных через URL
-				const newData = encodeURIComponent(JSON.stringify(response_data)); //кодуємо обєкт 
-				console.log('newData');
-                window.location.href = `/resultFindIPs?data=${newData}`; 
-                console.log('window');
+                console.log('Cканування відбулось і необхідно відкрити нову строніку з результатом')   
+				//якщо повернувся пустий обєкт то показуємо що результатів немає
+				if (Object.keys(response_data.result).length == 0) {
+					let answer =  confirm(`Сканування закінчилось\nРезультатів немає`);
+					//робим редірект на основну сторінку
+					window.location.href = `/`;  
+				}
+				else {
+					// Перенаправлення на нову сторінку з передачею даних через URL 
+					const newData = encodeURIComponent(JSON.stringify(response_data)); //кодуємо обєкт 
+					
+					window.location.href = `/resultFindIPs?data=${newData}`;  
+				}
             } else {
                 let answer = confirm(`Сканування не відбулось. Проблема з програмою.\nМожливо Іван щось не неалаштував.`);
                 document.location.reload(); // перезавантажує сторінку та оновлює всі данні

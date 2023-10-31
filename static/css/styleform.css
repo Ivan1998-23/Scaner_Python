@@ -227,6 +227,6 @@ input[type="checkbox"] {
 }
 
 .spinner-overlay img {
-  width: 300px; /* Размер спиннера (можно изменить) */
-  height: 300px;
+  width: 500px; /* Размер спиннера (можно изменить) */
+  height: 500px;
 }

@@ -41,7 +41,7 @@
                         <div class="value comment">Примітки</div>
                     </th>
                     <th scope="col">
-                        <div class="value other">Other</div>
+                        <div class="value ">Other</div>
                     </th>
                     <th scope="col">
                         <div class="value del">Видалити</div>
@@ -80,10 +80,10 @@
                                 <div class="value port">{% if el.id_svmap %} {{  el.id_svmap.ports  }} {% endif %}</div>
                             </td>
                             <td>
-                                <div class="value endTieme">{{ el.created.date() }}</div>
+                                <div class="value endTieme">{{ el.created.strftime("%d.%m.%Y %H:%M")}}</div>
                             </td>
                             <td>
-                                <div class="value endTieme">{{ el.update.date() }}</div>
+                                <div class="value endTieme">{{ el.update.strftime("%d.%m.%Y %H:%M") }}</div>
                             </td>
                             <td>
                                 <div class="value comment">
@@ -91,7 +91,18 @@
                                 </div>
                             </td>
                             <td>
-                                <div class="value other">{% if el.id_nmap %} {{  el.id_nmap.id  }} {% endif %}</div>
+                                <div class="value other" data-id-other="{{ el.id }}">
+									{% if el.id_nmap %} 
+										{{  el.id_nmap.other   }}
+									{% endif %}
+								</div>
+								<!-- Модальное окно с информацией -->
+								<div  class="popup" data-id-popup="{{ el.id }}">
+									<div class="popup-content">
+										<span class="close" data-id-close-popup="{{ el.id }}">&times;</span>
+										<pre>{{ el.id_nmap.other }}</pre>
+									</div>
+								</div>
                             </td>
                             <td >
                                 <div class="value">

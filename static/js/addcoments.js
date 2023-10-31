@@ -3,7 +3,7 @@ const checkedBools = document.querySelectorAll('.violations span');
 // Добавляем обработчик события при клике на галочку или крестик  "Подавали"
 checkedBools.forEach(checkedBool => {
     checkedBool.addEventListener('click', function () {
-        const id = this.getAttribute('data-id-vio'); // Получаем id элемента
+        const id = this.getAttribute('data-id-vio'); // Отримуємо id елемент 
 
         // Получаем value
         const value =  this.getAttribute('value');
@@ -87,7 +87,7 @@ const bottsDelete = document.querySelectorAll('.delete');
 
 bottsDelete.forEach(bott => {
     bott.addEventListener('click', function () {
-        const id = this.getAttribute('data-id-del'); // Получаем id элемента
+        const id = this.getAttribute('data-id-del'); // Отримуємо id елемент 
 
         // Получаем ip
         const ip = document.querySelector(`[data-id-ip="${id}"]`).textContent; // Получаем ip элемента
@@ -127,4 +127,42 @@ bottsDelete.forEach(bott => {
 //
     });
 });
+
+
+//ф-я повертая зменшиний текст на N символів
+function truncateText(text, maxLength) {
+    if (text.length > maxLength) {
+        return text.substring(0, maxLength) + "...";
+    } else {
+        return text;
+    }
+}
+
+//перебираємол всі OTHER
+const bottsInfoPopup= document.querySelectorAll('.other'); 
+
+bottsInfoPopup.forEach(bott => {
+	//буде обрізано після 30 символів і додано три крапки.	 
+	bott.innerText = truncateText(bott.innerText, 15); 
+    bott.addEventListener('click', function () {
+		const id = this.getAttribute('data-id-other'); // Отримуємо id елемент 
+		const objPopup = document.querySelector(`[data-id-popup="${id}"]`);
+		objPopup.style.display = "block"; 
+		
+		const bottCloseInfo = document.querySelector(`[data-id-close-popup="${id}"]`)
+		//objPopup.childNodes[1].childNodes[3].innerText = objPopup.childNodes[1].childNodes[3].innerHTML
+		bottCloseInfo.addEventListener('click', function () {
+			document.querySelector(`[data-id-popup="${id}"]`).style.display = "none";
+		});
+    });
+}); 
+ 
+// Закриваємо модальне вікно при кліку поза ним
+window.addEventListener("click", function(event) {
+	console.log(event.target.classList == 'popup')
+    if (event.target.classList == 'popup') {
+		event.target.style.display = "none"; 
+    }
+});
+
 

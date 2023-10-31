@@ -1,11 +1,12 @@
 import sys
 import subprocess
 import csv
-from datetime import date
+from datetime import datetime
 import re
 
 
-today = date.today()
+today = datetime.now()
+
 result_svmap = '''+--------------------+-------------------------------------+
 | SIP Device         | User Agent                          |
 +====================+=====================================+
@@ -21,14 +22,15 @@ result_svmap = '''+--------------------+-------------------------------------+
 +--------------------+-------------------------------------+
 | 10.189.82.101:5062 | Grandstream GXP1625 1.0.7.49        |
 +--------------------+-------------------------------------+'''
+
+
 #виконуємо пошук та зберігаємо весь текст результату
 def svmap_SIP(address):  
     name_file = 'svmap_'+ str(today) 
     write_file = 'result_scan/' + name_file + '.txt' 
     
     result = subprocess.run(['svmap', '-p5060-5062',  address], stdout = subprocess.PIPE)
-    all_text = result.stdout.decode('utf-8')
-    
+    all_text = result.stdout.decode('utf-8') 
     '''
     with open(write_file, 'a') as f2:
         print(all_text, file=f2)
@@ -77,27 +79,32 @@ def search_regular_expression(in_str):
 	'''									
 	
 #створюємо словник який потім зможемо використовувати для запису в БД    
-def create_obj_ip_to_bd(dict_ips):
-	result_obg_with_ips = {} 
-	for ip in dict_ips: 
+def create_obj_ip_to_bd(dict_ips, text_result_svmap):
+	result_obg_with_ips = {}  
+	for ip in dict_ips:   
 		result_obg_with_ips[ip] = {
 		'ip'	   : ip,
-		'update'   : today,
+		'update'   : today ,
 		'comments' : '',
-		'ports'	   : dict_ips[ip]['port'],
-		'version'  : dict_ips[ip]['version'],
-		'dev_name' : dict_ips[ip]['name']+ ' '  + dict_ips[ip]['name_v'],
-		'other'    : '' 
+		'checked'  : False,
+		'id_svmap' : {
+			'ports'	   : dict_ips[ip]['port'],
+			'version'  : dict_ips[ip]['version'],
+			'dev_name' : dict_ips[ip]['name']+ ' '  + dict_ips[ip]['name_v']
+		},
+		'id_nmap' : {
+			'other'    : text_result_svmap,
+		}, 
 		} 
 	return result_obg_with_ips
 		
 def up_scan_svmap_and_result(ips):
 	#виконуємо пошук та зберігаємо весь текст результату
 	text = svmap_SIP(ips)
-	#вибираємо необхідне 
-	dict_with_ips = search_regular_expression(result_svmap)
+	#вибираємо необхідне  
+	dict_with_ips = search_regular_expression(text)
 	#створюємо словник який потім зможемо використовувати для запису в БД
-	ips_from_bd = create_obj_ip_to_bd(dict_with_ips)
+	ips_from_bd = create_obj_ip_to_bd(dict_with_ips, text)
 	return ips_from_bd
 
 

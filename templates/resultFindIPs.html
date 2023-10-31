@@ -24,21 +24,18 @@
                     </th>
                     <th scope="col">
                         <div class="value endTieme">Останє сканування</div>
-                    </th>
-                    <th scope="col">
-                        <div class="value comment">Примітки</div>
-                    </th>
+                    </th> 
                     <th scope="col">
                         <div class="value other">Other</div>
                     </th> 
                 </tr>
             </thead>
             <tbody>  
-                {% for ip in data%}
+                {% for key_ip, value_ip in data.items()%}   
                         <tr class=" row">  
                             <td>
                                 <div class="value ipAdress"  >
-                                    <a href="http://{{ip }}" target="_blank" >{{ ip }}</a>
+                                    <a href="http://{{key_ip }}" target="_blank" >{{ key_ip }}</a>
                                 </div>
                             </td>
                             <td>
@@ -47,18 +44,15 @@
                                 </div>
                             </td>
                             <td>
-                                <div class="value port"></div>
+                                <div class="value port"> {{ value_ip['id_svmap']['ports'] }}</div>
                             </td>
                             <td>
-                                <div class="value endTieme"></div>
-                            </td>
+                                <div class="value endTieme">{{ value_ip['update'][4:-7] }}</div>
+                            </td> 
                             <td>
-                                <div class="value comment">
-                                    <textarea class="myTextarea" rows="about" cols="about"  ></textarea>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="value other"></div>
+                                <div class="other">
+									<pre>{{ value_ip['id_nmap']['other'] }}</pre>
+								</div>
                             </td>
 
                         </tr>

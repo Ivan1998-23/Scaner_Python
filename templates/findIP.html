@@ -20,7 +20,7 @@
                 <h1>Scaner IP adress</h1>
             </div>
             <div class="spinner-overlay" id="spinner">
-				<img src="https://rethinkhealth.org/wp-content/themes/rethink-for-health-theme/images/spinner.gif" alt="Loading...">
+				<img src="{{ url_for('static', filename='img/three_points.gif') }}" alt="Loading...">
 			</div>
             <form name="formLoging" method="post" >
                 <div>
@@ -44,9 +44,9 @@
                     <select class="form ValueOff" name="listports" data-for="listports" >
                         <option>23</option>
                         <option>8080</option>
-                        <option>80,443</option>
-                        <option>21,22,23,80,443,8080</option>
-                        <option>25,445,3389,1433,53,67,68,161,162,139,135</option>
+                        <option>80, 443</option>
+                        <option>21, 22, 23, 80, 443, 8080</option>
+                        <option>25, 445, 3389, 1433, 53, 67, 68, 161, 162, 139, 135 </option>
                     </select>
                 </div>
                 <div class="linefiltr" >
