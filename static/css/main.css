@@ -11,7 +11,10 @@ table {
     text-align: center;
 }
 
-.violations span {
+.checked span {
+    cursor: pointer;
+}
+.looked span {
     cursor: pointer;
 }
 .commentip {
@@ -38,7 +41,7 @@ a {
 /*    width: auto;*/
     height: 15px;
     min-width: 150px;
-    max-width: 200px;   /*Максимальная ширина в пикселях*/
+    max-width: 190px;   /*Максимальная ширина в пикселях*/
     max-height: 20px;
     min-height: 10px;
     border: none;
@@ -53,12 +56,31 @@ a {
     border-style: solid;
     border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
     height: 60px;
-    max-height: 200px;
-    max-width: 200px;
+    max-height: 190px;
+    width: auto;
     overflow: auto;
 }
-.value.port #myTextarea {
-    white-space: none;
+
+.myTextVio {  
+    height: 15px; 
+    max-width: 190px;   /*Максимальная ширина в пикселях*/
+    max-height: 20px;
+    min-height: 10px;
+    border: none;
+    background: transparent;
+    resize: none;     /*    *//* Отключаем возможность изменения размера */
+    overflow: hidden;  /*  *//* Скрываем полосы прокрутки */
+}
+.myTextVio:focus {
+    outline: none;
+    resize: both;
+    border-width: 1px;
+    border-style: solid;
+    border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
+    height: 60px;
+    max-height: 190px;
+    width: auto;
+    overflow: auto;
 }
 .main { 
     margin-right: 5%;

@@ -20,7 +20,10 @@
                         <div class="value id">ID</div>
                     </th>
                     <th scope="col">
-                        <div class="value violations">Подавали</div>
+                        <div class="value checked">Подавали</div>
+                    </th>
+                    <th scope="col">
+                        <div class="value looked">Перевірили</div>
                     </th>
                     <th scope="col">
                         <div class="value ipAdress">IP addres</div>
@@ -31,11 +34,14 @@
                     <th scope="col">
                         <div class="value port">Port</div>
                     </th>
-                    <th scope="col">
+                    <!--<th scope="col">
                         <div class="value endTieme">Коли виявили</div>
-                    </th>
+                    </th>--->
                     <th scope="col">
                         <div class="value endTieme">Останє сканування</div>
+                    </th>
+                    <th scope="col">
+                        <div class="value violation">Що виявили</div>
                     </th>
                     <th scope="col">
                         <div class="value comment">Примітки</div>
@@ -55,11 +61,20 @@
                                 <div class="value id">{{ el.id}}</div>
                             </td>
                             <td>
-                                <div class="value violations">
+                                <div class="value checked">
                                                 {% if el.checked == True %}
-                                                        <span   data-id-vio="{{ el.id }}" value="True">&#9989</span>     <!-- Галочка -->
+                                                        <span   data-id-check="{{ el.id }}" value="True">&#9989</span>     <!-- Галочка -->
                                                 {% else %}
-                                                        <span   data-id-vio="{{ el.id }}" value="False">&#10060</span>  <!-- Крестик -->
+                                                        <span   data-id-check="{{ el.id }}" value="False">&#10060</span>  <!-- Крестик -->
+                                                {% endif %}
+                                 </div>
+                            </td>
+                            <td>
+                                <div class="value looked"> 
+                                                {% if el.looked == True %}
+                                                        <span   data-id-look="{{ el.id }}" value="True">&#9989</span>     <!-- Галочка -->
+                                                {% else %}
+                                                        <span   data-id-look="{{ el.id }}" value="False">&#10060</span>  <!-- Крестик -->
                                                 {% endif %}
                                  </div>
                             </td>
@@ -69,7 +84,7 @@
                                 </div>
                             </td>
                             <td>
-                                <div class="value st"> {% if el.id_status == True %}
+                                <div class="value st"> {% if el.status == True %}
                                                         <span>&#127774</span>
                                                 {% else %}
                                                         <span>&#128164</span>
@@ -79,11 +94,16 @@
                             <td>
                                 <div class="value port">{% if el.id_svmap %} {{  el.id_svmap.ports  }} {% endif %}</div>
                             </td>
-                            <td>
+                            <!--<td>
                                 <div class="value endTieme">{{ el.created.strftime("%d.%m.%Y %H:%M")}}</div>
-                            </td>
+                            </td>-->
                             <td>
                                 <div class="value endTieme">{{ el.update.strftime("%d.%m.%Y %H:%M") }}</div>
+                            </td>
+                            <td>
+                                <div class="value violation"> 
+                                    <textarea class="myTextVio" rows="about" cols="about" data-id-vio="{{ el.id }}" >{{ el.violation }}</textarea> 
+                                </div>
                             </td>
                             <td>
                                 <div class="value comment">

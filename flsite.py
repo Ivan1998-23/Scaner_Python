@@ -2,6 +2,7 @@ from ast import dump
 from datetime import datetime
 from flask import Flask, render_template, url_for, request, redirect, flash, jsonify
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 from wtforms import StringField, SubmitField
 from static.py.inValueScan import chehekValueScan
 import json
@@ -20,13 +21,13 @@ class Address(db.Model):
     ip = db.Column(db.String(25), nullable=False, unique=True)
     update = db.Column(db.DateTime, default=datetime.now)               # остання дата перевірки
     created = db.Column(db.DateTime, default=datetime.now)              # дата створення
-    #violation = db.Column(db.Text, default='', nullable=True)           # порушення які виявили
+    violation = db.Column(db.Text, default='', nullable=True)           # порушення які виявили
     comments = db.Column(db.Text, default='', nullable=True)               # Примітки
     checked = db.Column(db.Boolean, nullable=True)                         # подавали порушення
-    #looked = db.Column(db.Boolean, default=False, nullable=True)           # чи взагалі перевіряли його 
+    looked = db.Column(db.Boolean, default=False, nullable=True)           # чи взагалі перевіряли його 
     id_svmap = db.relationship('Svmap', backref='address', uselist=False)  # Связь с профилем пользователя   1:1
-    id_nmap = db.relationship('Nmap', backref='address', uselist=False)    # Связь с профилем пользователя   1:1
-    id_status = db.Column(db.Integer, db.ForeignKey('status.id'), nullable=False)    # m:1
+    id_nmap = db.relationship('Nmap', backref='address', uselist=False)    # Связь с профилем пользователя   1:1 
+    status = db.Column(db.Boolean, default=True, nullable=False)            # включен чи ні  up down
     def __repr__(self):
         return f'<Address {self.id}>'
 
@@ -52,15 +53,10 @@ class Nmap(db.Model):
     def __repr__(self):
         return f'<Other {self.id}>'
 
-# Клас який описує статус ІР включений чи ні. Відношення до ІР м:1
-class Status(db.Model):      # 1:m
-    __tablename__ = 'status'
-    id = db.Column(db.Integer, primary_key=True)
-    value = db.Column(db.Boolean, nullable=True)            # включен чи ні  up down
-    id_address = db.relationship('Address', backref='status', lazy=True)  # Связь с постами пользователя
 
-    def __repr__(self):
-        return f'<Value {self.value}>'
+with app.app_context():
+    #crStatusTF()         # створюємо в БД дві змінні ТРУ та Фолс
+    db.create_all()
 
 
 #перзаписуємо значення ІР
@@ -88,7 +84,7 @@ def update_address_from_data(id_ones_ip, data):
 
 # Записуємо  новий ІР
 def create_address_from_data(ip, data):  
-	new_ip = Address(ip=ip, comments=data['comments'], status=Status.query.get(1))   
+	new_ip = Address(ip=ip, comments=data['comments'])   
 	new_svmap = Svmap(
 				ports=data['id_svmap']['ports'], 
 				version=data['id_svmap']['version'],
@@ -98,20 +94,8 @@ def create_address_from_data(ip, data):
 	db.session.add_all([new_svmap, new_nmap, new_ip]) 
 	
 
-# перевіряє чи створені два значення True False в таблиці Status
-def crStatusTF():
-    nstatus = Status.query.all()
-    if len(nstatus) == 0:
-        status_tr = Status(value=True)
-        status_fl = Status(value=False)
-        db.session.add(status_tr)
-        db.session.add(status_fl)
-        db.session.commit()
 
 
-with app.app_context():
-    crStatusTF()         # створюємо в БД дві змінні ТРУ та Фолс
-    db.create_all()
 
 @app.route('/errorAddIP', methods=['POST', 'GET'])
 def errorAddIP():
@@ -128,15 +112,23 @@ def index():
         work = data.get('work')
         response_data = {}
         try:
-            address_from_com = Address.query.get(id_com)
-            comments = data.get('comments')
+            address_from_com = Address.query.get(id_com)  
             match work:
                 case 'com':   #дадаємо коменти
+                    comments = data.get('comments')
                     address_from_com.comments = comments
                     db.session.add(address_from_com)
-                case 'chek': # змінюємо значення перевірки
-                    value = data.get('value')
+                case 'vio':   #дадаємо коменти
+                    comments = data.get('comments')
+                    address_from_com.violation = comments
+                    db.session.add(address_from_com)
+                case 'chek': # змінюємо значення чи подавали порушення
+                    value = data.get('value') 
                     address_from_com.checked = value
+                    db.session.add(address_from_com)
+                case 'look': # змінюємо значення чи подавали порушення
+                    value = data.get('value') 
+                    address_from_com.looked = value
                     db.session.add(address_from_com)
                 case 'del':  # видаляємо спочатку значення з таблиць nmap, svmap а потім вже ІР
                     if address_from_com:
@@ -186,12 +178,11 @@ def addIP():
             # якщо в масиві 0 елементів значить нічого не знайшли і такий ІР унікальний
             if findListIPFromBD == 0:
                 # Записуємо ІР в  БД
-                new_ip = Address(ip=ip, comments=comment, checked=checked, status=Status.query.get(1))
+                new_ip = Address(ip=ip, comments=comment, checked=checked)
                 new_svmap = Svmap(ports=port, address=new_ip)
                 new_nmap = Nmap(other='', address=new_ip)
                 db.session.add_all([new_svmap, new_nmap, new_ip])
-                db.session.commit()
-
+                db.session.commit() 
                 # Повертаємо на фронт True, для підтвердження запису в БД
                 response_data = {"result": True}
             else:
