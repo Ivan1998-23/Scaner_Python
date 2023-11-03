@@ -14,8 +14,20 @@ table {
 .checked span {
     cursor: pointer;
 }
+.sort {
+	cursor: pointer;
+}
+.sort:hover {
+	background-color: #ccc;
+}
 .looked span {
     cursor: pointer;
+}
+.look-row {
+	display: blok; 
+}
+.unlook-row {
+	display: none; 
 }
 .commentip {
     width: 350px;
@@ -90,10 +102,11 @@ a {
 
 /* Стили для заголовка */
 header {
-    background-color: #333; /* Цвет фона заголовка */
+    background-color: #333;  /*Цвет фона заголовка */
+    /*background-color: #098c55;   Цвет фона заголовка */
     color: #fff; /* Цвет текста */
     padding: 10px 0; /* Внутренние отступы сверху и снизу */
-    margin-bottom: 20px;
+    /*margin-bottom: 20px;*/
 }
 
 .container {
@@ -127,6 +140,7 @@ nav a {
 }
 body {
     font: caption;
+	margin: 0;
 }
 
 /*-----------------DELETE botton---------*/
@@ -186,4 +200,19 @@ body {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+}
+.filtr-ip {
+	display: flex; 
+	align-items: center;
+	margin-bottom: 5px;
+}
+.find-Adress {
+	width:150px;
+}
+#Adress {
+	width:110px;
+	margin-left: 10px;
+	margin-right: 20px;
+	margin-bottom: none;
+	height: 20px;
 }

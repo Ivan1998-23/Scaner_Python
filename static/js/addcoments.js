@@ -8,7 +8,7 @@ checkedBools.forEach(checkedBool => {
         // Получаем value
         const value =  this.getAttribute('value');
 //        console.log(value);
-
+		
         // Робимо заміну зображень
         this.innerHTML = (value === 'True') ? "&#10060" : "&#9989";
 
@@ -254,4 +254,86 @@ window.addEventListener("click", function(event) {
     }
 });
 
+//-----------------------sort__element 
+let list = document.querySelector('tbody')
+let buttonChek = document.getElementById('sort-chek');
+let buttonLook = document.getElementById('sort-look'); 
+let buttonTieme = document.getElementById('sort-tieme');  
+let buttonFindIPs = document.getElementById('find-ip');
+let buttonInputAdress = document.getElementById('Adress');
 
+//сортування по ПОДАВАЛИ
+buttonChek.addEventListener('click', function () { 
+	let listElements = Array.prototype.slice.call(list.children); // перетворюємо NodeList на справжній масив 
+	// сортируем
+	let sortedListElements = listElements.sort(function(a, b) { 
+		let a_value = a.childNodes[3].childNodes[1].childNodes[1].attributes.value.value
+		let b_value = b.childNodes[3].childNodes[1].childNodes[1].attributes.value.value 
+		return (a_value > b_value) ? 1 : -1; 
+	})  
+	// очищаємо батьківський контейнер
+	list.innerHTML = ''
+	// вставляємо елементи в новому порядку
+	sortedListElements.forEach(function(el) {
+		list.appendChild(el)
+	});
+})
+
+//сортування по ПЕРЕВІРЯЛИ
+buttonLook.addEventListener('click', function () { 
+	let listElements = Array.prototype.slice.call(list.children); // перетворюємо NodeList на справжній масив 
+	// сортируем
+	let sortedListElements = listElements.sort(function(a, b) { 
+		let a_value = a.childNodes[5].childNodes[1].childNodes[1].attributes.value.value
+		let b_value = b.childNodes[5].childNodes[1].childNodes[1].attributes.value.value 
+		return (a_value > b_value) ? 1 : -1; 
+	})  
+	// очищаємо батьківський контейнер
+	list.innerHTML = ''
+	// вставляємо елементи в новому порядку
+	sortedListElements.forEach(function(el) {
+		list.appendChild(el)
+	});
+})
+
+//сортування по Tieme
+buttonTieme.addEventListener('click', function () { 
+	let listElements = Array.prototype.slice.call(list.children); // перетворюємо NodeList на справжній масив 
+	// сортируем
+	let sortedListElements = listElements.sort(function(a, b) {  
+		let a_value = a.childNodes[15].childNodes[1].childNodes[0].data
+		let b_value = b.childNodes[15].childNodes[1].childNodes[0].data
+		return (a_value > b_value) ? 1 : -1; 
+	})  
+	// очищаємо батьківський контейнер
+	list.innerHTML = ''
+	// вставляємо елементи в новому порядку
+	sortedListElements.forEach(function(el) {
+		list.appendChild(el)
+	});
+})
+
+
+//сортування по IP
+buttonFindIPs.addEventListener('click', function () { 
+	let findIPs = buttonInputAdress.value
+	buttonInputAdress.value = ''  
+	let listElements = Array.prototype.slice.call(list.children); // перетворюємо NodeList на справжній масив
+	listElements.forEach(row => {  
+		if (row.childNodes[7].childNodes[1].childNodes[1].innerHTML.includes(findIPs) ) {
+			row.classList.add('look-row');
+			row.classList.remove('unlook-row'); 
+		}
+		else {
+			row.classList.remove('look-row');
+			row.classList.add('unlook-row');
+		}
+	}) 
+})
+
+//сортування по IP clik ENTER
+buttonInputAdress.addEventListener("keyup", function(e) {
+	if (e.keyCode === 13) {
+		buttonFindIPs.click();
+	}
+});
