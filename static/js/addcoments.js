@@ -303,7 +303,7 @@ buttonTieme.addEventListener('click', function () {
 	let sortedListElements = listElements.sort(function(a, b) {  
 		let a_value = a.childNodes[15].childNodes[1].childNodes[0].data
 		let b_value = b.childNodes[15].childNodes[1].childNodes[0].data
-		return (a_value > b_value) ? 1 : -1; 
+		return (a_value < b_value) ? 1 : -1; 
 	})  
 	// очищаємо батьківський контейнер
 	list.innerHTML = ''

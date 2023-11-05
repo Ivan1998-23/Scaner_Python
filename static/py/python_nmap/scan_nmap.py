@@ -11,7 +11,8 @@ ports_from_server = ["22","80", "443", "5060", "5062", "8080"]
 ports_from_windows = ["3389", "25", "445", "1433", "53", "67", "68", "161", "162", "139", "135"]
 
 
-def scan_nmap_write_csv(network_range): 
+def scan_nmap_write_csv(network_range):
+	today = date.today()
 	save_file_from_csv = 'result_scan/csv_' + str(today) + '.csv'
 	port = ', '.join(ports_from_server)
 	nm = nmap.PortScanner()
