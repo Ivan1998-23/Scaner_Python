@@ -1,78 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title> 
-        <link  rel="stylesheet" type="text/css"  href="main.css">
-        <title>{% block title %}{% endblock %}</title>
-        <script>
-            // document.getElementById("saveButton").addEventListener("click", function () {
-            //     // Получаем текст из <textarea>
-            //     var textToSave = document.getElementById("myTextarea").value;
+{% extends 'base.html' %}
 
-            //     // Создаем элемент <a> для скачивания файла
-            //     var downloadLink = document.createElement("a");
-            //     downloadLink.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(textToSave));
-            //     downloadLink.setAttribute("download", "myText.txt");
-                
-            //     // Симулируем клик на элементе <a>, чтобы начать скачивание
-            //     downloadLink.click();
-            // });
-        </script>
-    </head>
-<body>
-    <header>
-        <div class="container"> 
-            <nav>
-                <ul>
-                    <li><a href="\table.html">Головна</a></li>
-                    <li><a href="\addIP.html">Додати IP адресу</a></li>
-                    <li><a href="\findIP.html">Сканувати</a></li>
-                    <li><a href="#">Статистика</a></li>
-                    <li><a href="#">Контакти</a></li>
-                </ul>
-            </nav>
-            <h1>Scaner 6 VKBI</h1>
-        </div>
-    </header>
-    
-	<div class="main"> 
-        <div class="table">
-            <div class="row table-header ">
-                <div class="value id">ID</div>
-                <div class="value ipAdress">IP addres</div>
-                <div class="value st"> STATUS</div>
-                <div class="value port">Port</div>
-                <div class="value endTieme">Останє сканування</div>
-                <div class="value comment">Примітки</div>
-                <div class="value other">Other</div>
-            </div>
-            
-            <div class="element row">
-                <div class="value id">0</div>
-                <div class="value ipAdress">
-                    <textarea id="myTextarea" rows="about" cols="about"></textarea> 
-                </a></div>
-                <div class="value st"> 
-                    up 
-                </div>
-                <div class="value port">
-                    <textarea id="myTextarea" rows="about" cols="about"></textarea> 
-                </div>
-                <div class="value endTieme">
-                    01.01.2023 23:00 
-                </div>
-                <div class="value comment">
-                    <textarea id="myTextarea" rows="about" cols="about"></textarea>  
-                </div>
-                <div class="value other">
-                    <textarea id="myTextarea" rows="about" cols="about"></textarea> 
-                </div>
-            </div>
-        </div>
+{% block title %}
+	Додати  ІР адрес
+{% endblock %}
 
+{% block style %}
+	<link rel="stylesheet icon" href="{{ url_for('static', filename='css/main.css')}}"> 
+{% endblock %}
+
+{% block script %}
+    <script  type='module'src="{{ url_for('static', filename='js/checkAddIp.js') }}"></script> 
+{% endblock %}
+
+{% block body %}
+<div class="bady">
+<!--    <h2>{{massedg}}</h2>-->
+    <div class="form-container">
+        <div class='formaAllElement'>
+            <div class="headline">
+                <h1>Додати ІР</h1>
+            </div>
+            <form name="formAddIP" id="myForm" method="post">
+                <div class="form-group">
+                    <label for="ip">IP:</label>
+                    <input class='form' type="text" id="ip" name="ip" placeholder="192.168.1.1">
+                    <span class="message" data-for="ip"></span>
+                </div>
+                <div class="form-group">
+                    <label for="port">Port:</label>
+                    <input class='form' type="text" id="port" name="port" placeholder="23, 44, 555, 11">
+                    <span class="message" data-for="port"></span>
+                </div>
+                <div class="form-group">
+                    <label for="comment">Comment:</label>
+                    <textarea  class="commentip form" id="comment" name="comment" placeholder="Це вч А1234" ></textarea>
+                    <span class="message " data-for="comment"></span>
+                </div>
+                <div class="form-group">
+                    <label for="violations">Чи подавали його ?</label>
+                    <select class='form'  name="violations" id="violations">
+                        <<option selected value="No">No</option>-->
+                        <option value="Yes">Yes</option>
+                    </select>
+                    <span class="message" data-for="violations"></span>
+                </div>
+                <button id="addition"  class="signUp" type="submit">Add</button>
+            </form>
+        </div>
     </div>
-    
-</body>
-</html>
+</div>
+{% endblock %}

@@ -1,5 +1,218 @@
-body {
+@import url('styleform.css');
+table {
+	border: 2px solid #dddddd;
+    width: 100%;
+    border-collapse: collapse;   /* Убирает отступы и объединяет границы ячеек */
 }
-.table {
+.table-striped tbody tr:nth-child(odd) {
+    background-color: #ffffff;  /*  Цвет фона для нечетных строк*/
+}
+.value {
+    text-align: center;
+}
+
+.checked span {
+    cursor: pointer;
+}
+.sort {
+	cursor: pointer;
+}
+.sort:hover {
+	background-color: #ccc;
+}
+.looked span {
+    cursor: pointer;
+}
+.look-row {
+	display: blok; 
+}
+.unlook-row {
+	display: none; 
+}
+.commentip {
+    width: 350px;
+    height: 100px;
+}
+.row {  
+	background: #efefef;
+	border: 1px solid #dddddd;
+}
+/*        при наведенні весь рядок змінює колір */
+/*.row:hover {background-color: #00cd1b59}*/
+
+.table-header {
+	background: #b6b6b6;
+}
+
+
+a {
+    text-decoration:none;
+}
+
+.myTextarea {
+/*    width: auto;*/
+    height: 15px;
+    min-width: 150px;
+    max-width: 190px;   /*Максимальная ширина в пикселях*/
+    max-height: 20px;
+    min-height: 10px;
+    border: none;
+    background: transparent;
+    resize: none;     /*    *//* Отключаем возможность изменения размера */
+    overflow: hidden;  /*  *//* Скрываем полосы прокрутки */
+}
+.myTextarea:focus {
+    outline: none;
+    resize: both;
+    border-width: 1px;
+    border-style: solid;
+    border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
+    height: 60px;
+    max-height: 190px;
+    width: auto;
+    overflow: auto;
+}
+
+.myTextVio {  
+    height: 15px; 
+    max-width: 190px;   /*Максимальная ширина в пикселях*/
+    max-height: 20px;
+    min-height: 10px;
+    border: none;
+    background: transparent;
+    resize: none;     /*    *//* Отключаем возможность изменения размера */
+    overflow: hidden;  /*  *//* Скрываем полосы прокрутки */
+}
+.myTextVio:focus {
+    outline: none;
+    resize: both;
+    border-width: 1px;
+    border-style: solid;
+    border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
+    height: 60px;
+    max-height: 190px;
+    width: auto;
+    overflow: auto;
+}
+.main { 
+    margin-right: 5%;
+    margin-left: 5%;
+    margin-bottom: 100px;
+}
+
+/* Стили для заголовка */
+header {
+    background-color: #333;  /*Цвет фона заголовка */
+    /*background-color: #098c55;   Цвет фона заголовка */
+    color: #fff; /* Цвет текста */
+    padding: 10px 0; /* Внутренние отступы сверху и снизу */
+    /*margin-bottom: 20px;*/
+}
+
+.container {
+    /*max-width: 960px; /* Максимальная ширина контейнера */
+    margin:   auto; /* Центрирование контейнера по горизонтали */
     display: flex;
+    justify-content: space-around ; /* Равномерное распределение элементов по горизонтали */
+    align-items: center; /*Выравнивание элементов по вертикали */
+    font: 1.2em "Fira Sans", sans-serif;
+}
+
+h1 {
+    margin: 0; /* Убираем отступы вокруг заголовка */
+}
+
+nav ul {
+    list-style-type: none; /* Убираем маркеры списка */
+    padding: 0; /* Убираем внутренние отступы списка */
+}
+
+nav li {
+    display: inline; /* Элементы списка в строку */
+    margin-right: 20px; /* Внешний отступ между элементами */
+}
+
+nav a {
+    text-decoration: none; /* Убираем подчеркивание ссылок */
+    color: #fff; /* Цвет текста ссылок */
+    font-size: 23px;
+    padding: 5px;
+}
+body {
+    font: caption;
+	margin: 0;
+}
+
+/*-----------------DELETE botton---------*/
+.delete {
+    background-color: #cd002ff0;
+    color:white;
+    border-radius: 15px;
+    height:20px;
+    padding: 5px 10px 5px 10px;
+}
+
+.delete:hover {background-color: #cd002f6c}
+
+.delete:active {
+  background-color: #ad0042f0;
+  box-shadow: 0 5px hwb(0 59% 40%);
+  transform: translateY(4px);
+}
+/*------------------------*/
+/* Стили для модального окна */
+.popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+}
+
+.popup-content {
+    background-color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    max-width: 80%;
+    max-height: 80%;
+    overflow: auto;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: #f00;
+}
+.other {
+	font-size: 12px; 
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.filtr-ip {
+	display: flex; 
+	align-items: center;
+	margin-bottom: 5px;
+}
+.find-Adress {
+	width:150px;
+}
+#Adress {
+	width:110px;
+	margin-left: 10px;
+	margin-right: 20px;
+	margin-bottom: none;
+	height: 20px;
 }

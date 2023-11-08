@@ -1,1 +1,19 @@
 source venv/bin/activate
+ python flsite.py
+pip freeze > requirements.txt
+навпаки завантажити: pip install -r requirements.txt
+
+
+Масскан, по умолчанию, сканирует со скоростью 100 пакетов в секунду (медленно).
+ Чтобы увеличить скорость, нужно использовать параметр --rate: 
+sudo masscan 172.217.167.46 -p0-65535 --rate 25000000
+
+
+Alembic
+	alembic init migration
+
+
+
+
+
+

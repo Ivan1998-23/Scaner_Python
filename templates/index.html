@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	Головка
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet icon" href="{{ url_for('static', filename='css/main.css')}}">
+{% endblock %}
+{% block script %}
+    <script  type='module'src="{{ url_for('static', filename='js/addcoments.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+
+	<div class="main">
+		<div class="filtr-ip">   
+			<label >Фільтр по ІР :</label>
+			<input id="Adress" type="text"  placeholder="192.168.1.1">
+			<button id="find-ip"  class="signUp">Пошук</button>
+		</div>
+        <table  class="table table-striped">
+            <thead>
+                <tr  class="row table-header ">
+                    <th scope="col">
+                        <div class="value id">ID</div>
+                    </th>
+                    <th scope="col">
+                        <div class="value sort checked" id='sort-chek'>Подавали &#11109 </div>
+                    </th>
+                    <th scope="col">
+                        <div class="value  sort looked" id='sort-look'>Перевірили &#11109</div>
+                    </th>
+                    <th scope="col">
+                        <div class="value ipAdress">IP addres</div>
+                    </th>
+                    <th scope="col">
+                        <div class="value st"> STATUS</div>
+                    </th>
+                    <th scope="col">
+                        <div class="value port">Port</div>
+                    </th>
+                    <!--<th scope="col">
+                        <div class="value endTieme">Коли виявили</div>
+                    </th>--->
+                    <th scope="col">
+                        <div class="value sort endTieme" id='sort-tieme'>Останє сканування &#11109</div>
+                    </th>
+                    <th scope="col">
+                        <div class="value violation">Що виявили</div>
+                    </th>
+                    <th scope="col">
+                        <div class="value comment">Примітки</div>
+                    </th>
+                    <th scope="col">
+                        <div class="value ">Other</div>
+                    </th>
+                    <th scope="col">
+                        <div class="value del">Видалити</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for el in address%}
+                        <tr class="row look-row">
+                            <td scope="col">
+                                <div class="value id">{{ el.id}}</div>
+                            </td>
+                            <td>
+                                <div class="value checked">
+                                                {% if el.checked == True %}
+                                                        <span   data-id-check="{{ el.id }}" value="True">&#9989</span>     <!-- Галочка -->
+                                                {% else %}
+                                                        <span   data-id-check="{{ el.id }}" value="False">&#10060</span>  <!-- Крестик -->
+                                                {% endif %}
+                                 </div>
+                            </td>
+                            <td>
+                                <div class="value looked"> 
+                                                {% if el.looked == True %}
+                                                        <span   data-id-look="{{ el.id }}" value="True">&#9989</span>     <!-- Галочка -->
+                                                {% else %}
+                                                        <span   data-id-look="{{ el.id }}" value="False">&#10060</span>  <!-- Крестик -->
+                                                {% endif %}
+                                 </div>
+                            </td>
+                            <td>
+                                <div class="value ipAdress"  >
+                                    <a href="http://{{ el.ip }}" target="_blank" data-id-ip="{{ el.id }}">{{ el.ip }}</a>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="value st"> {% if el.status == True %}
+                                                        <span>&#127774</span>
+                                                {% else %}
+                                                        <span>&#128164</span>
+                                                {% endif %}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="value port">{% if el.id_svmap %} {{  el.id_svmap.ports  }} {% endif %}</div>
+                            </td>
+                            <!--<td>
+                                <div class="value endTieme">{{ el.created.strftime("%d.%m.%Y %H:%M")}}</div>
+                            </td>-->
+                            <td>
+                                <div class="value endTieme">{{ el.update.strftime("%Y.%m.%d	 %H:%M") }}</div>
+                            </td>
+                            <td>
+                                <div class="value violation"> 
+                                    <textarea class="myTextVio" rows="about" cols="about" data-id-vio="{{ el.id }}" >{{ el.violation }}</textarea> 
+                                </div>
+                            </td>
+                            <td>
+                                <div class="value comment">
+                                    <textarea class="myTextarea" rows="about" cols="about" data-id-com="{{ el.id }}" >{{ el.comments }}</textarea>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="value other" data-id-other="{{ el.id }}">
+									{% if el.id_nmap %} 
+										{{  el.id_nmap.other   }}
+									{% endif %}
+								</div>
+								<!-- Модальное окно с информацией -->
+								<div  class="popup" data-id-popup="{{ el.id }}">
+									<div class="popup-content">
+										<span class="close" data-id-close-popup="{{ el.id }}">&times;</span>
+										<pre>{{ el.id_nmap.other }}</pre>
+									</div>
+								</div>
+                            </td>
+                            <td >
+                                <div class="value">
+                                    <button  class="value delete" name='deleteIP' data-id-del="{{ el.id }}">delete</button>
+                                </div>
+                            </td>
+
+                        </tr>
+
+                {% endfor %}
+            </tbody>
+
+        </table >
+    </div>
+{% endblock %}

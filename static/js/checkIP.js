@@ -34,7 +34,22 @@ export function isValidIpAddressesFromMask(ipMasc) {
     return true;
 }  
 
-
+export function validatePorts(input) {
+    // Разделяем введенную строку на порты, используя запятые и пробелы как разделители
+    if (input.length) {
+        const ports = input.split(', ');
+        for (const port of ports) {
+            // Проверяем, что порт состоит только из цифр
+            if (!/^\d+$/.test(port)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    else {
+        return true;
+    }
+}
 
 //  проверяет введенный IP-адрес с помощью регулярного выражения ipPattern. Если IP-адрес корректен, 
 // то выводится сообщение "IP-адрес корректен", иначе выводится сообщение "IP-адрес некорректен".

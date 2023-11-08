@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	Resultat
+{% endblock %}
+
+{% block style %} 
+    <link rel="stylesheet icon" href="{{ url_for('static', filename='css/main.css')}}"> 
+{% endblock %}
+
+{% block body %}
+	<div class="main">
+        <table  class="table table-striped">
+            <thead>
+                <tr  class="row table-header ">  
+                    <th scope="col">
+                        <div class="value ipAdress">IP addres</div>
+                    </th>
+                    <th scope="col">
+                        <div class="value st"> STATUS</div>
+                    </th>
+                    <th scope="col">
+                        <div class="value port">Port</div>
+                    </th>
+                    <th scope="col">
+                        <div class="value endTieme">Останє сканування</div>
+                    </th> 
+                    <th scope="col">
+                        <div class="value other">Other</div>
+                    </th> 
+                </tr>
+            </thead>
+            <tbody>  
+                {% for key_ip, value_ip in data.items()%}   
+                        <tr class=" row">  
+                            <td>
+                                <div class="value ipAdress"  >
+                                    <a href="http://{{key_ip }}" target="_blank" >{{ key_ip }}</a>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="value st">  
+                                                        <span>&#127774</span> 
+                                </div>
+                            </td>
+                            <td>
+                                <div class="value port"> {{ value_ip['id_svmap']['ports'] }}</div>
+                            </td>
+                            <td>
+                                <div class="value endTieme">{{ value_ip['update'][4:-7] }}</div>
+                            </td> 
+                            <td>
+                                <div class="other">
+									<pre>{{ value_ip['id_nmap']['other'] }}</pre>
+								</div>
+                            </td>
+
+                        </tr>
+
+                 {% endfor %}
+            </tbody>
+
+        </table >
+    </div>
+{% endblock %}
