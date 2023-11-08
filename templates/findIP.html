@@ -14,89 +14,225 @@
 {% endblock %}
 {% block body %} 
 <div class="bady">
-    <div class="form-container"> 
-        <div class='formaAllElement widthform'>
-            <div class="headline">
-                <h1>Scaner IP adress</h1>
-            </div>
-            <div class="spinner-overlay" id="spinner">
-				<img src="{{ url_for('static', filename='img/three_points.gif') }}" alt="Loading...">
+	<div class="blok left-blok">
+		<div class="form-container"> 
+			<div class="formaAllElement widthform">
+				<div class="headline">
+					<h1>Scaner IP adress</h1>
+				</div>
+				<div class="spinner-overlay" id="spinner">
+					<img src="{{ url_for('static', filename='img/three_points.gif') }}" alt="Loading...">
+				</div>
+				<form name="formLoging" method="post" >
+					<div>
+						<label class="sign-in-IP">IP  adress:</label>
+						<input type="text" class="form" name="ipadress" id="ipadress" placeholder="192.168.1.1 or 192.168.1.0/24">
+						<span class="message form" data-for="ipadress"></span>
+					</div>
+					<div class="linefiltr">
+						<input type="radio" name="metodscan" class="form" value="fping" checked>
+						<label class="form">Fping</label>
+						<label class="form ValueOff" data-for="fping">Просто сканування </label>
+					</div>
+					<div class="linefiltr">
+						<input type="radio" name="metodscan" class="form" value="svmap">
+						<label class="form">Svmap</label>
+						<label class="form ValueOff" data-for="svmap"  >Сканування SIP 5060-5062 портів </label>
+					</div>
+					<div class="linefiltr">
+						<input type="radio" name="metodscan" class="form" value="listports"  >
+						<label class="form">Готовий список портів для сканування</label>
+						<select class="form ValueOff" name="listports" data-for="listports" >
+							<option>23</option>
+							<option>8080</option>
+							<option>80, 443</option>
+							<option>21, 22, 23, 80, 443, 8080</option>
+							<option>25, 445, 3389, 1433, 53, 67, 68, 161, 162, 139, 135 </option>
+						</select>
+					</div>
+					<div class="linefiltr" >
+						<input type="radio" name="metodscan" class="form" value="allports"  >
+						<label class="form"> Написати список портів </label>
+						<input type='text' class="allports form ValueOff" name="allports"  data-for="allports" placeholder="22, 23, 443, 80">
+					</div>
+	<!--                <div class="nmap ValueOff" id="checkboxListContainer" name="nmapValue">-->
+	<!--                    <hr>-->
+	<!--                    <div class="valuetonmap">-->
+	<!--                        <input type="checkbox"  >-->
+	<!--                        <label class="tagsnmap">-PN :</label>-->
+	<!--                        <label class="description"> Розцінювати всі хости як такі, що працюють - пропустити виявлення хостів </label>-->
+	<!--                    </div>-->
+	<!--                    <hr>-->
+	<!--                    <div class="valuetonmap">-->
+	<!--                        <input type="checkbox"   checked>-->
+	<!--                        <label class="tagsnmap">-PS :</label>-->
+	<!--                        <label class="description">TCP SYN  пінгування заданих хостів </label>-->
+	<!--                    </div>-->
+	<!--                    <hr>-->
+	<!--                    <div class="valuetonmap">-->
+	<!--                        <input type="checkbox"  checked>-->
+	<!--                        <label class="tagsnmap">-PA :</label>-->
+	<!--                        <label class="description">TCP ACK   пінгування заданих хостів </label>-->
+	<!--                    </div>-->
+	<!--                    <hr>-->
+	<!--                    <div class="valuetonmap">-->
+	<!--                        <input type="checkbox"   checked>-->
+	<!--                        <label class="tagsnmap">-sU :</label>-->
+	<!--                        <label class="description">UDP сканування </label>-->
+	<!--                    </div>-->
+	<!--                    <hr>-->
+	<!--                    <div class="valuetonmap">-->
+	<!--                        <input type="checkbox"  checked>-->
+	<!--                        <label class="tagsnmap">-O :</label>-->
+	<!--                        <label class="description"> Активувати ф-ю визначення ОС</label>-->
+	<!--                    </div>-->
+	<!--                    <hr>-->
+	<!--                    <div class="valuetonmap">-->
+	<!--                        <input type="checkbox" class="form" checked>-->
+	<!--                        <label class="tagsnmap">-A :</label>-->
+	<!--                        <label class="description">Активувати ф-ю визначення ОС та версії,сканування з використанням скриптів та трасування</label>-->
+	<!--                    </div>-->
+	<!--                    <hr>-->
+	<!--                    <span class="message form" data-for="email"></span>-->
+	<!--                </div>-->
+					<button id="signUp" class="signUp" type="submit" >Сканувати</button>
+				</form>
 			</div>
-            <form name="formLoging" method="post" >
-                <div>
-                    <label class='sign-in-IP'>IP  adress:</label>
-                    <input type='text' class='form' name="ipadress" id="ipadress" placeholder="192.168.1.1 or 192.168.1.0/24">
-                    <span class="message form" data-for="ipadress"></span>
-                </div>
-                <div class="linefiltr">
-                    <input type="radio" name="metodscan" class="form" value="fping" checked>
-                    <label class="form">Fping</label>
-                    <label class="form ValueOff" data-for="fping">Просто сканування </label>
-                </div>
-                <div class="linefiltr">
-                    <input type="radio" name="metodscan" class="form" value="svmap">
-                    <label class="form">Svmap</label>
-                    <label class="form ValueOff" data-for="svmap"  >Сканування SIP 5060-5062 портів </label>
-                </div>
-                <div class="linefiltr">
-                    <input type="radio" name="metodscan" class="form" value="listports"  >
-                    <label class="form">Готовий список портів для сканування</label>
-                    <select class="form ValueOff" name="listports" data-for="listports" >
-                        <option>23</option>
-                        <option>8080</option>
-                        <option>80, 443</option>
-                        <option>21, 22, 23, 80, 443, 8080</option>
-                        <option>25, 445, 3389, 1433, 53, 67, 68, 161, 162, 139, 135 </option>
-                    </select>
-                </div>
-                <div class="linefiltr" >
-                    <input type="radio" name="metodscan" class="form" value="allports"  >
-                    <label class="form"> Написати список портів </label>
-                    <input type='text' class="allports form ValueOff" name="allports"  data-for="allports" placeholder="22, 23, 443, 80">
-                </div>
-<!--                <div class="nmap ValueOff" id="checkboxListContainer" name="nmapValue">-->
-<!--                    <hr>-->
-<!--                    <div class="valuetonmap">-->
-<!--                        <input type="checkbox"  >-->
-<!--                        <label class="tagsnmap">-PN :</label>-->
-<!--                        <label class="description"> Розцінювати всі хости як такі, що працюють - пропустити виявлення хостів </label>-->
-<!--                    </div>-->
-<!--                    <hr>-->
-<!--                    <div class="valuetonmap">-->
-<!--                        <input type="checkbox"   checked>-->
-<!--                        <label class="tagsnmap">-PS :</label>-->
-<!--                        <label class="description">TCP SYN  пінгування заданих хостів </label>-->
-<!--                    </div>-->
-<!--                    <hr>-->
-<!--                    <div class="valuetonmap">-->
-<!--                        <input type="checkbox"  checked>-->
-<!--                        <label class="tagsnmap">-PA :</label>-->
-<!--                        <label class="description">TCP ACK   пінгування заданих хостів </label>-->
-<!--                    </div>-->
-<!--                    <hr>-->
-<!--                    <div class="valuetonmap">-->
-<!--                        <input type="checkbox"   checked>-->
-<!--                        <label class="tagsnmap">-sU :</label>-->
-<!--                        <label class="description">UDP сканування </label>-->
-<!--                    </div>-->
-<!--                    <hr>-->
-<!--                    <div class="valuetonmap">-->
-<!--                        <input type="checkbox"  checked>-->
-<!--                        <label class="tagsnmap">-O :</label>-->
-<!--                        <label class="description"> Активувати ф-ю визначення ОС</label>-->
-<!--                    </div>-->
-<!--                    <hr>-->
-<!--                    <div class="valuetonmap">-->
-<!--                        <input type="checkbox" class="form" checked>-->
-<!--                        <label class="tagsnmap">-A :</label>-->
-<!--                        <label class="description">Активувати ф-ю визначення ОС та версії,сканування з використанням скриптів та трасування</label>-->
-<!--                    </div>-->
-<!--                    <hr>-->
-<!--                    <span class="message form" data-for="email"></span>-->
-<!--                </div>-->
-                <button id="signUp" class="signUp" type="submit" >Сканувати</button>
-            </form>
-        </div>
+		</div>
+	</div>
+    
+    <div class="blok right-blok">
+		<div class="form-container"> 
+			<div class="table-history">
+				<table  class="table table-striped"> 
+					<thead>
+						<tr class="row table-header ">
+							<th>
+								<div class="value endTieme">Час</div>
+							</th>
+							<th><div class="value ipAdress">
+									Адреса
+								</div>
+							</th>
+							<th>
+								<div class="value"  >
+									Результат	
+								</div>
+							</th> 
+						</tr>
+					</thead>
+					<tbody class="scroll"> 
+						 <tr class="row">
+							<td>
+									<div class="value endTieme">2023.11.05 18:51</div>
+							</td>
+							<td>
+								<div class="value ipAdress"  >
+									192.168.85.144/24
+								</div>
+							</td>
+							<td>
+								<div class="value"  >
+									False	
+								</div>
+							</td>
+						 </tr>
+						 <tr class="row">
+							 <td>
+									<div class="value endTieme">2023.11.05 18:51</div>
+							 </td>
+							 <td>
+								<div class="value ipAdress"  >
+									192.168.85.144/24
+								</div>
+							</td>
+							<td>
+								<div class="value"  >
+									True	
+								</div>
+							</td>
+						 </tr>		
+						 <tr class="row  ">
+							 <td>
+									<div class="value endTieme">2023.11.05 18:51</div>
+							 </td>
+							 <td>
+								<div class="value ipAdress"  >
+									192.168.85.144/24
+								</div>
+							</td>
+							<td>
+								<div class="value"  >
+									True	
+								</div>
+							</td>
+						 </tr>
+						 <tr class="row  ">
+							 <td>
+									<div class="value endTieme">2023.11.05 18:51</div>
+							 </td>
+							 <td>
+								<div class="value ipAdress"  >
+									192.168.85.144/24
+								</div>
+							</td>
+							 <td>
+								 <div class="value"  >
+									True
+								</div>
+							</td>
+						 </tr>		
+						 <tr class="row  ">
+							 <td>
+									<div class="value endTieme">2023.11.05 18:51</div>
+							 </td>
+							 <td>
+								<div class="value ipAdress"  >
+									192.168.85.144/24
+								</div>
+							</td>
+							 <td>
+								 <div class="value"  >
+									True
+								</div>
+							</td>
+						 </tr>	
+						 
+						 <tr class="row">
+							 <td>
+									<div class="value endTieme">2023.11.05 18:51</div>
+							 </td>
+							 <td>
+								<div class="value ipAdress"  >
+									192.168.85.144/24
+								</div>
+							</td>
+							 <td>
+								 <div class="value"  >
+									True
+								</div>
+							</td>
+						 </tr>	
+						 <tr class="row">
+							 <td>
+									<div class="value endTieme">2023.11.05 18:51</div>
+							 </td>
+							 <td>
+								<div class="value ipAdress"  >
+									192.168.85.144/24
+								</div>
+							</td>
+							 <td>
+								 <div class="value"  >
+									True
+								</div>
+							</td>
+						 </tr>		 
+					</tbody>
+				</table>
+			</div> 
+		</div>
     </div>
+	 
 </div>
 {% endblock %}

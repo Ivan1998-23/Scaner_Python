@@ -16,15 +16,4 @@ Alembic
 
 
 
-class LogScan(db.Model):
-    __tablename__ = 'nmap'
-    id = db.Column(db.Integer, primary_key=True) 
-    start_time = db.Column(db.DateTime, default=datetime.now)           # дата створення
-    ips = db.Column(db.String(25), nullable=False, unique=True)
-    result = db.Column(db.String(255), nullable=True)           	 	#  result scan......
-    other = db.Column(db.String(255), nullable=True)            		# nmap result scan......
-
-    def __repr__(self):
-        return f'<LogScan {self.id}>'
-
 
