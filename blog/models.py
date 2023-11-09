@@ -1,4 +1,4 @@
-from __init__ import db
+from blog import db
 from datetime import datetime
 # Клас  ІР
 class Address(db.Model):
@@ -8,6 +8,7 @@ class Address(db.Model):
     created = db.Column(db.DateTime, default=datetime.now)              # дата створення
     violation = db.Column(db.Text, default='', nullable=True)           # порушення які виявили
     comments = db.Column(db.Text, default='', nullable=True)               # Примітки
+    password = db.Column(db.Text, default='', nullable=True)            # password
     checked = db.Column(db.Boolean, nullable=True)                         # подавали порушення
     looked = db.Column(db.Boolean, default=False, nullable=True)           # чи взагалі перевіряли його 
     id_svmap  = db.relationship('Svmap', backref='address', uselist=False)  # Связь с профилем пользователя   1:1
@@ -76,12 +77,12 @@ def update_address_from_data(id_ones_ip, data):
 
 # Записуємо  новий ІР
 def create_address_from_data(ip, data):  
-	new_ip = Address(ip=ip, comments=data['comments'])   
-	new_svmap = Svmap(
-				ports=data['id_svmap']['ports'], 
+    new_ip = Address(ip=ip, comments=data['comments'])
+    new_svmap = Svmap(
+				ports=data['id_svmap']['ports'],
 				version=data['id_svmap']['version'],
 				dev_name=data['id_svmap']['dev_name'] ,
 				address=new_ip)   
-	new_nmap = Nmap(other=data['id_nmap']['other'], address=new_ip) 
-	db.session.add_all([new_svmap, new_nmap, new_ip]) 
+    new_nmap = Nmap(other=data['id_nmap']['other'], address=new_ip)
+    db.session.add_all([new_svmap, new_nmap, new_ip])
 	

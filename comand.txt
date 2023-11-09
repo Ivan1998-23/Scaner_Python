@@ -12,8 +12,25 @@ sudo masscan 172.217.167.46 -p0-65535 --rate 25000000
 Alembic
 	alembic init migration
 
+відеоурок
+https://www.youtube.com/watch?v=P328E_qgVOQ
+------------------------------------------------------
+from blog import create_app
+app = create_app()
+from blog.models import db, Address, Svmap, Nmap, LogScan
+app.app_context().push()
+db.create_all()
+exit()
+------------------------------------------------------
+For Pycharm windows run these line on the terminal:
+    set FLASK_APP=flsite.py
+    $env:FLASK_APP = "flsite.py"
+    flask run
 
-
-
-
-
+------------------------------------------------------
+flask db init
+flask db migrate
+flask db migrate -m 'add passwrd'    спочатку робимо зміни тоді робимо міграцію
+flask db upgrade                        оновлюємо БД
+flask db downgrade                      повернутися на самий початок
+flask db downgrade 7da1581ba2cf         повернутися на відповідний коміт

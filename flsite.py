@@ -1,13 +1,10 @@
-from ast import dump
-from flask import  render_template, url_for, request, redirect, flash, jsonify, Flask
+from flask import  render_template, request, jsonify
 #from flask_sqlalchemy import SQLAlchemy
-from wtforms import StringField, SubmitField
-from static.py.inValueScan import chehekValueScan
-from models import *
-from __init__ import *
+# from static.py.inValueScan import chehekValueScan
+from blog import create_app
+from blog.models import db
 import json
 import urllib.parse
-import sys
 
 app = create_app()
 
@@ -28,7 +25,7 @@ with app.app_context():
 
 
 
-
+'''
 @app.route('/errorAddIP', methods=['POST', 'GET'])
 def errorAddIP():
     return render_template('errorAddIP.html')
@@ -180,6 +177,6 @@ def resultFindIPs():
         return render_template('resultFindIPs.html', data=response_data.get('result'))
     else:
         return "Дані не знайдено" 
-
+'''
 if __name__ == '__main__': 
     app.run()
