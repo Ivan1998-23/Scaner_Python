@@ -6,8 +6,8 @@ db = SQLAlchemy()
 migrate = Migrate()
 
 
-def create_app():
-	app = Flask(__name__) 
+def create_app(): 
+	app = Flask(__name__,template_folder='../templates', static_folder='../static')
 	app.debug = True
 	
 	app.config['SECRET_KEY'] = 'JHVASJDIGi132412923JB12412'

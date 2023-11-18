@@ -1,31 +1,14 @@
-from flask import  render_template, request, jsonify
-#from flask_sqlalchemy import SQLAlchemy
-# from static.py.inValueScan import chehekValueScan
+from flask import render_template, request, jsonify 
+from static.py.inValueScan import chehekValueScan
 from blog import create_app
-from blog.models import db
+from blog.models import *
+from templates import *
 import json
 import urllib.parse
 
-app = create_app()
-
-'''
-app = Flask(__name__)
-# app.config['SQLALCHEMY_DATABASE_URI'] = 's'
-app.config['SECRET_KEY'] = 'hard to guess string'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///dbscan.db'
-db = SQLAlchemy(app)
-''' 
-
-'''
-with app.app_context():
-    #crStatusTF()         # створюємо в БД дві змінні ТРУ та Фолс
-    db.create_all()
-'''
+app = create_app()  
 
 
-
-
-'''
 @app.route('/errorAddIP', methods=['POST', 'GET'])
 def errorAddIP():
     return render_template('errorAddIP.html')
@@ -33,7 +16,7 @@ def errorAddIP():
 @app.route("/home", methods=['POST', 'GET'])
 @app.route("/", methods=['POST', 'GET'])
 def index():
-    address = Address.query.all()
+    address = Address.query.all() 
     # коли робимо якісь зміни в comments та зміні флажка то вони автоматично зберігаються
     if request.method == "POST":
         data = request.get_json()
@@ -83,7 +66,7 @@ def index():
             db.session.commit()
             return jsonify(response_data)
         except:
-            return 'Відбулись якісь проблеми'
+            return 'Відбулись якісь проблеми' 
     return render_template("index.html", address=address)
 
 
@@ -108,7 +91,7 @@ def addIP():
             if findListIPFromBD == 0:
                 # Записуємо ІР в  БД
                 new_ip = Address(ip=ip, comments=comment, checked=checked)
-                new_svmap = Svmap(ports=port, address=new_ip)
+                new_svmap = Svmap(ports=port, address=new_ip, version='', dev_name='')
                 new_nmap = Nmap(other='', address=new_ip)
                 db.session.add_all([new_svmap, new_nmap, new_ip])
                 db.session.commit() 
@@ -128,12 +111,18 @@ def addIP():
 def findIP():
     if request.method == "POST":
         data = request.get_json() 
-        return_data = chehekValueScan(data)  
+        return_data = chehekValueScan(data)     
         #Перевіряємо що повернула ф-я виконання сканування 
         if  return_data == False :
+			# Записуємо логи сканування  
+            create_log_scan_ips(data, return_data)
             response_data = {"result": False}
             return jsonify( response_data)
         #print('return_data: ',return_data)
+        
+        #Якщо сканування нормально відбулось то записуємо True логі сканування 
+        create_log_scan_ips(data, True)
+        
         try:
 			# Беребираємо список ІР
             for key_ip, val_ip in return_data.items():	 
@@ -144,23 +133,23 @@ def findIP():
                     # Записуємо  новий ІР   
                     create_address_from_data(key_ip, val_ip)  
                 else: 
-					#перезаписуємо значення в ІР
-                    id_ones_ip = Address.query.filter_by(ip=key_ip).first() 
+					#перезаписуємо значення в ІР 
+                    id_ones_ip = Address.query.filter_by(ip=key_ip).first()  
                     update_address_from_data(id_ones_ip, val_ip)  
                 db.session.commit()  
                 
-            response_data = {"result": return_data}
-            print('return result from findIP')
-            print(return_data)
+            response_data = {"result": return_data} 
             return jsonify( response_data)
-        except:
-             return 'Відбулись якісь проблеми' 
+        except Exception as er:
+            print('Відбулась помилка ;', er)
+            return 'Відбулись якісь проблеми' 
         
         response_data = {"result": return_data}
         return jsonify(response_data)
         # return render_template("findIP.html")
     else:
-        return render_template("findIP.html")
+        logs_scan = LogScan.query.all() 
+        return render_template("findIP.html", logs_scan=logs_scan)
 
 @app.route('/statistics')
 def statistics():
@@ -177,6 +166,6 @@ def resultFindIPs():
         return render_template('resultFindIPs.html', data=response_data.get('result'))
     else:
         return "Дані не знайдено" 
-'''
+
 if __name__ == '__main__': 
     app.run()

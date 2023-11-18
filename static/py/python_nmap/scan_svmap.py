@@ -52,12 +52,19 @@ def search_regular_expression(in_str):
 		#якщо спрацьовує регулярний вираз 
 		if match: 
 			inf_ip = match.groupdict()
+			inf_ip['other'] = line.strip()
 			# Видаляємо зайві пробіли в кінці та на початку
 			inf_ip['version'] = inf_ip.get('version').strip() 
 			#додаємо інфу або змінюємо  таку ж інфу
 			find_ip_in_dict = mas_result.get(inf_ip['ip']) 
 			if find_ip_in_dict: 
-				inf_ip['port'] += ' ' +find_ip_in_dict.get('port') 
+				if inf_ip['port'] == '':
+					inf_ip['port'] = find_ip_in_dict.get('port')
+				else:
+					inf_ip['port'] += ', ' +find_ip_in_dict.get('port')
+				lin_tab = '-' * len(line)
+				inf_ip['other'] += '\n' + find_ip_in_dict.get('other')+ '\n' + lin_tab  
+				#inf_ip['other'] += '\n' + find_ip_in_dict.get('other')
 			mas_result[inf_ip['ip']] = inf_ip  
 	return mas_result 
 	'''
@@ -79,21 +86,23 @@ def search_regular_expression(in_str):
 	'''									
 	
 #створюємо словник який потім зможемо використовувати для запису в БД    
-def create_obj_ip_to_bd(dict_ips, text_result_svmap):
+def create_obj_ip_to_bd(dict_ips):
 	result_obg_with_ips = {}  
 	for ip in dict_ips:   
+		ports_coma = dict_ips[ip]['port'] 
+		print('ports_coma', ports_coma)
 		result_obg_with_ips[ip] = {
 		'ip'	   : ip,
 		'update'   : today ,
 		'comments' : '',
 		'checked'  : False,
 		'id_svmap' : {
-			'ports'	   : dict_ips[ip]['port'],
+			'ports'	   : ports_coma,
 			'version'  : dict_ips[ip]['version'],
 			'dev_name' : dict_ips[ip]['name']+ ' '  + dict_ips[ip]['name_v']
 		},
 		'id_nmap' : {
-			'other'    : text_result_svmap,
+			'other'    : dict_ips[ip]['other'],
 		}, 
 		} 
 	return result_obg_with_ips
@@ -101,11 +110,13 @@ def create_obj_ip_to_bd(dict_ips, text_result_svmap):
 def up_scan_svmap_and_result(ips):
 	#виконуємо пошук та зберігаємо весь текст результату
 	text = svmap_SIP(ips)
+	print(text)
 	#вибираємо необхідне  
 	dict_with_ips = search_regular_expression(text)
 	#створюємо словник який потім зможемо використовувати для запису в БД
-	ips_from_bd = create_obj_ip_to_bd(dict_with_ips, text)
-	return ips_from_bd
+	ips_from_bd = create_obj_ip_to_bd(dict_with_ips) 
+	print(ips_from_bd)
+	return  ips_from_bd if ips_from_bd != {} else False
 
 
 if __name__ == '__main__':

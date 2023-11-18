@@ -159,4 +159,8 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 .idea/
 vebv_scan/
+venv/
+*.db
 photo_*
+instance/
+static/py/python_nmap/result_scan/

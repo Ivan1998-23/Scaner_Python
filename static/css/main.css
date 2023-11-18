@@ -201,18 +201,26 @@ body {
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
-.filtr-ip {
+.filtr {
 	display: flex; 
 	align-items: center;
 	margin-bottom: 5px;
+	margin-right: 5em;
 }
 .find-Adress {
 	width:150px;
 }
 #Adress {
+	width:110px; 
+	margin-left: 10px;
+	margin-right: 5px;
+	margin-bottom: none;
+	height: 20px;
+}
+#Time {
 	width:110px;
 	margin-left: 10px;
-	margin-right: 20px;
+	margin-right: 5px;
 	margin-bottom: none;
 	height: 20px;
 }

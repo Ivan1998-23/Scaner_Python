@@ -261,14 +261,16 @@ let buttonLook = document.getElementById('sort-look');
 let buttonTieme = document.getElementById('sort-tieme');  
 let buttonFindIPs = document.getElementById('find-ip');
 let buttonInputAdress = document.getElementById('Adress');
+let buttonFindTime = document.getElementById('find-time');
+let buttonInputTime = document.getElementById('Time');
 
 //сортування по ПОДАВАЛИ
 buttonChek.addEventListener('click', function () { 
 	let listElements = Array.prototype.slice.call(list.children); // перетворюємо NodeList на справжній масив 
 	// сортируем
-	let sortedListElements = listElements.sort(function(a, b) { 
-		let a_value = a.childNodes[3].childNodes[1].childNodes[1].attributes.value.value
-		let b_value = b.childNodes[3].childNodes[1].childNodes[1].attributes.value.value 
+	let sortedListElements = listElements.sort(function(a, b) {  
+		let a_value = a.querySelector(`[data-id-check]`).attributes.value.value;
+		let b_value = b.querySelector(`[data-id-check]`).attributes.value.value; 
 		return (a_value > b_value) ? 1 : -1; 
 	})  
 	// очищаємо батьківський контейнер
@@ -284,8 +286,9 @@ buttonLook.addEventListener('click', function () {
 	let listElements = Array.prototype.slice.call(list.children); // перетворюємо NodeList на справжній масив 
 	// сортируем
 	let sortedListElements = listElements.sort(function(a, b) { 
-		let a_value = a.childNodes[5].childNodes[1].childNodes[1].attributes.value.value
-		let b_value = b.childNodes[5].childNodes[1].childNodes[1].attributes.value.value 
+		//let a_value = a.childNodes[5].childNodes[1].childNodes[1].attributes.value.value
+		let a_value = a.querySelector(`[data-id-look]`).attributes.value.value;
+		let b_value = b.querySelector(`[data-id-look]`).attributes.value.value; 
 		return (a_value > b_value) ? 1 : -1; 
 	})  
 	// очищаємо батьківський контейнер
@@ -298,11 +301,11 @@ buttonLook.addEventListener('click', function () {
 
 //сортування по Tieme
 buttonTieme.addEventListener('click', function () { 
-	let listElements = Array.prototype.slice.call(list.children); // перетворюємо NodeList на справжній масив 
+	let listElements = Array.prototype.slice.call(list.children); // перетворюємо NodeList на справжній масив  
 	// сортируем
 	let sortedListElements = listElements.sort(function(a, b) {  
-		let a_value = a.childNodes[15].childNodes[1].childNodes[0].data
-		let b_value = b.childNodes[15].childNodes[1].childNodes[0].data
+		let a_value = a.querySelector(`[data-id-tieme]`).textContent; //шукаємо саме дату в строці першого ІР
+		let b_value = b.querySelector(`[data-id-tieme]`).textContent;  //шукаємо саме дату в строці другого  ІР
 		return (a_value < b_value) ? 1 : -1; 
 	})  
 	// очищаємо батьківський контейнер
@@ -320,7 +323,28 @@ buttonFindIPs.addEventListener('click', function () {
 	buttonInputAdress.value = ''  
 	let listElements = Array.prototype.slice.call(list.children); // перетворюємо NodeList на справжній масив
 	listElements.forEach(row => {  
-		if (row.childNodes[7].childNodes[1].childNodes[1].innerHTML.includes(findIPs) ) {
+		let ip_list = row.querySelector(`[data-id-ip]`).textContent; 
+		if (ip_list.includes(findIPs) ) {
+			row.classList.add('look-row');
+			row.classList.remove('unlook-row'); 
+		}
+		else {
+			row.classList.remove('look-row');
+			row.classList.add('unlook-row');
+		}
+	}) 
+})
+
+
+//Пошук по даті
+buttonFindTime.addEventListener('click', function () { 
+	let findTime = buttonInputTime.value
+	buttonInputTime.value = ''  
+	let listElements = Array.prototype.slice.call(list.children); // перетворюємо NodeList на справжній масив
+	listElements.forEach(row => {  
+		console.log(row.childNodes[19].childNodes[1].innerHTML)
+		console.log(findTime)
+		if (row.childNodes[19].childNodes[1].innerHTML.includes(findTime) ) {
 			row.classList.add('look-row');
 			row.classList.remove('unlook-row'); 
 		}
@@ -335,5 +359,13 @@ buttonFindIPs.addEventListener('click', function () {
 buttonInputAdress.addEventListener("keyup", function(e) {
 	if (e.keyCode === 13) {
 		buttonFindIPs.click();
+	}
+});
+
+
+//пошук по Time clik ENTER
+buttonInputTime.addEventListener("keyup", function(e) {
+	if (e.keyCode === 13) {
+		buttonFindTime.click();
 	}
 });

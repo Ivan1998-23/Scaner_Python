@@ -53,7 +53,12 @@
 					<div class="linefiltr" >
 						<input type="radio" name="metodscan" class="form" value="allports"  >
 						<label class="form"> Написати список портів </label>
-						<input type='text' class="allports form ValueOff" name="allports"  data-for="allports" placeholder="22, 23, 443, 80">
+						<input type="text" class="allports form ValueOff" name="allports"  data-for="allports" placeholder="22, 23, 443, 80">
+					</div>
+					<div class="linefiltr" >
+						<input type="radio" name="metodscan" class="form" value="pnports"  >
+						<label class="form"> Cканувати на все</label> 
+						<label class="form ValueOff" name="pnports"  data-for="pnports">nmap 0-1000s ports</label>
 					</div>
 	<!--                <div class="nmap ValueOff" id="checkboxListContainer" name="nmapValue">-->
 	<!--                    <hr>-->
@@ -114,6 +119,10 @@
 									Адреса
 								</div>
 							</th>
+							<th><div class="value ipAdress">
+									Значення 
+								</div>
+							</th>
 							<th>
 								<div class="value"  >
 									Результат	
@@ -122,112 +131,32 @@
 						</tr>
 					</thead>
 					<tbody class="scroll"> 
-						 <tr class="row">
-							<td>
-									<div class="value endTieme">2023.11.05 18:51</div>
-							</td>
-							<td>
-								<div class="value ipAdress"  >
-									192.168.85.144/24
-								</div>
-							</td>
-							<td>
-								<div class="value"  >
-									False	
-								</div>
-							</td>
-						 </tr>
-						 <tr class="row">
-							 <td>
-									<div class="value endTieme">2023.11.05 18:51</div>
-							 </td>
-							 <td>
-								<div class="value ipAdress"  >
-									192.168.85.144/24
-								</div>
-							</td>
-							<td>
-								<div class="value"  >
-									True	
-								</div>
-							</td>
-						 </tr>		
-						 <tr class="row  ">
-							 <td>
-									<div class="value endTieme">2023.11.05 18:51</div>
-							 </td>
-							 <td>
-								<div class="value ipAdress"  >
-									192.168.85.144/24
-								</div>
-							</td>
-							<td>
-								<div class="value"  >
-									True	
-								</div>
-							</td>
-						 </tr>
-						 <tr class="row  ">
-							 <td>
-									<div class="value endTieme">2023.11.05 18:51</div>
-							 </td>
-							 <td>
-								<div class="value ipAdress"  >
-									192.168.85.144/24
-								</div>
-							</td>
-							 <td>
-								 <div class="value"  >
-									True
-								</div>
-							</td>
-						 </tr>		
-						 <tr class="row  ">
-							 <td>
-									<div class="value endTieme">2023.11.05 18:51</div>
-							 </td>
-							 <td>
-								<div class="value ipAdress"  >
-									192.168.85.144/24
-								</div>
-							</td>
-							 <td>
-								 <div class="value"  >
-									True
-								</div>
-							</td>
-						 </tr>	
-						 
-						 <tr class="row">
-							 <td>
-									<div class="value endTieme">2023.11.05 18:51</div>
-							 </td>
-							 <td>
-								<div class="value ipAdress"  >
-									192.168.85.144/24
-								</div>
-							</td>
-							 <td>
-								 <div class="value"  >
-									True
-								</div>
-							</td>
-						 </tr>	
-						 <tr class="row">
-							 <td>
-									<div class="value endTieme">2023.11.05 18:51</div>
-							 </td>
-							 <td>
-								<div class="value ipAdress"  >
-									192.168.85.144/24
-								</div>
-							</td>
-							 <td>
-								 <div class="value"  >
-									True
-								</div>
-							</td>
-						 </tr>		 
+						{% for el in logs_scan[::-1] %}       
+							<tr class="row">
+								<td>
+										<div class="value endTieme">{{ el.start_time.strftime("%Y.%m.%d	 %H:%M") }}</div>
+								</td>
+								<td>
+									<div class="value ipAdress"  >
+										{{ el.ips}}
+									</div>
+								</td>
+								<td>
+									<div class="value Other"  >
+										{{ el.other}}
+									</div>
+								</td>
+								<td>
+									<div class="value"  >
+										{% if el.result == True %}
+												<span>&#128994</span>
+										{% else %}
+												<span>&#128308</span>
+										{% endif %}
+									</div>
+								</td>
+							 </tr> 	 
+						{% endfor %} 
 					</tbody>
 				</table>
 			</div> 

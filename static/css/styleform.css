@@ -109,10 +109,7 @@ form {
 .sign-in-IP {
     margin-right: 20px;
 }
-label {
-    margin-right: 15px;
-    line-height: 32px;
-}
+
 
 input[name="metodscan"] {
     -webkit-appearance: none;
@@ -164,7 +161,8 @@ input:checked {
 }
 label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 5px; 
+    line-height: 32px;
 }
 input[type="text"], select {
 /*     margin-bottom: 10px;
@@ -232,9 +230,9 @@ input[type="checkbox"] {
 	height: 500px;
 }
 .table-history {
-	width: 500px;  
+	width: 550px;  
 	overflow-x:auto;
-	height: auto;
+	height: 500px;
 }
 .blok { 
 	display: block;
@@ -242,8 +240,11 @@ input[type="checkbox"] {
 }
 .right-blok {  
 	clear: both;
-    float: right;
+    float: right; 
 }
 .left-blok { 
 	margin: 0 auto;
 } 
+.Other {
+	width: 180px;
+}

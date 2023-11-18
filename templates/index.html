@@ -10,14 +10,20 @@
 {% block script %}
     <script  type='module'src="{{ url_for('static', filename='js/addcoments.js') }}"></script>
 {% endblock %}
-
-{% block body %}
-
+              
+{% block body %} 
 	<div class="main">
-		<div class="filtr-ip">   
-			<label >Фільтр по ІР :</label>
-			<input id="Adress" type="text"  placeholder="192.168.1.1">
-			<button id="find-ip"  class="signUp">Пошук</button>
+		<div class="filtr">
+			<div class="filtr">   
+				<label>Фільтр по ІР :</label>
+				<input id="Adress" type="text"  placeholder="192.168.1.1">
+				<button id="find-ip"  class="signUp">Пошук</button>
+			</div>
+			<div class="filtr">   
+				<label>Пошук по даті :</label>
+				<input id="Time" type="text"  placeholder="2023.11.10 16:02">
+				<button id="find-time"  class="signUp">Пошук</button>
+			</div>
 		</div>
         <table  class="table table-striped">
             <thead>
@@ -26,25 +32,31 @@
                         <div class="value id">ID</div>
                     </th>
                     <th scope="col">
-                        <div class="value sort checked" id='sort-chek'>Подавали &#11109 </div>
+                        <div class="value sort checked" id='sort-chek'>Подавали &#8595 </div>
                     </th>
                     <th scope="col">
-                        <div class="value  sort looked" id='sort-look'>Перевірили &#11109</div>
+                        <div class="value  sort looked" id='sort-look'>Перевірили &#8595</div>
                     </th>
                     <th scope="col">
-                        <div class="value ipAdress">IP addres</div>
+                        <div class="value ipAdress">IP</div>
                     </th>
                     <th scope="col">
-                        <div class="value st"> STATUS</div>
+                        <div class="value Device">Пристрій</div>
                     </th>
                     <th scope="col">
-                        <div class="value port">Port</div>
+                        <div class="value Device">Версія</div>
+                    </th>
+                    <th scope="col">
+                        <div class="value st"> Статус</div>
+                    </th>
+                    <th scope="col">
+                        <div class="value port">Порт</div>
                     </th>
                     <!--<th scope="col">
-                        <div class="value endTieme">Коли виявили</div>
+                        <div class="value ">Коли виявили</div>
                     </th>--->
                     <th scope="col">
-                        <div class="value sort endTieme" id='sort-tieme'>Останє сканування &#11109</div>
+                        <div class="value sort endTieme" id='sort-tieme'>Останє сканування &#8595</div>
                     </th>
                     <th scope="col">
                         <div class="value violation">Що виявили</div>
@@ -61,7 +73,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% for el in address%}
+                {% for el in address[::-1] %}
                         <tr class="row look-row">
                             <td scope="col">
                                 <div class="value id">{{ el.id}}</div>
@@ -90,6 +102,16 @@
                                 </div>
                             </td>
                             <td>
+                                <div class="value Device"  >
+                                    <div class="value">{% if el.id_svmap %} {{  el.id_svmap.dev_name  }} {% endif %}</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="value Device"  >
+                                    <div class="value">{% if el.id_svmap %} {{  el.id_svmap.version  }} {% endif %}</div>
+                                </div>
+                            </td>
+                            <td>
                                 <div class="value st"> {% if el.status == True %}
                                                         <span>&#127774</span>
                                                 {% else %}
@@ -101,10 +123,10 @@
                                 <div class="value port">{% if el.id_svmap %} {{  el.id_svmap.ports  }} {% endif %}</div>
                             </td>
                             <!--<td>
-                                <div class="value endTieme">{{ el.created.strftime("%d.%m.%Y %H:%M")}}</div>
+                                <div class="value ">{{ el.created.strftime("%d.%m.%Y %H:%M")}}</div>
                             </td>-->
                             <td>
-                                <div class="value endTieme">{{ el.update.strftime("%Y.%m.%d	 %H:%M") }}</div>
+                                <div class="value endTieme" data-id-tieme="{{ el.id }}">{{ el.update.strftime("%Y.%m.%d	 %H:%M") }}</div>
                             </td>
                             <td>
                                 <div class="value violation"> 
