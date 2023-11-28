@@ -224,3 +224,50 @@ body {
 	margin-bottom: none;
 	height: 20px;
 }
+
+/*стилі відносно кнопки для повернення в гору*/
+.btn-up {
+	/* фіксоване позиціонування */
+	position: fixed;
+	/* колір фона */
+	background-color: #b6b6b6;
+	/* відстаннь від правого вікна браузера  */
+	right: 20px;
+	/* відстаннь від нижнього вікна браузера */
+	bottom: 0;
+	/* округлення  верхнего лівого угла */
+	border-top-left-radius: 8px;
+	/* округлення  верхнего правого угла */
+	border-top-right-radius: 8px;
+	/* вид курсора */
+	cursor: pointer;
+	/* відображення елемента як  flex */
+	display: flex;
+	/* вирівнювання елемента в середині по центру вдоль поперечної осі */
+	align-items: center;
+	/* вирівнювання елемента в середині по центру вдоль  головной осі */
+	justify-content: center;
+	/* ширина елемента */
+	width: 60px;
+	/* висота елемента */
+	height: 50px;
+}
+
+.btn-up::before {
+	content: "";
+	width: 40px;
+	height: 40px;
+	background: transparent no-repeat center center;
+	background-size: 100% 100%;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23fff' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z'/%3E%3C/svg%3E");
+}
+
+.btn-up_hide {
+	display: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.btn-up:hover {
+		background-color: #6f6f6f; /* колір при наведенні */
+  }
+}

@@ -77,7 +77,7 @@ signUpBtn.addEventListener("click", (e)=> {
 				if (Object.keys(response_data.result).length == 0) {
 					let answer =  confirm(`Сканування закінчилось\nРезультатів немає`);
 					//робим редірект на основну сторінку
-					window.location.href = `/`;  
+					window.location.href = `/findIP`;  
 				}
 				else {
 					// Перенаправлення на нову сторінку з передачею даних через URL 
@@ -216,5 +216,12 @@ function hideSpinner() {
 //     downloadLink.click();
 // });
 
-
-
+ 
+//перебираємол всі ip  в таблиці логів
+const clickIpLogs= document.querySelectorAll('.iplogs'); 
+// при натисканні на ІР в логах, записується одразу а форму пошуку
+clickIpLogs.forEach(bott => { 
+	bott.addEventListener('click', function () { 
+		form.elements.ipadress.value = bott.innerText 
+    });
+}); 

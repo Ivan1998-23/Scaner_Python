@@ -70,7 +70,7 @@ def update_address_from_data(id_ones_ip, data):
     nmap_fields = ['other']
     try: 
         #Оновіть поля класу Address на основі даних
-        for field in address_fields:
+        for field in address_fields: 
             if field in data and data[field] != '':   
                 setattr(id_ones_ip, field, data[field])
 		# Оновіть поля класу Svmap на основі даних з id_svmap

@@ -221,7 +221,7 @@ bottsDelete.forEach(bott => {
 //ф-я повертая зменшиний текст на N символів
 function truncateText(text, maxLength) {
     if (text.length > maxLength) {
-        return text.substring(0, maxLength) + "...";
+        return text.substring(6, maxLength) + "...";
     } else {
         return text;
     }
@@ -232,7 +232,7 @@ const bottsInfoPopup= document.querySelectorAll('.other');
 
 bottsInfoPopup.forEach(bott => {
 	//буде обрізано після 30 символів і додано три крапки.	 
-	bott.innerText = truncateText(bott.innerText, 15); 
+	bott.innerText = truncateText(bott.innerText, 17); 
     bott.addEventListener('click', function () {
 		const id = this.getAttribute('data-id-other'); // Отримуємо id елемент 
 		const objPopup = document.querySelector(`[data-id-popup="${id}"]`);
@@ -263,6 +263,7 @@ let buttonFindIPs = document.getElementById('find-ip');
 let buttonInputAdress = document.getElementById('Adress');
 let buttonFindTime = document.getElementById('find-time');
 let buttonInputTime = document.getElementById('Time');
+let buttonViolation = document.getElementById('look-viol');
 
 //сортування по ПОДАВАЛИ
 buttonChek.addEventListener('click', function () { 
@@ -341,9 +342,7 @@ buttonFindTime.addEventListener('click', function () {
 	let findTime = buttonInputTime.value
 	buttonInputTime.value = ''  
 	let listElements = Array.prototype.slice.call(list.children); // перетворюємо NodeList на справжній масив
-	listElements.forEach(row => {  
-		console.log(row.childNodes[19].childNodes[1].innerHTML)
-		console.log(findTime)
+	listElements.forEach(row => {    
 		if (row.childNodes[19].childNodes[1].innerHTML.includes(findTime) ) {
 			row.classList.add('look-row');
 			row.classList.remove('unlook-row'); 
@@ -354,6 +353,25 @@ buttonFindTime.addEventListener('click', function () {
 		}
 	}) 
 })
+
+//пошук всі пристрої на яких записанні були колись порушення
+buttonViolation.addEventListener('click', function () {  
+	let listElements = Array.prototype.slice.call(list.children); // перетворюємо NodeList на справжній масив
+	listElements.forEach(row => {  
+		let ip_list = row.querySelector(`[data-id-vio]`).textContent; 
+		console.log(ip_list == '') 
+		
+		if (ip_list !== '') {
+			row.classList.add('look-row');
+			row.classList.remove('unlook-row'); 
+		}
+		else {
+			row.classList.remove('look-row');
+			row.classList.add('unlook-row');
+		}
+	}) 
+})
+
 
 //сортування по IP clik ENTER
 buttonInputAdress.addEventListener("keyup", function(e) {
@@ -369,3 +387,35 @@ buttonInputTime.addEventListener("keyup", function(e) {
 		buttonFindTime.click();
 	}
 });
+
+//конопка для повернення в гору сторінки
+const btnUp = {
+  el: document.querySelector('.btn-up'),
+  show() {
+    // видалити у кнопки класс btn-up_hide
+    this.el.classList.remove('btn-up_hide');
+  },
+  hide() {
+    // добавити до кнопки класс btn-up_hide
+    this.el.classList.add('btn-up_hide');
+  },
+  addEventListener() {
+    // під час прокрутки вмісту сторінки
+    window.addEventListener('scroll', () => {
+      // визначаємо значення прокрутки
+      const scrollY = window.scrollY || document.documentElement.scrollTop;
+      //  кщо сторінка прокручена більше на 400рх, то кнопку ставимо явною, в іншому випадку скриваєм її
+      scrollY > 400 ? this.show() : this.hide();
+    });
+    // при кліку на кнопку .btn-up
+    document.querySelector('.btn-up').onclick = () => {
+      // переміщаємо на початоку сторінки  
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'smooth'
+      });
+    }
+  }
+}
+btnUp.addEventListener();
