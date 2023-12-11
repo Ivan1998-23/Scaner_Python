@@ -4,15 +4,15 @@ import csv
 from datetime import datetime
 today = datetime.now()
 
-#функция пингует хосты и дописывает активные хосты в файл output_scv.csv
-#обязательно вписывать адрес с маской через /
-# Пример вызова ф-и :   python exam_fping.py 192.168.100.1/28
+# функція пінгує хости і дописує активні хости в файл output_scv.csv
+# обов'язково вписувати адресу з маскою через /
+# Приклад виклику ф-і :   python exam_fping.py 192.168.100.1/28
 def fping_all(address): 
 	'''
 	today = date.today()
 	write_file = 'static/py/python_nmap/result_scan/' + str(today) + '.txt' 
 	''' 
-	#якщо передається з маскою  ('/')   то ставимо арнумент -g
+	# якщо передається з маскою  ('/')   то ставимо арнумент -g
 	if '/' in address:
 		result = subprocess.run(['fping', '-r', '2', '-a', '-g',  address], stdout = subprocess.PIPE)
 	else:
@@ -29,15 +29,16 @@ def fping_all(address):
 			print('', file=f2)
 		'''  
 		return mas_alive
-	
+
+# пінгує з ОС windows
 def fping_all_from_windows (address):
-    result = subprocess.run(["ping", address], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-    # Получить вывод ping
-    ping_output = result.stdout
-    print(ping_output)
+	result = subprocess.run(["ping", address], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+	# Отримати висновок ping
+	ping_output = result.stdout
+	print(ping_output)
 
 
-#створюємо словник який потім зможемо використовувати для запису в БД    
+# створюємо словник який потім зможемо використовувати для запису в БД
 def create_obj_fping_ip_to_bd(array_ips):
 	result_obg_with_ips = {} 
 	for ip in array_ips:   
@@ -57,12 +58,14 @@ def create_obj_fping_ip_to_bd(array_ips):
 		} 
 	return result_obg_with_ips
 
+
 def ping_all_ip_result_object(ip):
 	ob_ip = fping_all(ip)
 	if ob_ip:
 		return create_obj_fping_ip_to_bd(ob_ip)
 	else:
 		return False
+
 
 if __name__ == '__main__':
 	address = sys.argv[1]

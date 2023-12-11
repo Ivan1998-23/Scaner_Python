@@ -47,10 +47,11 @@ signUpBtn.addEventListener("click", (e)=> {
     else {
         let valueOnBox = form.querySelector( `[data-for="${inRadio.value}"]`).value;
         valueOnBox = (!valueOnBox) ? "" : valueOnBox;
+//        стврюємо обєкт який буде відправлено на сервер
         let obj = {
-            name : form.elements.ipadress.value,
-            work: inRadio.value,
-            value: valueOnBox,
+            name : form.elements.ipadress.value,            // ІР адрес
+            work: inRadio.value,                            // який тип сканування
+            value: valueOnBox,                              // порти або пусте значення
         }
         showSpinner();
         //  відправляємо на бекенд за допомогою метода fetch
@@ -64,7 +65,7 @@ signUpBtn.addEventListener("click", (e)=> {
         .then(response => {
             // Обробка відповідей сервера
             if (!response.ok) {
-                throw new Error('Сетевая ошибка');
+                throw new Error('Мережева помилка');
             }
             // Перетворення відповіді в JSON
             return response.json();
@@ -97,10 +98,9 @@ signUpBtn.addEventListener("click", (e)=> {
 });
 
 
-// Когда пользователь выбирает одну из опций, вызывается функция createCheckboxList(),
-//  которая создает список из трех флажков (Флажок 1, Флажок 2 и Флажок 3).
-//  Флажки будут отображаться под радиокнопками.
-// script.js
+// Коли користувач вибирає одну з опцій, викликається функція createCheckboxList(),
+//  яка створює список із трьох прапорців (Прапорець 1, Прапорець 2 і Прапорець 3).
+//  Прапорці відображатимуться під радіокнопками.
 function createCheckboxList() {
     const container = document.getElementById("checkboxListContainer");
     container.innerHTML = ""; // Очищаем контейнер от предыдущих элементов
@@ -125,7 +125,7 @@ function createCheckboxList() {
 }
 
 
-// Добавляем обработчик события change каждой радио-кнопке в группе 1
+// Додаємо обробник події change кожної радіо-кнопки в групі 1
 const groupRadios = form.querySelectorAll('.linefiltr');
 const elements = document.querySelectorAll('.form[data-for]');
 // перевіряємо всі div блоки радіо
@@ -170,7 +170,7 @@ function hideSpinner() {
 }
 
 //
-//// Пример использования функции
+//// Приклад використання функції
 //document.getElementById('signadd').addEventListener('click', function() {
 //    const info = gatherInformation();
 //    console.log(info);
@@ -202,7 +202,7 @@ function hideSpinner() {
 // elem.addEventListener("click", handler1); // Спасибо!  
 // --------------------------------------------------------------
 
-// //Робота с текстовым полем textarea
+// Робота з текстовим полем textarea
 // document.getElementById("saveButton").addEventListener("click", function () {
 //     // Получаем текст из <textarea>
 //     var textToSave = document.getElementById("myTextarea").value;

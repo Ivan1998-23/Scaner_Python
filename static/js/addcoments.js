@@ -1,13 +1,13 @@
-// Находим все элементы с классом "checked"
+// Знаходимо всі елементи з класом "checked"
 const checkedBools = document.querySelectorAll('.checked span');
-// Добавляем обработчик события при клике на галочку или крестик  "Подавали"
+// Додаємо обробник події при кліку на галочку або хрестик "Подавали"
 checkedBools.forEach(checkedBool => {
     checkedBool.addEventListener('click', function () {
         const id = this.getAttribute('data-id-check'); // Отримуємо id елемент 
 
         // Получаем value
         const value =  this.getAttribute('value');
-//        console.log(value);
+        // console.log(value);
 		
         // Робимо заміну зображень
         this.innerHTML = (value === 'True') ? "&#10060" : "&#9989";
@@ -35,26 +35,26 @@ checkedBools.forEach(checkedBool => {
         })
         .then(response => {
             if (response.ok) {
-                    console.log('Данные успешно сохранены в базе данных');
+                    console.log('Дані вдало збережено в базі даних');
             } else {
-                console.error('Ошибка сохранения данных в базе данных');
+                console.error('Помилка збереження даних у базі даних');
             }
         })
         .catch(error => {
-            console.error('Произошла ошибка:', error);
+            console.error('Сталася помилка:', error);
         });
     });
 });
 
 
-// Находим все элементы с классом "looked"
+// Знаходимо всі елементи з класом "looked"
 const lookedBools = document.querySelectorAll('.looked span');
-// Добавляем обработчик события при клике на галочку или крестик  "Подавали"
+// Додаємо обробник події при кліці на галочку або хрестик "Подавали"
 lookedBools.forEach(lookedBool => {
     lookedBool.addEventListener('click', function () {
         const id = this.getAttribute('data-id-look'); // Отримуємо id елемент 
 
-        // Получаем value
+        // Отримуємо value
         const value =  this.getAttribute('value');
 //        console.log(value);
 
@@ -84,26 +84,26 @@ lookedBools.forEach(lookedBool => {
         })
         .then(response => {
             if (response.ok) {
-                    console.log('Данные успешно сохранены в базе данных');
+                    console.log('Дані вдало збережено в базі даних');
             } else {
-                console.error('Ошибка сохранения данных в базе данных');
+                console.error('Помилка збереження даних у базі даних');
             }
         })
         .catch(error => {
-            console.error('Произошла ошибка:', error);
+            console.error('Сталася помилка:', error);
         });
     });
 });
 
 
-// Находим все элементы с классом "myTextarea"
+// Знаходимо всі елементи з класом "myTextarea"
 const textareas = document.querySelectorAll('.myTextarea');
-// Добавляем обработчик события при изменении фокуса (blur) в каждом текстовом редакторе
+// Додаємо обробник події при зміні фокусу (blur) у кожному текстовому редакторі
 textareas.forEach(textarea => {
     textarea.addEventListener('blur', function () {
         const id = this.getAttribute('data-id-com'); // Получаем id элемента
 
-        // Получаем текст из текущего текстового редактора
+        // Отримуємо текст із поточного текстового редактора
         const text = this.value;
         console.log(`ID: ${id}, Текст: ${text}`);
 
@@ -120,26 +120,26 @@ textareas.forEach(textarea => {
         })
         .then(response => {
             if (response.ok) {
-                console.log('Данные успешно сохранены в базе данных');
+                console.log('Дані вдало збережено в базі даних');
             } else {
-                console.error('Ошибка сохранения данных в базе данных');
+                console.error('Помилка збереження даних у базі даних');
             }
         })
         .catch(error => {
-            console.error('Произошла ошибка:', error);
+            console.error('Сталася помилка:', error);
         });
     });
 });
 
 
-// Находим все элементы с классом "myTextVio"
+// Знаходимо всі елементи з класом "myTextVio"
 const textvio = document.querySelectorAll('.myTextVio');
-// Добавляем обработчик события при изменении фокуса (blur) в каждом текстовом редакторе
+// Додаємо обробник події при зміні фокусу (blur) у кожному текстовому редакторі
 textvio.forEach(textvio => {
     textvio.addEventListener('blur', function () {
         const id = this.getAttribute('data-id-vio'); // Получаем id элемента
 
-        // Получаем текст из текущего текстового редактора
+        // Отримуємо текст із поточного текстового редактора
         const text = this.value;
         console.log(`ID: ${id}, Текст: ${text}`);
 
@@ -156,13 +156,13 @@ textvio.forEach(textvio => {
         })
         .then(response => {
             if (response.ok) {
-                console.log('Данные успешно сохранены в базе данных');
+                console.log('Дані вдало збережено в базі даних');
             } else {
-                console.error('Ошибка сохранения данных в базе данных');
+                console.error('Помилка збереження даних у базі даних');
             }
         })
         .catch(error => {
-            console.error('Произошла ошибка:', error);
+            console.error('Сталася помилка:', error);
         });
     });
 });
@@ -171,7 +171,7 @@ textvio.forEach(textvio => {
 
 
 // кнопка для видалення
-// Находим все элементы с классом "delete"
+// Знаходимо всі елементи з класом "delete"
 const bottsDelete = document.querySelectorAll('.delete');
 
 bottsDelete.forEach(bott => {
@@ -207,7 +207,7 @@ bottsDelete.forEach(bott => {
                 console.log('Ответ от сервера:', response_data);
             })
             .catch(error => {
-                console.error('Произошла ошибка:', error);
+                console.error('Сталася помилка:', error);
             });
 //          alert("Видалили");
         } else {

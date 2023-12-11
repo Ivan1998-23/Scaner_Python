@@ -1,22 +1,22 @@
 export function isValidIpAddress(ip) {
-    // Регулярное выражение для проверки корректности IP-адреса
+    // Регулярний вираз для перевірки коректності IP-адреси
     const ipPattern = /^(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)$/;
     return ipPattern.test(ip);
 }   
 
 export function isValidIpAddressesFromMask(ipMasc) {
-    // Регулярное выражение для проверки формата IP-адреса и маски подсети
+    // Регулярний вираз для перевірки формату IP-адреси та маски підмережі
     const ipRegex = /^(\d{1,3}\.){3}\d{1,3}\/\d{1,2}$/;
 
-    // Проверка совпадения IP-адреса с регулярным выражением
+    // Перевірка збігу IP-адреси з регулярним виразом
     if (!ipRegex.test(ipMasc)) {
         return false;
     }
 
-    // Разделение IP-адреса и маски подсети
+    // Поділ IP-адреси та маски підмережі
     const [ip, subnet] = ipMasc.split('/');
 
-    // Проверка корректности IP-адреса
+    // Перевірка коректності IP-адреси
     const ipParts = ip.split('.');
     if (
         ipParts.length !== 4 ||
@@ -25,7 +25,7 @@ export function isValidIpAddressesFromMask(ipMasc) {
         return false;
     }
 
-    // Проверка корректности маски подсети
+    // Перевірка коректності маски підмережі
     const subnetValue = parseInt(subnet, 10);
     if (subnetValue < 0 || subnetValue > 32) {
         return false;
@@ -35,11 +35,11 @@ export function isValidIpAddressesFromMask(ipMasc) {
 }  
 
 export function validatePorts(input) {
-    // Разделяем введенную строку на порты, используя запятые и пробелы как разделители
+    // Розділяємо введений рядок на порти, використовуючи коми і пробіли як роздільники
     if (input.length) {
         const ports = input.split(', ');
         for (const port of ports) {
-            // Проверяем, что порт состоит только из цифр
+            // Перевіряємо, що порт складається тільки з цифр
             if (!/^\d+$/.test(port)) {
                 return false;
             }
@@ -51,7 +51,7 @@ export function validatePorts(input) {
     }
 }
 
-//  проверяет введенный IP-адрес с помощью регулярного выражения ipPattern. Если IP-адрес корректен, 
+//  перевіряє введену IP-адресу за допомогою регулярного виразу ipPattern. Якщо IP-адреса коректна,
 // то выводится сообщение "IP-адрес корректен", иначе выводится сообщение "IP-адрес некорректен".
 
 // function checkIpAddress() {

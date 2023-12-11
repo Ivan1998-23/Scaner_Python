@@ -5,9 +5,11 @@ from flask_migrate import Migrate
 db = SQLAlchemy()
 migrate = Migrate()
 
+# описується яка саме БД буде створено
 
-def create_app(): 
-	app = Flask(__name__,template_folder='../templates', static_folder='../static')
+
+def create_app():
+	app = Flask(__name__, template_folder='../templates', static_folder='../static')
 	app.debug = True
 	
 	app.config['SECRET_KEY'] = 'JHVASJDIGi132412923JB12412'

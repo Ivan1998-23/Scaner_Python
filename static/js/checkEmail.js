@@ -1,24 +1,4 @@
-// export function checkEmail(nameEmail){ 
-//   if (nameEmail == '') {
-//     return false
-//   }
-//   let requestURLEmail = `https://api.2ip.ua/email.txt?email=${nameEmail}`;
-
-//   let request = new XMLHttpRequest();
-//   request.open('GET', requestURLEmail);
-//   request.responseType = 'json';
-//   request.send();
-  
-//   // // console.log(request)
-  
-//   let result =  request.onload = function() {
-//     let superHeroes = request.response;  
-//     return superHeroes;
-//   }
-//   return result
-// } 
-
-export function checkEmail(nameEmail){ 
+export function checkEmail(nameEmail){
   return true;
 } 
 

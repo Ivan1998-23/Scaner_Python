@@ -9,7 +9,7 @@ today = datetime.now()
 ports_from_server = ["22","80", "443", "5060", "5062", "8080"]
 ports_from_windows = ["3389", "25", "445", "1433", "53", "67", "68", "161", "162", "139", "135"]
 
-
+# скануємо та записуємо до файлу 'result_scan/csv_' + str(today) + '.csv'
 def scan_nmap_write_csv(network_range):
 	today = datetime.today()
 	save_file_from_csv = 'result_scan/csv_' + str(today) + '.csv'
@@ -37,17 +37,18 @@ def scan_nmap_write_csv(network_range):
 	'''
 
 
+# скануємо на готовий список портів
 def scan_network(network_range):
 	port = ', '.join(ports_from_windows)
 	port2 = ', '.join(ports_from_server)
 	write_file = 'result_scan/nmap_' + str(today) + '.txt'
-	result = subprocess.run(['nmap', '-p', f'{port2}',   network_range], stdout = subprocess.PIPE, encoding='utf-8')
+	result = subprocess.run(['nmap', '-p', f'{port2}',   network_range], stdout=subprocess.PIPE, encoding='utf-8')
 	with open(write_file, 'w') as f2:
 		print(result.stdout, file=f2) 
 
-
+# скануємо на  список портів які передали до ф-ї
 def scan_list_ports_nmap(ip, ports):
-	result = subprocess.run(['nmap', '-PN','-p', f'{ports}',   ip], stdout = subprocess.PIPE, encoding='utf-8')
+	result = subprocess.run(['nmap', '-PN', '-p', f'{ports}',   ip], stdout=subprocess.PIPE, encoding='utf-8')
 	write_file = 'static/py/python_nmap/result_scan/nmap_' + str(today.date()) + '.txt'
 	with open(write_file, 'x') as f2:
 		print(result.stdout, file=f2) 
@@ -101,7 +102,8 @@ def find_regular_in_scan_nmap(all_text):
 	return mas_result   
 
 
-
+# скануємо на  список портів які передали та записуєио результат в файл
+# повертає обєкт в якому зберігається вся інформація про ІР
 def scan_list_nmap_write_csv(network_range, ports):
 	mas_result = {}
 	array_up_ip = fping_all(network_range) 
@@ -138,23 +140,24 @@ def scan_list_nmap_write_csv(network_range, ports):
 	else:
 		return False
 
+
 def masscan_scan(ips, ports='0-65535'): 
 	result = subprocess.run(['masscan', '-p', f'{ports}',   ips], stdout = subprocess.PIPE, encoding='utf-8')  
 	all_text = result.stdout  
-	#використовуємо регулярний вираз щоб вибрати те що нам треба
+	# використовуємо регулярний вираз щоб вибрати те що нам треба
 	regex= r'\S+ +(?P<status>\S+) +\S+ +(?P<ports>\d+)\/(?P<type>\S+) +\S+ +(?P<ip>\d+\.\d+.\d+.\d+)' 
-	#result = [match.groups() for match in re.finditer(regex, in_str)]
+	# result = [match.groups() for match in re.finditer(regex, in_str)]
 	 
-	#створюємо новий обєкт в якому ІР буде ключом  
+	# створюємо новий обєкт в якому ІР буде ключом
 	mas_result = {}
-	#перебираємо текст построчно
+	# перебираємо текст построчно
 	for line in all_text.split('\n'):  
 		match = re.search(regex, line) 
-		#якщо спрацьовує регулярний вираз 
+		# якщо спрацьовує регулярний вираз
 		if match: 
 			inf_ip = match.groupdict() 
 			inf_ip['other'] = line.strip() 
-			#додаємо  інфу PORT або змінюємо  таку ж інфу
+			# додаємо  інфу PORT або змінюємо  таку ж інфу
 			find_ip_in_dict = mas_result.get(inf_ip['ip'])   
 			if find_ip_in_dict:  
 				if inf_ip['ports'] == '': 
@@ -164,22 +167,22 @@ def masscan_scan(ips, ports='0-65535'):
 				inf_ip['other'] += '\n' + find_ip_in_dict.get('other')   
 			mas_result[inf_ip['ip']] = inf_ip   
 	return mas_result 
-	'''
-	 mas_result = 
-	{'10.180.25.23': {
-		'ip': '10.180.25.23', 
-		'port': '5062', 
-		'status': 'open',
-		'type': 'tcp', 
-		'other': 'Discovered open port 80/tcp on 10.187.95.69'
-	}}
-	'''
+'''
+ mas_result = 
+{'10.180.25.23': {
+	'ip': '10.180.25.23', 
+	'port': '5062', 
+	'status': 'open',
+	'type': 'tcp', 
+	'other': 'Discovered open port 80/tcp on 10.187.95.69'
+}}
+'''
 
-
+# Створюється візуальний варіант який записується в ОЗЕР
 def create_visual_response_others(objects_ip):
 	try: 
 		text_rezult_ALL = f"IP Address: {objects_ip['addresses']['ipv4']}\n"
-		#text_rezult_ALL += f"MAC Address: {objects_ip['addresses']['mac']}\n"
+		# text_rezult_ALL += f"MAC Address: {objects_ip['addresses']['mac']}\n"
 		text_rezult_ALL += f"Vendor: {objects_ip['vendor']}\n"
 		text_rezult_ALL += f"Host Status: {objects_ip['status']['state']}\n"
 		text_rezult_ALL += f"Status Reason: {objects_ip['status']['reason']}\n"
@@ -209,6 +212,7 @@ def create_visual_response_others(objects_ip):
 	except:
 		return False
 
+# Створюємо обєкт який буде записуватись в БД
 def create_obj_ip_to_bd_nmap(dict_ips):
 	try: 
 		result_obg_with_ips = {}
@@ -232,10 +236,11 @@ def create_obj_ip_to_bd_nmap(dict_ips):
 		print('Помилка При створенні основного обекту для запису в БД')
 		print(er)
 
+
 def scan_list_nmap_and_result(ips, ports):
-	#виконуємо пошук та  записуємо  результат в тимчасовий обєкт
+	# виконуємо пошук та  записуємо  результат в тимчасовий обєкт
 	obj_from_scan_nmap = scan_list_nmap_write_csv(ips, ports)
-	#створюємо словник який потім зможемо використовувати для запису в БД 
+	# створюємо словник який потім зможемо використовувати для запису в БД
 	ips_to_bd = create_obj_ip_to_bd_nmap(obj_from_scan_nmap) 
 	return ips_to_bd
 
@@ -253,6 +258,7 @@ def scan_nmap_all_ports_and_result(ips):
 	#створюємо словник який потім зможемо використовувати для запису в БД
 	ips_to_bd = create_obj_ip_to_bd_nmap(obj_from_scan_nmap) 
 	return ips_to_bd
+
 
 if __name__ == '__main__':
 	network = '192.168.85.147'
