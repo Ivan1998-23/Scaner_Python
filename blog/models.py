@@ -40,7 +40,7 @@ class Svmap(db.Model):
 class Nmap(db.Model):
     __tablename__ = 'nmap'
     id = db.Column(db.Integer, primary_key=True)
-    other = db.Column(db.String(255), nullable=True)            # nmap result scan......
+    other = db.Column(db.Text, nullable=True)            # nmap result scan......
     id_address = db.Column(db.Integer, db.ForeignKey('address.id'), unique=True, nullable=False)
 
     def __repr__(self):
@@ -86,14 +86,22 @@ def update_address_from_data(id_ones_ip, data):
 		
 		# Оновіть поля класу Nmap на основі даних з  id_nmap
         nmap = id_ones_ip.id_nmap    
-        for field in nmap_fields: 
-            if field in data['id_nmap'] and data['id_nmap'][field] != '' : 
-                if field == 'other':
-                    current_text = f'\n------{datetime.now().strftime("%Y.%m.%d %H:%M")}----------\n'
-                    current_text += data['id_nmap'][field]  +'\n'
-                    current_text += nmap.other 
-                setattr(nmap, field, current_text)    
-		
+        #for field in nmap_fields: 
+        #    if field in data['id_nmap'] and data['id_nmap'][field] != '' : 
+        #        if field == 'other':
+        #            current_text = f'\n------{datetime.now().strftime("%Y.%m.%d %H:%M")}----------\n'
+        #            current_text += data['id_nmap'][field]  +'\n'
+        #            current_text += nmap.other 
+        #        setattr(nmap, field, current_text)    
+
+        if data['id_nmap']['other'] != '' :  
+            current_text = f'\n------{datetime.now().strftime("%Y.%m.%d %H:%M")}----------\n'
+            current_text += data['id_nmap']['other']  +'\n'
+            current_text += nmap.other 
+            #перевіряє якщо стало більше 3000 символів то обрізати все що більше 3000
+            if len(current_text) > 3000:
+                current_text = current_text[0:3000]
+            setattr(nmap, 'other', current_text)  
         db.session.add(id_ones_ip)
     except Exception as er:
         print('помилка в перезаписі значень')
