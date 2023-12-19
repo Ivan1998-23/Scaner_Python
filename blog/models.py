@@ -13,8 +13,9 @@ class Address(db.Model):
     comments = db.Column(db.Text, default='', nullable=True)                # Примітки
     password = db.Column(db.Text, default='', nullable=True)                # password
     checked = db.Column(db.Boolean, nullable=True)                          # подавали порушення
+    data_checked = db.Column(db.Text, default='', nullable=True)           # дата коли подали кейс
     looked = db.Column(db.Boolean, default=False, nullable=True)            # чи взагалі перевіряли його
-    id_svmap = db.relationship('Svmap', backref='address', uselist=False)  # Св'язок з   id_svmap  1:1
+    id_svmap = db.relationship('Svmap', backref='address', uselist=False)   # Св'язок з   id_svmap  1:1
     id_nmap = db.relationship('Nmap', backref='address', uselist=False)     # Св'язок з   id_nmap   1:1
     status = db.Column(db.Boolean, default=True, nullable=False)            # увімкнен чи ні  up down
     def __repr__(self):
@@ -40,7 +41,7 @@ class Svmap(db.Model):
 class Nmap(db.Model):
     __tablename__ = 'nmap'
     id = db.Column(db.Integer, primary_key=True)
-    other = db.Column(db.Text, nullable=True)            # nmap result scan......
+    other = db.Column(db.Text, default='', nullable=True)            # nmap result scan......
     id_address = db.Column(db.Integer, db.ForeignKey('address.id'), unique=True, nullable=False)
 
     def __repr__(self):

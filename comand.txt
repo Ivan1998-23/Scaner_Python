@@ -27,6 +27,9 @@ For Pycharm windows run these line on the terminal:
     set FLASK_APP=flsite.py
     $env:FLASK_APP = "flsite.py"
     flask run
+    
+    
+flask --app=flsite run
 
 ------------------------------------------------------
 flask db init
@@ -35,3 +38,11 @@ flask db migrate -m 'add passwrd'    спочатку робимо зміни т
 flask db upgrade                        оновлюємо БД
 flask db downgrade                      повернутися на самий початок
 flask db downgrade 7da1581ba2cf         повернутися на відповідний коміт
+-------------------------------------------
+alembic revision --autogenerate -m 'create first commit'        створюємо перший репозиторій для БД
+alembic upgrade head          									оновлюємо БД 
+																робимо зміни
+alembic revision --autogenerate -m 'create first commit' 
+alembic upgrade head          									оновлюємо БД 
+
+alembic downgrade -1											якщо хочемо повернутись на один пункт назад

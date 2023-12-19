@@ -1,10 +1,10 @@
 from logging.config import fileConfig
-
+from sqlalchemy import String
 from sqlalchemy import engine_from_config, pool
 from sqlalchemy.schema import MetaData
 
 from alembic import context 
-from blog import db
+from blog.models import * 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
@@ -27,7 +27,7 @@ target_metadata = db.Model.metadata
 # ... etc.
 
 
-def run_migrations_offline() -> None:
+def run_migrations_offline() -> None: 
     """Run migrations in 'offline' mode.
 
     This configures the context with just a URL
