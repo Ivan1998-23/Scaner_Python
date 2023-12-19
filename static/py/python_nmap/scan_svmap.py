@@ -95,7 +95,7 @@ def create_obj_ip_to_bd(dict_ips):
 		'ip'	   : ip,
 		'update'   : today ,
 		'comments' : '',
-		'checked'  : False,
+		'checked'  : '',
 		'id_svmap' : {
 			'ports'	   : ports_coma,
 			'version'  : dict_ips[ip]['version'],
