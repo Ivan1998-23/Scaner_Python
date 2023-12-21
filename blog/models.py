@@ -14,6 +14,7 @@ class Address(db.Model):
     password = db.Column(db.Text, default='', nullable=True)                # password
     checked = db.Column(db.Boolean, nullable=True)                          # подавали порушення
     data_checked = db.Column(db.DateTime, default='', nullable=True)        # дата коли подали кейс
+    data_call = db.Column(db.DateTime, default='', nullable=True)           # дата коли телефонували на цей номер
     looked = db.Column(db.Boolean, default=False, nullable=True)            # чи взагалі перевіряли його
     id_svmap = db.relationship('Svmap', backref='address', uselist=False)   # Св'язок з   id_svmap  1:1
     id_nmap = db.relationship('Nmap', backref='address', uselist=False)     # Св'язок з   id_nmap   1:1
@@ -60,6 +61,18 @@ class LogScan(db.Model):
 
     def __repr__(self):
         return f'<LogScan {self.id}>'
+        
+
+
+# Показує пристрої до яких версій необхідно оновити
+class Frimvare(db.Model):
+    __tablename__ = 'frimvare'
+    id = db.Column(db.Integer, primary_key=True)  
+    dev_name = db.Column(db.String(50), nullable=True)         			# Grandstream ht818 Dinstar Cisco
+    new_version = db.Column(db.String(50), nullable=True)          		# версія до якої треба оновити 
+
+    def __repr__(self):
+        return f'<frimvare {self.id}>'
 
 
 

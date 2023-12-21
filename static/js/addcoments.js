@@ -247,8 +247,7 @@ bottsInfoPopup.forEach(bott => {
 }); 
  
 // Закриваємо модальне вікно при кліку поза ним
-window.addEventListener("click", function(event) {
-	console.log(event.target.classList == 'popup')
+window.addEventListener("click", function(event) { 
     if (event.target.classList == 'popup') {
 		event.target.style.display = "none"; 
     }
@@ -418,4 +417,10 @@ const btnUp = {
     }
   }
 }
-btnUp.addEventListener();
+btnUp.addEventListener(); 
+let tableInformations = document.querySelector('.table-striped') 
+
+// реагує на всі кліки в таблиці
+tableInformations.addEventListener("click", function(event) { 
+	console.log(event.target.attributes) 
+});
