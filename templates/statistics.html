@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	Статистика
+{% endblock %}
+
+{% block style %} 
+	<link rel="stylesheet icon" href="{{ url_for('static', filename='css/statistics.css')}}"> 
+{% endblock %}
+
+{% block script %}
+    <script  type='module'src="{{ url_for('static', filename='js/upstatistics.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+<div class="bady">
+<!--    <h2>{{massedg}}</h2>-->
+	<div class="centr">
+		<!-- <div>
+			<div class="pie" style="--p:20"> 20%</div>
+			<div class="pie" style="--p:40;--c:darkblue;--b:10px"> 40%</div>
+			<div class="pie no-round" style="--p:60;--c:purple;--b:15px"> 60%</div>
+			<div class="pie animate no-round" style="--p:80;--c:orange;"> 80%</div>
+			<div class="pie animate" style="--p:90;--c:lightgreen"> 90%</div>
+		</div>-->
+		<div class="forma-statistics">
+			<div class="canvas">
+			  <div class="legend">
+				<p class="title">Стосовно кількості ІР-адресов які виявили</p>
+				<ul class="caption-list">
+				  <li class="caption-item">В зоні ВМС</li>
+				  <li class="caption-item">Starlink</li></li>
+				  <li class="caption-item">Інші зони</li>
+				</ul>
+			  </div>
+
+			  <svg class="chart" width="500" height="500" viewBox="0 0 50 50">
+				<circle class="unit" r="15.9" cx="50%" cy="50%"></circle>
+				<circle class="unit" r="15.9" cx="50%" cy="50%"></circle>
+				<circle class="unit" r="15.9" cx="50%" cy="50%"></circle>
+			  </svg>
+			</div>
+		</div>
+		<div class="forma-statistics">
+			<div class="canvas">
+			  <div class="legend">
+				<p class="title">Стосовно кількості ІР-адресов які виявили</p>
+				<ul class="caption-list">
+				  <li class="caption-item">В зоні ВМС</li>
+				  <li class="caption-item">Starlink</li></li>
+				  <li class="caption-item">Інші зони</li>
+				</ul>
+			  </div>
+
+			  <svg class="chart" width="500" height="500" viewBox="0 0 50 50">
+				<circle class="unit" r="15.9" cx="50%" cy="50%"></circle>
+				<circle class="unit" r="15.9" cx="50%" cy="50%"></circle>
+				<circle class="unit" r="15.9" cx="50%" cy="50%"></circle>
+			  </svg>
+			</div>
+		</div>
+		<div class="forma-statistics">
+			<div class="canvas">
+			  <div class="legend">
+				<p class="title">Стосовно кількості ІР-адресов які виявили</p>
+				<ul class="caption-list">
+				  <li class="caption-item">В зоні ВМС</li>
+				  <li class="caption-item">Starlink</li></li>
+				  <li class="caption-item">Інші зони</li>
+				</ul>
+			  </div>
+
+			  <svg class="chart" width="500" height="500" viewBox="0 0 50 50">
+				<circle class="unit" r="15.9" cx="50%" cy="50%"></circle>
+				<circle class="unit" r="15.9" cx="50%" cy="50%"></circle>
+				<circle class="unit" r="15.9" cx="50%" cy="50%"></circle>
+			  </svg>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

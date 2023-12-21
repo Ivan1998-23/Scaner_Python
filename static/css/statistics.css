@@ -1,0 +1,186 @@
+@import url('heder.css');
+.bady {
+    display: flex; 
+     flex-direction: row;
+    justify-content: center;
+}
+
+.centr { 
+	display: flex; 
+    margin-top: 5%;
+    margin-right: 5%;
+    margin-left: 5%;
+    margin-bottom: 100px;
+}
+
+@property --p{
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+
+.pie {
+  --p:20;
+  --b:22px;
+  --c:darkred;
+  --w:150px;
+  
+  width:var(--w);
+  aspect-ratio:1;
+  position:relative;
+  display:inline-grid;
+  margin:5px;
+  place-content:center;
+  font-size:25px;
+  font-weight:bold;
+  font-family:sans-serif;
+}
+.pie:before,
+.pie:after {
+  content:"";
+  position:absolute;
+  border-radius:50%;
+}
+.pie:before {
+  inset:0;
+  background:
+    radial-gradient(farthest-side,var(--c) 98%,#0000) top/var(--b) var(--b) no-repeat,
+    conic-gradient(var(--c) calc(var(--p)*1%),#0000 0);
+  -webkit-mask:radial-gradient(farthest-side,#0000 calc(99% - var(--b)),#000 calc(100% - var(--b)));
+          mask:radial-gradient(farthest-side,#0000 calc(99% - var(--b)),#000 calc(100% - var(--b)));
+}
+.pie:after {
+  inset:calc(50% - var(--b)/2);
+  background:var(--c);
+  transform:rotate(calc(var(--p)*3.6deg)) translateY(calc(50% - var(--w)/2));
+}
+.animate {
+  animation:p 1s .5s both;
+}
+.no-round:before {
+  background-size:0 0,auto;
+}
+.no-round:after {
+  content:none;
+}
+@keyframes p {
+  from{--p:0}
+}
+
+body {
+  background:#f2f2f2;
+}
+@keyframes render {
+  0% {
+    stroke-dasharray: 0 100;
+  }
+}0
+
+html, body { 
+  background-color: #8d782e;
+}
+
+.canvas {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 800px;
+}
+
+.legend {
+  max-width: 250px;
+  margin-left: 30px;
+}
+
+.title {  
+  font-family: "Verdana", sans-serif;
+  font-size: 18px;
+  line-height: 21px;
+  color: #4e38a1;
+}
+
+.caption-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.caption-item {
+  position: relative;
+
+  margin: 20px 0;
+  padding-left: 30px;
+  
+  font-family: "Verdana", sans-serif;
+  font-size: 16px;
+  line-height: 18px;
+  color: #a3c0c8;  
+  cursor: pointer;
+}
+
+.caption-item:hover {
+  opacity: 0.8;
+}
+
+.caption-item::before {
+  content: "";
+  
+  position: absolute;
+  top: 0;
+  left: 0;
+  
+  width: 20px;
+  height: 20px;
+  
+  border-radius: 8px;
+}
+
+.caption-item:nth-child(1)::before {
+  background-color: #a3c0c8;
+}
+
+.caption-item:nth-child(2)::before {
+  background-color: #168325;
+}
+
+.caption-item:nth-child(3)::before {
+  background-color: #ffc7ec;
+}
+
+
+.chart {
+  min-width: 500px;
+}
+
+.unit {
+  fill: none;
+  stroke-width: 10;
+  cursor: pointer;
+  
+  animation-name: render;
+  animation-duration: 1.5s;
+  transition-property: all; 
+  transition-duration: 1.5s;
+}
+.unit:hover,
+.hovered {
+  opacity: 0.8;
+  stroke-width: 12;
+}
+
+.unit:nth-child(1) {
+  stroke: #a3c0c8;
+  stroke-dasharray: 100 100;
+}
+
+.unit:nth-child(2) {
+  stroke: #168325;
+  stroke-dasharray: 7.9 100;
+  stroke-dashoffset: 0;
+}
+
+.unit:nth-child(3) {
+  stroke: #ffc7ec;
+  stroke-dasharray: 2.2 100;
+  stroke-dashoffset: 0;
+}

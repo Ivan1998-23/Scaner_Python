@@ -1,0 +1,44 @@
+
+h1 {
+    margin: 0; /* Убираем отступы вокруг заголовка */
+}
+
+nav ul {
+    list-style-type: none; /* Убираем маркеры списка */
+    padding: 0; /* Убираем внутренние отступы списка */
+}
+
+nav li {
+    display: inline; /* Элементы списка в строку */
+    margin-right: 20px; /* Внешний отступ между элементами */
+}
+
+nav a {
+    text-decoration: none; /* Убираем подчеркивание ссылок */
+    color: #fff; /* Цвет текста ссылок */
+    font-size: 23px;
+    padding: 5px;
+}
+body {
+    font: caption;
+	margin: 0;
+}
+
+/* Стили для заголовка */
+header {
+    background-color: #333;  /*Цвет фона заголовка */
+    /*background-color: #098c55;   Цвет фона заголовка */
+    color: #fff; /* Цвет текста */
+    padding: 10px 0; /* Внутренние отступы сверху и снизу */
+    /*margin-bottom: 20px;*/
+}
+
+
+.container {
+    /*max-width: 960px; /* Максимальная ширина контейнера */
+    margin:   auto; /* Центрирование контейнера по горизонтали */
+    display: flex;
+    justify-content: space-around ; /* Равномерное распределение элементов по горизонтали */
+    align-items: center; /*Выравнивание элементов по вертикали */
+    font: 1.2em "Fira Sans", sans-serif;
+}

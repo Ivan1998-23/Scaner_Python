@@ -38,7 +38,9 @@ flask db migrate -m 'add passwrd'    спочатку робимо зміни т
 flask db upgrade                        оновлюємо БД
 flask db downgrade                      повернутися на самий початок
 flask db downgrade 7da1581ba2cf         повернутися на відповідний коміт
+
 -------------------------------------------
+https://www.youtube.com/watch?v=LKkn-2FId8w
 alembic revision --autogenerate -m 'create first commit'        створюємо перший репозиторій для БД
 alembic upgrade head          									оновлюємо БД 
 																робимо зміни

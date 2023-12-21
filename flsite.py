@@ -156,7 +156,7 @@ def findIP():
 
 @app.route('/statistics')
 def statistics():
-    return '<h1>Hello World!</h1>'
+    return render_template("statistics.html")
 
 
 @app.route("/resultFindIPs", methods=['GET'])
