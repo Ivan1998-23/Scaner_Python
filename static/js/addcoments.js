@@ -422,5 +422,48 @@ let tableInformations = document.querySelector('.table-striped')
 
 // реагує на всі кліки в таблиці
 tableInformations.addEventListener("click", function(event) { 
-	console.log(event.target.attributes) 
+	const listNameClassClick = event.target
+	if (listNameClassClick.className.includes('Device')) {
+		const text = listNameClassClick.innerText               // Отримуємо text елемент 
+		const id = event.target.getAttribute('data-id-device'); // Отримуємо id елемент 
+		const helper = listNameClassClick.querySelector('.helpversion'); 
+		console.log('clik')
+		fetch('/home', {
+                method: 'POST',
+                body: JSON.stringify({
+                    work: 'showVersion',
+                    id: id
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                // Обработка ответа от сервера 
+                if (!response.ok) {
+                    throw new Error('Сетевая ошибка');
+                }
+                // Преобразование ответа в JSON
+                return response.json();
+            })
+            .then(response_data => {  
+                console.log('ID elementa:', id);
+                console.log('Ответ от сервера:', response_data.result);
+                helper.innerText= response_data.result
+				if (helper.style.display === "none") {
+					helper.style.display = "block";
+				}
+				else{
+					helper.style.display  = "none";
+				}
+            })
+            .catch(error => {
+                console.error('Сталася помилка:', error);
+            }); 
+		
+	} 
+	
 });
+
+
+ 

@@ -12,6 +12,7 @@
 {% endblock %}
               
 {% block body %} 
+
 	<div class="main">
 		<div class="filtr">
 			<div class="filtr">   
@@ -102,9 +103,12 @@
                                 </div>
                             </td>
                             <td>
-                                <div class="value Device"  > 
-									{% if el.id_svmap %} {{  el.id_svmap.dev_name  }} {% endif %}
-                                </div>
+                                <div class="value Device" data-id-device="{{ el.id }}"> 
+									{% if el.id_svmap %} 
+										{{  el.id_svmap.dev_name  }}  
+										<tooltip class='helpversionoff helpversion'>ome text here</tooltip>
+									{% endif %} 
+								<div>
                             </td>
                             <td>
                                 <div class="value version"  >

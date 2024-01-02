@@ -43,6 +43,18 @@ def index():
                     value = data.get('value')                    # визначаємо значення
                     address_from_com.looked = value              # змінюємо значення "перевірки" на протилежний
                     db.session.add(address_from_com)             # додоаємо до БД
+                case 'showVersion':                                # шукаємо в БД схожі значення які необхідно оновити
+                    name_IP = address_from_com.id_svmap.dev_name.lstrip().rstrip()
+                    version_ip =  address_from_com.id_svmap.version 
+                    resutlFind = Frimvare.query.filter_by(dev_name=name_IP).first() 
+                    #frimwareUpdate = result if result else False 
+                    
+                    if resutlFind: 
+                        response_data = {"result": resutlFind.new_version} 
+                    else:
+                        print('Відповідну прошивку не найшло в БД') 
+                        response_data = {"result": False}  
+                    return jsonify(response_data)
                 case 'del':                           # видаляємо спочатку значення з таблиць nmap, svmap а потім вже ІР
                     if address_from_com:
                         delet_list_ip_svmap_ = address_from_com.id_svmap
