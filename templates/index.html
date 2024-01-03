@@ -12,7 +12,16 @@
 {% endblock %}
               
 {% block body %} 
+<!-- Элемент, на который вы нажмете -->
+<div class="timestamp">Нажмите для записи времени и даты</div>
 
+<!-- Модальное окно -->
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p id="timestamp"></p>
+    </div>
+</div>
 	<div class="main">
 		<div class="filtr">
 			<div class="filtr">   
@@ -37,6 +46,9 @@
                     </th>
                     <th scope="col">
                         <div class="value  sort looked" id='sort-look'>Перевірили &#8595</div>
+                    </th>
+                    <th scope="col">
+                        <div class="value  sort call" id='sort-call'>Телефонували </div>
                     </th>
                     <th scope="col">
                         <div class="value ipAdress">IP</div>
@@ -82,7 +94,11 @@
                             <td>
                                 <div class="value checked">
                                                 {% if el.checked == True %}
-                                                        <span   data-id-check="{{ el.id }}" value="True">&#9989</span>     <!-- Галочка -->
+                                                        <span   data-id-check="{{ el.id }}" value="True" 
+                                                        {% if el.data_checked != None %}
+															title="{{ el.data_checked.strftime('%Y.%m.%d %H:%M') }}"
+                                                        {% endif %}
+                                                        >&#9989</span>     <!-- Галочка -->
                                                 {% else %}
                                                         <span   data-id-check="{{ el.id }}" value="False">&#10060</span>  <!-- Крестик -->
                                                 {% endif %}
@@ -94,6 +110,14 @@
                                                         <span   data-id-look="{{ el.id }}" value="True">&#9989</span>     <!-- Галочка -->
                                                 {% else %}
                                                         <span   data-id-look="{{ el.id }}" value="False">&#10060</span>  <!-- Крестик -->
+                                                {% endif %}
+                                 </div>
+                            </td>
+                            <td>
+                                <div class="value call">
+                                                {% if el.data_call == None %}  
+                                                {% else %}  
+                                                        <span   data-id-check="{{ el.id }}" value="False">{{el.data_call.strftime('%Y.%m.%d %H:%M')}}</span>  <!-- Крестик -->
                                                 {% endif %}
                                  </div>
                             </td>
@@ -158,7 +182,7 @@
                             </td>
                             <td >
                                 <div class="value">
-                                    <button  class="value delete" name='deleteIP' data-id-del="{{ el.id }}">delete</button>
+                                    <button  class="value delete" name="deleteIP" data-id-del="{{ el.id }}">delete</button>
                                 </div>
                             </td>
 

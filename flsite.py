@@ -3,6 +3,7 @@ from static.py.inValueScan import chehekValueScan
 from blog import create_app
 from blog.models import *
 from templates import *
+from datetime import datetime
 import json
 import urllib.parse
 
@@ -37,6 +38,10 @@ def index():
                     db.session.add(address_from_com)            # додоаємо до БД
                 case 'chek':                                # змінюємо значення чи подавали порушення
                     value = data.get('value')                   # визначаємо значення "перевірки"
+                    print('address_from_com.checked', address_from_com.checked)
+                    if address_from_com.checked == False:
+                        print(datetime.now())
+                        address_from_com.data_checked = datetime.now()
                     address_from_com.checked = value            # змінюємо значення "перевірки" на протилежний
                     db.session.add(address_from_com)            # додоаємо до БД
                 case 'look':                                # змінюємо значення чи подавали порушення

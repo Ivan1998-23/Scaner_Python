@@ -424,48 +424,75 @@ let tableInformations = document.querySelector('.table-striped')
 tableInformations.addEventListener("click", function(event) { 
 	const listNameClassClick = event.target
 	if (listNameClassClick.className.includes('Device')) {
-		const text = listNameClassClick.innerText               // Отримуємо text елемент 
-		const id = event.target.getAttribute('data-id-device'); // Отримуємо id елемент 
-		const helper = listNameClassClick.querySelector('.helpversion'); 
-		console.log('clik')
-		fetch('/home', {
-                method: 'POST',
-                body: JSON.stringify({
-                    work: 'showVersion',
-                    id: id
-                }),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(response => {
-                // Обработка ответа от сервера 
-                if (!response.ok) {
-                    throw new Error('Сетевая ошибка');
-                }
-                // Преобразование ответа в JSON
-                return response.json();
-            })
-            .then(response_data => {  
-                console.log('ID elementa:', id);
-                console.log('Ответ от сервера:', response_data.result);
-                helper.innerText= response_data.result
-                console.log(helper.style.display)
-				if (helper.style.display !== "block") {
-					helper.style.display = "block";
-				}
-				else{
-					helper.style.display  = "none";
-				}
-				console.log(helper.style)
-            })
-            .catch(error => {
-                console.error('Сталася помилка:', error);
-            }); 
-		
+		clickNameDevice(event, listNameClassClick)
 	} 
 	
 });
+// ф-я на реагування на кліна на назву пристрою
+function clickNameDevice(event, listNameClassClick) {
+	const text = listNameClassClick.innerText               // Отримуємо text елемент 
+	const id = event.target.getAttribute('data-id-device'); // Отримуємо id елемент 
+	const helper = listNameClassClick.querySelector('.helpversion');  
+	fetch('/home', {
+			method: 'POST',
+			body: JSON.stringify({
+				work: 'showVersion',
+				id: id
+			}),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+		.then(response => {
+			// Обработка ответа от сервера 
+			if (!response.ok) {
+				throw new Error('Сетевая ошибка');
+			}
+			// Преобразование ответа в JSON
+			return response.json();
+		})
+		.then(response_data => {   
+			helper.innerText= response_data.result 
+			if (helper.style.display !== "block") {
+				helper.style.display = "block";
+			}
+			else{
+				helper.style.display  = "none";
+			} 
+		})
+		.catch(error => {
+			console.error('Сталася помилка:', error);
+		}); 
+}
 
+// Находит элементы
+let timestampElement = document.querySelector('.timestamp');
+let modal = document.getElementById('myModal');
+let closeBtn = document.querySelector('.close');
+let timestampContent = document.getElementById('timestamp');
 
+// Обработчик события для нажатия на timestampElement
+timestampElement.addEventListener('click', function() {
+	// Отобразить модальное окно
+	modal.style.display = 'block';
+
+	// Записать время и дату в модальное окно
+	let now = new Date();
+	console.log(now)
+	let timestamp = now.toLocaleString();
+	console.log(timestamp)
+	timestampContent.textContent = 'Дата и время записи: ' + timestamp;
+});
+
+// Закрыть модальное окно при нажатии на closeBtn
+closeBtn.addEventListener('click', function() {
+	modal.style.display = 'none';
+});
+
+// Закрыть модальное окно при щелчке за его пределами
+window.addEventListener('click', function(event) {
+	if (event.target == modal) {
+		modal.style.display = 'none';
+	}
+});
  
