@@ -450,12 +450,14 @@ tableInformations.addEventListener("click", function(event) {
                 console.log('ID elementa:', id);
                 console.log('Ответ от сервера:', response_data.result);
                 helper.innerText= response_data.result
-				if (helper.style.display === "none") {
+                console.log(helper.style.display)
+				if (helper.style.display !== "block") {
 					helper.style.display = "block";
 				}
 				else{
 					helper.style.display  = "none";
 				}
+				console.log(helper.style)
             })
             .catch(error => {
                 console.error('Сталася помилка:', error);

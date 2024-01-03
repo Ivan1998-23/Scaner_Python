@@ -42,3 +42,8 @@ header {
     align-items: center; /*Выравнивание элементов по вертикали */
     font: 1.2em "Fira Sans", sans-serif;
 }
+.logoScaner {
+	height:80px;
+	width:260px;
+}
+
