@@ -48,3 +48,4 @@ alembic revision --autogenerate -m 'create first commit'
 alembic upgrade head          									оновлюємо БД 
 
 alembic downgrade -1											якщо хочемо повернутись на один пункт назад
+alembic history --verbose										історія

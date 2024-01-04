@@ -19,6 +19,7 @@ class Address(db.Model):
     id_svmap = db.relationship('Svmap', backref='address', uselist=False)   # Св'язок з   id_svmap  1:1
     id_nmap = db.relationship('Nmap', backref='address', uselist=False)     # Св'язок з   id_nmap   1:1
     status = db.Column(db.Boolean, default=True, nullable=False)            # увімкнен чи ні  up down
+    data_status_down = db.Column(db.DateTime, default='', nullable=True)    # дата коли пристрій було позначено вимкненим
     def __repr__(self):
         return f'<Address {self.id}>'
 
