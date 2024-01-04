@@ -6,6 +6,7 @@ from templates import *
 from datetime import datetime
 import json
 import urllib.parse
+import pytz
 
 app = create_app()  
 
@@ -58,8 +59,26 @@ def index():
                         response_data = {"result": resutlFind.new_version} 
                     else:
                         print('Відповідну прошивку не найшло в БД') 
-                        response_data = {"result": False}  
-                    return jsonify(response_data)
+                        response_data = {"result": False}   
+                case 'call':                                # перезаписуємо значення коли телефонували 
+                    data_from_frontend = data.get('formattedDate')  
+                    date_object = datetime.fromisoformat(data_from_frontend) 
+                    
+                    #визначаємо в якій зоні ПЗ
+                    source_timezone = pytz.timezone('UTC')  
+                    
+                    #Перетворюємо рядок в об'єкт datetime з урахуванням часової зони
+                    date_object_utc = datetime.fromisoformat(data_from_frontend).replace(tzinfo=pytz.UTC)
+                    
+                    #Визначаємо цільову часову зону (наприклад, '+02:00')
+                    target_timezone = pytz.timezone('Europe/Kiev')  # Замените 'Europe/Kiev' на вашу целевую временную зону
+
+                    #Перетворюємо часову зону
+                    date_object_local = date_object_utc.astimezone(target_timezone) 
+                     
+                    address_from_com.data_call = date_object_local 
+                    db.session.add(address_from_com) 
+                    response_data = {"result": True} 
                 case 'del':                           # видаляємо спочатку значення з таблиць nmap, svmap а потім вже ІР
                     if address_from_com:
                         delet_list_ip_svmap_ = address_from_com.id_svmap

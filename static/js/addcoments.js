@@ -425,7 +425,11 @@ tableInformations.addEventListener("click", function(event) {
 	const listNameClassClick = event.target
 	if (listNameClassClick.className.includes('Device')) {
 		clickNameDevice(event, listNameClassClick)
-	} 
+	}
+	else if (listNameClassClick.className.includes('imgcall')) {
+		clickCall(event, listNameClassClick)
+	}
+	
 	
 });
 // ф-я на реагування на кліна на назву пристрою
@@ -465,34 +469,44 @@ function clickNameDevice(event, listNameClassClick) {
 		}); 
 }
 
-// Находит элементы
-let timestampElement = document.querySelector('.timestamp');
-let modal = document.getElementById('myModal');
-let closeBtn = document.querySelector('.close');
-let timestampContent = document.getElementById('timestamp');
+// ф-я на реагування на кліна коли треба записати дату дзвінка 
+function clickCall(event, listNameClassClick) {
+    let now = new Date();  
+	const id = event.target.getAttribute('data-id-call'); // Отримуємо id елемент
+	// редагую для необхідного формату
+	let year = now.getFullYear();
+	let month = String(now.getMonth() + 1).padStart(2, '0');
+	let day = String(now.getDate()).padStart(2, '0');
+	let hours = String(now.getHours()).padStart(2, '0');
+	let minutes = String(now.getMinutes()).padStart(2, '0');
+	let timestamp = `${year}.${month}.${day} ${hours}:${minutes}`; 
+    // Змінюємо картинку 
+    listNameClassClick.src = '';
 
-// Обработчик события для нажатия на timestampElement
-timestampElement.addEventListener('click', function() {
-	// Отобразить модальное окно
-	modal.style.display = 'block';
+    // підсказка
+    listNameClassClick.alt = timestamp;
+    let formattedDate = now.toISOString();  // відформатована дата для запису в БД 
+	fetch('/home', {
+			method: 'POST',
+			body: JSON.stringify({
+				work: 'call',
+				id: id,
+				formattedDate: formattedDate
+			}),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+		.then(response => {
+			// Обработка ответа от сервера 
+			if (!response.ok) {
+				throw new Error('Сетевая ошибка');
+			}
+			// Преобразование ответа в JSON
+			return response.json();
+		}) 
+		.catch(error => {
+			console.error('Сталася помилка:', error);
+		}); 
+} 
 
-	// Записать время и дату в модальное окно
-	let now = new Date();
-	console.log(now)
-	let timestamp = now.toLocaleString();
-	console.log(timestamp)
-	timestampContent.textContent = 'Дата и время записи: ' + timestamp;
-});
-
-// Закрыть модальное окно при нажатии на closeBtn
-closeBtn.addEventListener('click', function() {
-	modal.style.display = 'none';
-});
-
-// Закрыть модальное окно при щелчке за его пределами
-window.addEventListener('click', function(event) {
-	if (event.target == modal) {
-		modal.style.display = 'none';
-	}
-});
- 

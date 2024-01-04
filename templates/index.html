@@ -11,17 +11,7 @@
     <script  type='module'src="{{ url_for('static', filename='js/addcoments.js') }}"></script>
 {% endblock %}
               
-{% block body %} 
-<!-- Элемент, на который вы нажмете -->
-<div class="timestamp">Нажмите для записи времени и даты</div>
-
-<!-- Модальное окно -->
-<div id="myModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <p id="timestamp"></p>
-    </div>
-</div>
+{% block body %}  
 	<div class="main">
 		<div class="filtr">
 			<div class="filtr">   
@@ -48,7 +38,7 @@
                         <div class="value  sort looked" id='sort-look'>Перевірили &#8595</div>
                     </th>
                     <th scope="col">
-                        <div class="value  sort call" id='sort-call'>Телефонували </div>
+                        <div class="value   call" id='sort-call' title="Показує коли отсанній раз телефонували">Тел.</div>
                     </th>
                     <th scope="col">
                         <div class="value ipAdress">IP</div>
@@ -115,9 +105,11 @@
                             </td>
                             <td>
                                 <div class="value call">
-                                                {% if el.data_call == None %}  
+                                                {% if el.data_call == None %} 
+													<img data-id-call="{{ el.id }}" class="imgcall" src="{{ url_for('static', filename='img/call.png') }}" alt=""> 
                                                 {% else %}  
-                                                        <span   data-id-check="{{ el.id }}" value="False">{{el.data_call.strftime('%Y.%m.%d %H:%M')}}</span>  <!-- Крестик -->
+													<img data-id-call="{{ el.id }}" class="imgcall" src="" alt="{{el.data_call.strftime('%Y.%m.%d %H:%M')}}"> 
+                                                    <!--<span data-id-call="{{ el.id }}" class="imgcall">{{el.data_call.strftime('%Y.%m.%d %H:%M')}}</span> -->
                                                 {% endif %}
                                  </div>
                             </td>
