@@ -37,6 +37,7 @@ def index():
                     comments = data.get('comments')             # визначаємо що саме записав користувач
                     address_from_com.violation = comments       # присвоюємо новий коміт
                     db.session.add(address_from_com)            # додоаємо до БД
+                
                 case 'chek':                                # змінюємо значення чи подавали порушення
                     value = data.get('value')                   # визначаємо значення "перевірки"
                     print('address_from_com.checked', address_from_com.checked)
@@ -45,10 +46,12 @@ def index():
                         address_from_com.data_checked = datetime.now()
                     address_from_com.checked = value            # змінюємо значення "перевірки" на протилежний
                     db.session.add(address_from_com)            # додоаємо до БД
+                
                 case 'look':                                # змінюємо значення чи подавали порушення
                     value = data.get('value')                    # визначаємо значення
                     address_from_com.looked = value              # змінюємо значення "перевірки" на протилежний
                     db.session.add(address_from_com)             # додоаємо до БД
+                
                 case 'showVersion':                                # шукаємо в БД схожі значення які необхідно оновити
                     name_IP = address_from_com.id_svmap.dev_name.lstrip().rstrip()
                     version_ip =  address_from_com.id_svmap.version 
@@ -60,6 +63,12 @@ def index():
                     else:
                         print('Відповідну прошивку не найшло в БД') 
                         response_data = {"result": False}   
+                        
+                case 'updown':
+                    value = data.get('value')                   # визначаємо значення статуса активності   
+                    address_from_com.status = value             # змінюємо значення "статуса" на протилежний
+                    db.session.add(address_from_com)            # додоаємо до БД
+                
                 case 'call':                                # перезаписуємо значення коли телефонували 
                     data_from_frontend = data.get('formattedDate')  
                     date_object = datetime.fromisoformat(data_from_frontend) 

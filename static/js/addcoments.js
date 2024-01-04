@@ -429,9 +429,11 @@ tableInformations.addEventListener("click", function(event) {
 	else if (listNameClassClick.className.includes('imgcall')) {
 		clickCall(event, listNameClassClick)
 	}
-	
-	
+	else if (listNameClassClick.className.includes('updown')) {
+		clickUpDown(event, listNameClassClick)
+	}
 });
+
 // ф-я на реагування на кліна на назву пристрою
 function clickNameDevice(event, listNameClassClick) {
 	const text = listNameClassClick.innerText               // Отримуємо text елемент 
@@ -481,10 +483,10 @@ function clickCall(event, listNameClassClick) {
 	let minutes = String(now.getMinutes()).padStart(2, '0');
 	let timestamp = `${year}.${month}.${day} ${hours}:${minutes}`; 
     // Змінюємо картинку 
-    listNameClassClick.src = '';
+    listNameClassClick.src = 'static/img/call_g.png';
 
     // підсказка
-    listNameClassClick.alt = timestamp;
+    listNameClassClick.title = timestamp;
     let formattedDate = now.toISOString();  // відформатована дата для запису в БД 
 	fetch('/home', {
 			method: 'POST',
@@ -510,3 +512,46 @@ function clickCall(event, listNameClassClick) {
 		}); 
 } 
 
+
+
+// ф-я на реагування на кліна на статус
+function clickUpDown(event, listNameClassClick) {  
+	const id = listNameClassClick.getAttribute('data-id-updown'); // Отримуємо id елемент
+	// Отримуємо value
+	const value =  listNameClassClick.getAttribute('value'); 
+	
+	// Робимо заміну зображень
+	listNameClassClick.innerHTML = (value === 'True') ? "&#128164" : "&#127774"; 
+	
+	// Робимо заміну значень. тру на фолс
+	let updDownLogik = (value === 'True') ?  false : true;
+	if (value === 'True') {
+		let updDownLogik = false
+		listNameClassClick.setAttribute('value', 'False');
+	}
+	else {
+		let updDownLogik = true
+		listNameClassClick.setAttribute('value', 'True');
+	}
+	fetch('/', {
+		method: 'POST',
+		body: JSON.stringify({
+			work: 'updown',
+			value: updDownLogik,
+			id: id
+		}),
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	})
+	.then(response => {
+		if (response.ok) {
+				console.log('Дані вдало збережено в базі даних');
+		} else {
+			console.error('Помилка збереження даних у базі даних');
+		}
+	})
+	.catch(error => {
+		console.error('Сталася помилка:', error);
+	});
+}

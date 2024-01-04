@@ -257,6 +257,10 @@ a {
 	height: 18px; 
     /*cursor: pointer;*/
 }
+.imgcall:active {
+	width: 20px;
+	height: 20px; 
+}
 /* Скрыть модальное окно по умолчанию */
 #myModal {
 	display: none;

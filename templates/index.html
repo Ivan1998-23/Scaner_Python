@@ -50,9 +50,6 @@
                         <div class="value Device">Версія</div>
                     </th>
                     <th scope="col">
-                        <div class="value st"> Статус</div>
-                    </th>
-                    <th scope="col">
                         <div class="value port">Порт</div>
                     </th>
                     <!--<th scope="col">
@@ -69,6 +66,9 @@
                     </th>
                     <th scope="col">
                         <div class="value ">Other</div>
+                    </th>
+                    <th scope="col">
+                        <div class="value st"> Статус</div>
                     </th>
                     <th scope="col">
                         <div class="value del">Видалити</div>
@@ -108,7 +108,8 @@
                                                 {% if el.data_call == None %} 
 													<img data-id-call="{{ el.id }}" class="imgcall" src="{{ url_for('static', filename='img/call.png') }}" alt=""> 
                                                 {% else %}  
-													<img data-id-call="{{ el.id }}" class="imgcall" src="" alt="{{el.data_call.strftime('%Y.%m.%d %H:%M')}}"> 
+													<img data-id-call="{{ el.id }}" class="imgcall" src="{{ url_for('static', filename='img/call_g.png') }}" 
+													title="{{el.data_call.strftime('%Y.%m.%d %H:%M')}}"> 
                                                     <!--<span data-id-call="{{ el.id }}" class="imgcall">{{el.data_call.strftime('%Y.%m.%d %H:%M')}}</span> -->
                                                 {% endif %}
                                  </div>
@@ -130,15 +131,6 @@
                                 <div class="value version"  >
 									 {% if el.id_svmap %} {{  el.id_svmap.version  }} {% endif %}
                                 </div>
-                            </td>
-                            <td>
-                                <div class="value st"> {% if el.status == True %}
-                                                        <span>&#127774</span>
-                                                {% else %}
-                                                        <span>&#128164</span>
-                                                {% endif %}
-                                </div>
-                            </td>
                             <td>
                                 <div class="value port">{% if el.id_svmap %} {{  el.id_svmap.ports  }} {% endif %}</div>
                             </td>
@@ -171,6 +163,16 @@
 										<pre>{{ el.id_nmap.other }}</pre>
 									</div>
 								</div>
+                            </td>
+                            </td>
+                            <td>
+                                <div class="value st"> 
+									{% if el.status == True %}
+											<span data-id-updown="{{ el.id }}" class="updown" value="True" >&#127774</span>
+									{% else %}
+											<span data-id-updown="{{ el.id }}" class="updown" value="False" >&#128164</span>
+									{% endif %}
+                                </div>
                             </td>
                             <td >
                                 <div class="value">
