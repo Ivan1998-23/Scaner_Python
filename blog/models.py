@@ -80,7 +80,7 @@ class Frimvare(db.Model):
 #перзаписуємо значення ІР
 def update_address_from_data(id_ones_ip, data): 
     # Визначте, які поля в класах потрібно оновити
-    address_fields = ['ip', 'update',    'checked']
+    address_fields = ['ip', 'update',    'checked', 'status']
     svmap_fields = ['ports', 'version', 'dev_name']
     nmap_fields = ['other']
     try: 

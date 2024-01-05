@@ -222,6 +222,7 @@ def create_obj_ip_to_bd_nmap(dict_ips):
 			'update'   : today,
 			'comments' : '',
 			'checked'  : '',
+			'status'   : True,
 			'id_svmap' : {
 				'ports'	   : dict_ips[ip]['ports'],
 				'version'  : '',

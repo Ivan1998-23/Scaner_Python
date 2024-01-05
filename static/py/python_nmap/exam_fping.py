@@ -47,6 +47,7 @@ def create_obj_fping_ip_to_bd(array_ips):
 		'update'   : today,
 		'comments' : '',
 		'checked'  : '',
+		'status'   : True,
 		'id_svmap' : {
 			'ports'	   : '',
 			'version'  : '',
