@@ -12,14 +12,14 @@ class Address(db.Model):
     violation = db.Column(db.Text, default='', nullable=True)               # порушення які виявили
     comments = db.Column(db.Text, default='', nullable=True)                # Примітки
     password = db.Column(db.Text, default='', nullable=True)                # password
-    checked = db.Column(db.Boolean, nullable=True)                          # подавали порушення
-    data_checked = db.Column(db.DateTime, default='', nullable=True)        # дата коли подали кейс
-    data_call = db.Column(db.DateTime, default='', nullable=True)           # дата коли телефонували на цей номер
+    checked = db.Column(db.Boolean, default=False, nullable=True)                          # подавали порушення
+    data_checked = db.Column(db.DateTime, nullable=True)        # дата коли подали кейс
+    data_call = db.Column(db.DateTime, nullable=True)           # дата коли телефонували на цей номер
     looked = db.Column(db.Boolean, default=False, nullable=True)            # чи взагалі перевіряли його
     id_svmap = db.relationship('Svmap', backref='address', uselist=False)   # Св'язок з   id_svmap  1:1
     id_nmap = db.relationship('Nmap', backref='address', uselist=False)     # Св'язок з   id_nmap   1:1
     status = db.Column(db.Boolean, default=True, nullable=False)            # увімкнен чи ні  up down
-    data_status_down = db.Column(db.DateTime, default='', nullable=True)    # дата коли пристрій було позначено вимкненим
+    data_status_down = db.Column(db.DateTime, nullable=True)    # дата коли пристрій було позначено вимкненим
     def __repr__(self):
         return f'<Address {self.id}>'
 
