@@ -77,7 +77,12 @@
             </thead>
             <tbody>
                 {% for el in address[::-1] %}
-                        <tr class="row look-row">
+						{% if el.checked == True %}
+							<tr class="row look-row checked-row">
+						{% else %}
+							<tr class="row look-row ">
+						{% endif %}
+                        
                             <td scope="col">
                                 <div class="value id">{{ el.id}}</div>
                             </td>

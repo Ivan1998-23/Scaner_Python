@@ -5,9 +5,7 @@ table {
     width: 100%;
     border-collapse: collapse;   /* Убирает отступы и объединяет границы ячеек */
 }
-.table-striped tbody tr:nth-child(odd) {
-    background-color: #ffffff;  /*  Цвет фона для нечетных строк*/
-}
+
 .value {
     text-align: center;
 }
@@ -35,8 +33,16 @@ table {
     height: 100px;
 }
 .row {  
-	background: #efefef;
+	background: #ffffff;
 	border: 1px solid #dddddd;
+}
+/* Стиль для непарних рядків */
+.table-striped tbody tr:nth-child(odd) {
+    background-color: #efefef; /* Колір фону для непарних рядків */
+}
+/* Перевизначення стилю для рядків із класом "checked-row" */
+.table-striped tbody tr.checked-row {
+    background-color: #49d9529c; /* Колір фону для рядків із класом "checked-row" */
 }
 /*        при наведенні весь рядок змінює колір */
 /*.row:hover {background-color: #00cd1b59}*/
